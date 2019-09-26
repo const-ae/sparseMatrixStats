@@ -73,6 +73,8 @@ source("tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow=10, ncol=6)
 sp_mat <- as(mat, "dgCMatrix")
 matrix_subset_sum(sp_mat, 1, 6)
+colSums2(sp_mat, na.rm = FALSE)
+colSums2(sp_mat, na.rm = TRUE)
 
 large_mat <- make_matrix(nrow=1e4, ncol=1e4, frac_zero = 0.99)
 large_sp_mat <- as(large_mat, "dgCMatrix")
@@ -83,8 +85,18 @@ tmp3 <- Matrix::colSums(large_sp_mat)
 
 bench::mark(
   matrixStats::colSums2(large_mat),
-  matrix_subset_sum(large_sp_mat, 0, 0),
+  colSums2(large_sp_mat),
   Matrix::colSums(large_sp_mat)
+)
+
+large_mat_with_na <- large_mat
+large_mat_with_na[sample(seq_len(prod(dim(large_mat))), 1000)] <- NA
+sp_large_mat_with_na <- as(large_mat_with_na, "dgCMatrix")
+
+bench::mark(
+  matrixStats::colSums2(large_mat_with_na, na.rm=TRUE),
+  colSums2(sp_large_mat_with_na, na.rm=TRUE),
+  Matrix::colSums(sp_large_mat_with_na, na.rm=TRUE)
 )
 
 */

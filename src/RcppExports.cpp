@@ -15,6 +15,18 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// dgCMatrix_colSums2
+NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colSums2(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colSums2(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // subset_sum
 double subset_sum(NumericVector v, R_len_t start, R_len_t end);
 RcppExport SEXP _sparseMatrixStats_subset_sum(SEXP vSEXP, SEXP startSEXP, SEXP endSEXP) {
@@ -57,6 +69,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_print_matrix", (DL_FUNC) &_sparseMatrixStats_print_matrix, 1},
+    {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},
     {"_sparseMatrixStats_matrix_subset_sum", (DL_FUNC) &_sparseMatrixStats_matrix_subset_sum, 3},

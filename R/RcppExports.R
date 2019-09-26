@@ -5,6 +5,10 @@ print_matrix <- function(matrix) {
     invisible(.Call('_sparseMatrixStats_print_matrix', PACKAGE = 'sparseMatrixStats', matrix))
 }
 
+dgCMatrix_colSums2 <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colSums2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
 subset_sum <- function(v, start, end) {
     .Call('_sparseMatrixStats_subset_sum', PACKAGE = 'sparseMatrixStats', v, start, end)
 }
