@@ -1,0 +1,7 @@
+*.o
+*.so
+*.rda
+*.RData
+.Rproj.user
+.Rhistory
+sparseMatrixStats.Rproj
