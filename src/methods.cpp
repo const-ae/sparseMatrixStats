@@ -36,6 +36,49 @@ NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm){
   });
 }
 
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colMeans2(S4 matrix, bool na_rm){
+  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+    double accum = 0.0;
+    R_len_t size = number_of_zeros;
+    std::for_each(values.begin(), values.end(),
+      [&](auto d){
+        ++size;
+        accum += d;
+      });
+    if(NumericVector::is_na(accum)){
+      return accum;
+    }else if(size == 0){
+      return R_NaN;
+    }else{
+      return accum / size;
+    }
+  });
+}
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
+  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+    double accum = 0.0;
+    double accum2 = 0.0;
+    R_len_t size = number_of_zeros;
+    std::for_each(values.begin(), values.end(),
+                  [&](auto d){
+                    ++size;
+                    accum += d;
+                    accum2 += pow(d, 2);
+                  });
+    if(NumericVector::is_na(accum)){
+      return accum;
+    }else if(size <= 1){
+      return NA_REAL;    // Yes, var(3) actually returns NA instead of NaN
+    }else{
+      return ((accum2) - pow(accum , 2)/ size)  / (size-1);
+    }
+  });
+}
+
 // You can include R code blocks in C++ files processed with sourceCpp
 // (useful for testing and development). The R code will be automatically
 // run after the compilation.

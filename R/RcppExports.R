@@ -9,6 +9,14 @@ dgCMatrix_colSums2 <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colSums2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
+dgCMatrix_colMeans2 <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colMeans2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
+dgCMatrix_colVars <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
 subset_sum <- function(v, start, end) {
     .Call('_sparseMatrixStats_subset_sum', PACKAGE = 'sparseMatrixStats', v, start, end)
 }

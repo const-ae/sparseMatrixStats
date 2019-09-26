@@ -32,7 +32,7 @@ public:
     using value_type = stored_type;
     using reference = stored_type;
     using pointer = stored_type const * ;
-    using difference_type = void;
+    using difference_type = ptrdiff_t;
 
 
     iterator(vsv_iterator vsv_iter_start_, vsv_iterator vsv_iter_end_): vsv_iter_start(vsv_iter_start_), vsv_iter_end(vsv_iter_end_) {
@@ -81,7 +81,6 @@ public:
   iterator end() {
     return iterator(nullptr, nullptr);
   }
-
 
 };
 

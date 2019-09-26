@@ -14,7 +14,7 @@ class VectorSubsetView {
   RcppVector vec;
 public:
   const R_len_t start;
-  const R_len_t size;
+  const R_len_t size_m;
   typedef typename RcppVector::Proxy Proxy ;
   typedef typename RcppVector::Storage stored_type;
 
@@ -33,7 +33,7 @@ public:
     using value_type = stored_type;
     using reference = stored_type;
     using pointer = stored_type const * ;
-    using difference_type = void;
+    using difference_type = ptrdiff_t;
 
 
     iterator(VectorSubsetView* vsv_): vsv(vsv_), current(0) {}
@@ -44,7 +44,7 @@ public:
 
     iterator& operator++(){ //preincrement
       ++current;
-      if(current == vsv->size){
+      if(current == vsv->size()){
         vsv = nullptr;
       }
       return *this;
@@ -66,7 +66,7 @@ public:
   };
 
   VectorSubsetView(const RcppVector vec_, const R_len_t start_, const R_len_t end_):
-    vec(vec_), start(start_), size(end_ - start) {
+    vec(vec_), start(start_), size_m(end_ - start_) {
     if(end_ < start_){
       throw std::range_error("End must not be smaller than start");
     }
@@ -79,13 +79,15 @@ public:
   }
 
   iterator begin() {
-    if(size == 0){
+    if(size_m == 0){
       return iterator(nullptr);
     }else{
       return iterator(this);
     }
   }
   iterator end() { return iterator(nullptr); }
+
+  R_len_t size() { return size_m; }
 
 
 };

@@ -22,7 +22,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double subset_sum(NumericVector v, R_len_t start, R_len_t end){
   auto vsv = VectorSubsetView<REALSXP>(v, start, end);
-  int s = vsv.size;
+  // int s = vsv.size;
   for(double e: vsv){
     Rcout << e << std::endl;
   }
@@ -75,6 +75,10 @@ sp_mat <- as(mat, "dgCMatrix")
 matrix_subset_sum(sp_mat, 1, 6)
 colSums2(sp_mat, na.rm = FALSE)
 colSums2(sp_mat, na.rm = TRUE)
+colMeans2(sp_mat)
+colMeans2(sp_mat, na.rm=TRUE)
+matrixStats::colMeans2(mat, na.rm=FALSE)
+
 
 large_mat <- make_matrix(nrow=1e4, ncol=1e4, frac_zero = 0.99)
 large_sp_mat <- as(large_mat, "dgCMatrix")
@@ -84,9 +88,9 @@ tmp2 <- matrix_subset_sum(large_sp_mat, 0, 0)
 tmp3 <- Matrix::colSums(large_sp_mat)
 
 bench::mark(
-  matrixStats::colSums2(large_mat),
-  colSums2(large_sp_mat),
-  Matrix::colSums(large_sp_mat)
+  matrixStats::colMeans2(large_mat),
+  colMeans2(large_sp_mat),
+  Matrix::colMeans(large_sp_mat)
 )
 
 large_mat_with_na <- large_mat
@@ -94,9 +98,9 @@ large_mat_with_na[sample(seq_len(prod(dim(large_mat))), 1000)] <- NA
 sp_large_mat_with_na <- as(large_mat_with_na, "dgCMatrix")
 
 bench::mark(
-  matrixStats::colSums2(large_mat_with_na, na.rm=TRUE),
-  colSums2(sp_large_mat_with_na, na.rm=TRUE),
-  Matrix::colSums(sp_large_mat_with_na, na.rm=TRUE)
+  matrixStats::colMeans2(large_mat_with_na, na.rm=TRUE),
+  colMeans2(sp_large_mat_with_na, na.rm=TRUE),
+  Matrix::colMeans(sp_large_mat_with_na, na.rm=TRUE)
 )
 
 */
