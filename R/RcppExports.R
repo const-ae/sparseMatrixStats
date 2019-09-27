@@ -17,6 +17,18 @@ dgCMatrix_colVars <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
+dgCMatrix_colMins <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colMins', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
+dgCMatrix_colMaxs <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colMaxs', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
+dgCMatrix_colCounts <- function(matrix, value, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colCounts', PACKAGE = 'sparseMatrixStats', matrix, value, na_rm)
+}
+
 subset_sum <- function(v, start, end) {
     .Call('_sparseMatrixStats_subset_sum', PACKAGE = 'sparseMatrixStats', v, start, end)
 }

@@ -51,6 +51,43 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colMins
+NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colMins(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colMins(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colMaxs
+NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colMaxs(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colMaxs(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colCounts
+NumericVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCounts(SEXP matrixSEXP, SEXP valueSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< double >::type value(valueSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCounts(matrix, value, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // subset_sum
 double subset_sum(NumericVector v, R_len_t start, R_len_t end);
 RcppExport SEXP _sparseMatrixStats_subset_sum(SEXP vSEXP, SEXP startSEXP, SEXP endSEXP) {
@@ -96,6 +133,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMeans2, 2},
     {"_sparseMatrixStats_dgCMatrix_colVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colVars, 2},
+    {"_sparseMatrixStats_dgCMatrix_colMins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMins, 2},
+    {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
+    {"_sparseMatrixStats_dgCMatrix_colCounts", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCounts, 3},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},
     {"_sparseMatrixStats_matrix_subset_sum", (DL_FUNC) &_sparseMatrixStats_matrix_subset_sum, 3},

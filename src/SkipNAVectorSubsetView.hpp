@@ -82,6 +82,10 @@ public:
     return iterator(nullptr, nullptr);
   }
 
+  bool is_empty(){
+    return begin() == end();
+  }
+
 };
 
 // // [[Rcpp::export]]

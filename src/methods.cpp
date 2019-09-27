@@ -79,6 +79,64 @@ NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
   });
 }
 
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
+  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+    auto min = std::min_element(values.begin(), values.end(), [](double a, double b) -> bool {
+      return a < b;
+    });
+    if(min == values.end()){
+      return number_of_zeros > 0 ? 0.0 : R_PosInf;
+    }else{
+      return std::min(*min, 0.0);
+    }
+  });
+}
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
+  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+    auto max_iter = std::max_element(values.begin(), values.end(), [](double a, double b) -> bool {
+      return a < b;
+    });
+    if(max_iter == values.end()){
+      return number_of_zeros > 0 ? 0.0 : R_NegInf;
+    }else{
+      return std::max(*max_iter, 0.0);
+    }
+  });
+}
+
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
+  return reduce_matrix(matrix, na_rm, [value, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(na_rm && value == 0.0){
+      return number_of_zeros;
+    }else if(na_rm){
+      return std::count(values.begin(), values.end(), value);
+    }else{
+      bool contains_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool{
+        return NumericVector::is_na(d);
+      });
+      if(! contains_na){  // No NA's in the vector
+        if(value == 0.0){
+          return number_of_zeros;
+        }else{
+          return std::count(values.begin(), values.end(), value);
+        }
+      }else{
+        return NA_REAL;
+      }
+    }
+  });
+}
+
+
+
+
+
 // You can include R code blocks in C++ files processed with sourceCpp
 // (useful for testing and development). The R code will be automatically
 // run after the compilation.

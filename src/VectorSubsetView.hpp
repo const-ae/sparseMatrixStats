@@ -89,6 +89,9 @@ public:
 
   R_len_t size() { return size_m; }
 
+  bool is_empty(){
+    return size_m == 0;
+  }
 
 };
 

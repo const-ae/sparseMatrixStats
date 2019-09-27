@@ -20,3 +20,25 @@ test_that("colVars works", {
   expect_equal(colVars(sp_mat), matrixStats::colVars(mat))
   expect_equal(colVars(sp_mat, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
 })
+
+
+
+test_that("colMins works", {
+  expect_equal(colMins(sp_mat), matrixStats::colMins(mat))
+  expect_equal(colMins(sp_mat, na.rm=TRUE), matrixStats::colMins(mat, na.rm=TRUE))
+})
+
+
+test_that("colMaxs works", {
+  expect_equal(colMaxs(sp_mat), matrixStats::colMaxs(mat))
+  expect_equal(colMaxs(sp_mat, na.rm=TRUE), matrixStats::colMaxs(mat, na.rm=TRUE))
+})
+
+
+
+test_that("colCounts works", {
+  expect_equal(colCounts(sp_mat, value=0), matrixStats::colCounts(mat, value=0))
+  expect_equal(colCounts(sp_mat, na.rm=TRUE, value=0), matrixStats::colCounts(mat, na.rm=TRUE, value = 0))
+  expect_equal(colCounts(sp_mat, value = tail(sp_mat@x, n=1)), matrixStats::colCounts(mat, value = tail(sp_mat@x, n=1)))
+  expect_equal(colCounts(sp_mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)), matrixStats::colCounts(mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)))
+})
