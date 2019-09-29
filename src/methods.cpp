@@ -6,8 +6,10 @@
 
 using namespace Rcpp;
 
+
+
 template<typename Functor>
-NumericVector reduce_matrix(S4 matrix, bool na_rm, Functor op){
+NumericVector reduce_matrix_double(S4 matrix, bool na_rm, Functor op){
   dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
   ColumnView cv(&sp_mat);
   std::vector<double> result;
@@ -28,10 +30,57 @@ NumericVector reduce_matrix(S4 matrix, bool na_rm, Functor op){
   return wrap(result);
 }
 
+template<typename Functor>
+IntegerVector reduce_matrix_int(S4 matrix, bool na_rm, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<int> result;
+  result.reserve(sp_mat.ncol);
+  if(na_rm){
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> int {
+                     SkipNAVectorSubsetView<REALSXP> values_wrapper(&col.values);
+                     SkipNAVectorSubsetView<INTSXP> row_indices_wrapper(&col.row_indices);
+                     return op(values_wrapper, row_indices_wrapper, col.number_of_zeros);
+                   });
+  }else{
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> int {
+                     return op(col.values, col.row_indices, col.number_of_zeros);
+                   });
+  }
+  return wrap(result);
+}
+
+template<typename Functor>
+LogicalVector reduce_matrix_lgl(S4 matrix, bool na_rm, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<int> result;
+  result.reserve(sp_mat.ncol);
+  if(na_rm){
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> int {
+                     SkipNAVectorSubsetView<REALSXP> values_wrapper(&col.values);
+                     SkipNAVectorSubsetView<INTSXP> row_indices_wrapper(&col.row_indices);
+                     return op(values_wrapper, row_indices_wrapper, col.number_of_zeros);
+                   });
+  }else{
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> int {
+                     return op(col.values, col.row_indices, col.number_of_zeros);
+                   });
+  }
+  return wrap(result);
+}
+
+
+
+/*---------------Simple Aggregation Functions-----------------*/
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     return std::accumulate(values.begin(), values.end(), 0.0);
   });
 }
@@ -39,7 +88,7 @@ NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm){
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMeans2(S4 matrix, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     double accum = 0.0;
     R_len_t size = number_of_zeros;
     std::for_each(values.begin(), values.end(),
@@ -57,9 +106,79 @@ NumericVector dgCMatrix_colMeans2(S4 matrix, bool na_rm){
   });
 }
 
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
+  return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(! na_rm){
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(any_na){
+        return NA_REAL;
+      }
+    }
+    R_len_t size = values.size();
+    if(number_of_zeros > size/2.0){
+      // Easy escape hatch
+      return 0.0;
+    }
+    int total_size = size + number_of_zeros;
+    if(total_size == 0){
+      return NA_REAL;
+    }
+    std::vector<double> sorted_values;
+    std::copy(values.begin(), values.end(), std::back_inserter(sorted_values));
+    std::sort(sorted_values.begin(), sorted_values.end());
+    double left_center = NA_REAL;
+    double right_center = NA_REAL;
+    bool left_of_zero = sorted_values[0] < 0;
+    bool right_of_zero = !left_of_zero && number_of_zeros == 0;
+    int zero_counter = 0;
+    int vec_counter = 0;
+    for(int i = 0; i < sorted_values.size() + number_of_zeros; i++){
+      if(i == std::floor((total_size-1)/2.0)){
+        if(! left_of_zero && ! right_of_zero){
+          left_center = 0;
+        }else{
+          left_center = sorted_values[vec_counter];
+        }
+      }
+      if(i == std::ceil((total_size-1)/2.0)){
+        if(! left_of_zero && ! right_of_zero){
+          right_center = 0;
+        }else{
+          right_center = sorted_values[vec_counter];
+        }
+        break;
+      }
+
+      if(left_of_zero){
+        vec_counter++;
+        if(sorted_values[vec_counter] > 0){
+          left_of_zero = false;
+          vec_counter--;
+        }
+      }
+      if(! left_of_zero && ! right_of_zero){
+        if(zero_counter < number_of_zeros){
+          zero_counter++;
+        }else{
+          right_of_zero = true;
+        }
+      }
+      if(right_of_zero){
+        vec_counter++;
+      }
+    }
+    return (left_center + right_center)/2.0;
+  });
+}
+
+
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     double accum = 0.0;
     double accum2 = 0.0;
     R_len_t size = number_of_zeros;
@@ -82,7 +201,7 @@ NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     auto min = std::min_element(values.begin(), values.end(), [](double a, double b) -> bool {
       return a < b;
     });
@@ -96,7 +215,7 @@ NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     auto max_iter = std::max_element(values.begin(), values.end(), [](double a, double b) -> bool {
       return a < b;
     });
@@ -110,8 +229,37 @@ NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
-NumericVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
-  return reduce_matrix(matrix, na_rm, [value, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
+  return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double {
+    if(na_rm){
+      if(number_of_zeros > 0){
+        return 0.0;
+      }else{
+        return std::accumulate(values.begin(), values.end(), 1.0, [](double a, double b) -> double { return a * b;});
+      }
+    }else{
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(any_na){
+        return NA_REAL;
+      }else{
+        if(number_of_zeros > 0){
+          return 0.0;
+        }else{
+          return std::accumulate(values.begin(), values.end(), 1.0, [](double a, double b) { return a * b; });
+        }
+      }
+    }
+  });
+}
+
+
+/*---------------Simple Detect Functions-----------------*/
+
+// [[Rcpp::export]]
+IntegerVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
+  return reduce_matrix_int(matrix, na_rm, [value, na_rm](auto values, auto row_indices, int number_of_zeros) -> int{
     if(na_rm && value == 0.0){
       return number_of_zeros;
     }else if(na_rm){
@@ -133,17 +281,106 @@ NumericVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
   });
 }
 
+// [[Rcpp::export]]
+LogicalVector dgCMatrix_colAnyNAs(S4 matrix){
+  return reduce_matrix_lgl(matrix, false, [](auto values, auto row_indices, int number_of_zeros) -> int{
+    bool contains_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool{
+      return NumericVector::is_na(d);
+    });
+    return contains_na;
+  });
+}
+
+
+// [[Rcpp::export]]
+LogicalVector dgCMatrix_colAnys(S4 matrix, double value, bool na_rm){
+  return reduce_matrix_lgl(matrix, na_rm, [value, na_rm](auto values, auto row_indices, int number_of_zeros) -> int{
+    if(na_rm && value == 0.0){
+      return number_of_zeros > 0;
+    }else if(! na_rm && value == 0.0){
+      bool all_na = std::all_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(all_na && !values.is_empty()){
+        return NA_LOGICAL;
+      }else{
+        return number_of_zeros > 0;
+      }
+    }else if(na_rm){
+      return std::any_of(values.begin(), values.end(),  [value](const double d) -> bool{
+        return d == value;
+      });
+    }else{
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      bool found_value = std::any_of(values.begin(), values.end(),  [value](const double d) -> bool{
+        return d == value;
+      });
+      if(any_na){
+        if(found_value){
+          return true;
+        }else{
+          return NA_LOGICAL;
+        }
+      }else{
+        return found_value;
+      }
+    }
+  });
+}
 
 
 
+// [[Rcpp::export]]
+LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_lgl(matrix, na_rm, [value, na_rm, nrows](auto values, auto row_indices, int number_of_zeros) -> int{
+    if(value == 0.0){
+      if(na_rm){
+        return values.is_empty();
+      }else{
+        if(number_of_zeros == nrows){
+          return true;
+        }else{
+          bool all_na = std::all_of(values.begin(), values.end(), [](const double d) -> bool {
+            return NumericVector::is_na(d);
+          });
+          if(all_na){
+            return NA_LOGICAL;
+          }else{
+            return false;
+          }
+        }
+      }
+    }else{
+      if(number_of_zeros > 0){
+        return false;
+      }
+      if(na_rm){
+        return std::all_of(values.begin(), values.end(), [value](const double d) -> bool {
+          return d == value;
+        });
+      }else{
+        bool all_equal_or_na = std::all_of(values.begin(), values.end(), [value](const double d) -> bool {
+          return d == value || NumericVector::is_na(d);
+        });
+        bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+          return NumericVector::is_na(d);
+        });
+        if(! all_equal_or_na){
+          return false;
+        }else if(all_equal_or_na && any_na){
+          return NA_LOGICAL;
+        }else if(all_equal_or_na && !any_na){
+          return true;
+        }
+      }
+    }
+    return false;
+  });
+}
 
-// You can include R code blocks in C++ files processed with sourceCpp
-// (useful for testing and development). The R code will be automatically
-// run after the compilation.
-//
 
-/*** R
-mat <- make_matrix_with_all_features(nrow=10, ncol=6)
-sp_mat <- as(mat, "dgCMatrix")
-colSums2(sp_mat)
-*/
+

@@ -39,6 +39,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colMedians
+NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colMedians(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colMedians(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dgCMatrix_colVars
 NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colVars(SEXP matrixSEXP, SEXP na_rmSEXP) {
@@ -75,8 +87,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colProds
+NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colProds(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colProds(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dgCMatrix_colCounts
-NumericVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm);
+IntegerVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCounts(SEXP matrixSEXP, SEXP valueSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -85,6 +109,43 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type value(valueSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCounts(matrix, value, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colAnyNAs
+LogicalVector dgCMatrix_colAnyNAs(S4 matrix);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colAnyNAs(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colAnyNAs(matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colAnys
+LogicalVector dgCMatrix_colAnys(S4 matrix, double value, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colAnys(SEXP matrixSEXP, SEXP valueSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< double >::type value(valueSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colAnys(matrix, value, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colAlls
+LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colAlls(SEXP matrixSEXP, SEXP valueSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< double >::type value(valueSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colAlls(matrix, value, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -132,10 +193,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_print_matrix", (DL_FUNC) &_sparseMatrixStats_print_matrix, 1},
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMeans2, 2},
+    {"_sparseMatrixStats_dgCMatrix_colMedians", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMedians, 2},
     {"_sparseMatrixStats_dgCMatrix_colVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colVars, 2},
     {"_sparseMatrixStats_dgCMatrix_colMins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMins, 2},
     {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
+    {"_sparseMatrixStats_dgCMatrix_colProds", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colProds, 2},
     {"_sparseMatrixStats_dgCMatrix_colCounts", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCounts, 3},
+    {"_sparseMatrixStats_dgCMatrix_colAnyNAs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnyNAs, 1},
+    {"_sparseMatrixStats_dgCMatrix_colAnys", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnys, 3},
+    {"_sparseMatrixStats_dgCMatrix_colAlls", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAlls, 3},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},
     {"_sparseMatrixStats_matrix_subset_sum", (DL_FUNC) &_sparseMatrixStats_matrix_subset_sum, 3},

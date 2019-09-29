@@ -86,6 +86,14 @@ public:
     return begin() == end();
   }
 
+  R_len_t size(){
+    R_len_t result = 0;
+    for(iterator index = begin(); index != end(); index++){
+      result++;
+    }
+    return result;
+  }
+
 };
 
 // // [[Rcpp::export]]

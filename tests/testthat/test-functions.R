@@ -15,6 +15,12 @@ test_that("colMeans works", {
 })
 
 
+test_that("colMedians works", {
+  expect_equal(colMedians(sp_mat), matrixStats::colMedians(mat))
+  expect_equal(colMedians(sp_mat, na.rm=TRUE), matrixStats::colMedians(mat, na.rm=TRUE))
+})
+
+
 
 test_that("colVars works", {
   expect_equal(colVars(sp_mat), matrixStats::colVars(mat))
@@ -42,3 +48,42 @@ test_that("colCounts works", {
   expect_equal(colCounts(sp_mat, value = tail(sp_mat@x, n=1)), matrixStats::colCounts(mat, value = tail(sp_mat@x, n=1)))
   expect_equal(colCounts(sp_mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)), matrixStats::colCounts(mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)))
 })
+
+
+test_that("colAnyNAs works", {
+  empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
+  sp_empty_mat <- as(empty_mat, "dgCMatrix")
+  expect_equal(colAnyNAs(sp_mat), matrixStats::colAnyNAs(mat))
+  expect_equal(colAnyNAs(sp_empty_mat), matrixStats::colAnyNAs(empty_mat))
+})
+
+
+test_that("colAnys works", {
+  empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
+  sp_empty_mat <- as(empty_mat, "dgCMatrix")
+  expect_equal(colAnys(sp_mat, value=0), matrixStats::colAnys(mat, value=0))
+  expect_equal(colAnys(sp_mat, na.rm=TRUE, value=0), matrixStats::colAnys(mat, na.rm=TRUE, value = 0))
+  # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
+  # expect_equal(colAnys(sp_mat, na.rm=TRUE, value=NA), matrixStats::colAnys(mat, na.rm=TRUE, value = NA))
+  expect_equal(colAnys(sp_mat, value = tail(sp_mat@x, n=1)), matrixStats::colAnys(mat, value = tail(sp_mat@x, n=1)))
+  expect_equal(colAnys(sp_mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)), matrixStats::colAnys(mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)))
+})
+
+
+test_that("colAlls works", {
+  empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
+  sp_empty_mat <- as(empty_mat, "dgCMatrix")
+  expect_equal(colAlls(sp_mat, value=0), matrixStats::colAlls(mat, value=0))
+  expect_equal(colAlls(sp_mat, na.rm=TRUE, value=0), matrixStats::colAlls(mat, na.rm=TRUE, value = 0))
+  # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
+  # expect_equal(colAnys(sp_mat, na.rm=TRUE, value=NA), matrixStats::colAnys(mat, na.rm=TRUE, value = NA))
+  expect_equal(colAlls(sp_mat, value = tail(sp_mat@x, n=1)), matrixStats::colAlls(mat, value = tail(sp_mat@x, n=1)))
+  expect_equal(colAlls(sp_mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)), matrixStats::colAlls(mat, na.rm=TRUE, value = tail(sp_mat@x, n=1)))
+})
+
+
+test_that("colProds works", {
+  expect_equal(colProds(sp_mat), matrixStats::colProds(mat))
+  expect_equal(colProds(sp_mat, na.rm=TRUE), matrixStats::colProds(mat, na.rm=TRUE))
+})
+

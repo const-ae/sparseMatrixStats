@@ -2,7 +2,6 @@
 
 # Sum
 
-#
 setGeneric("colSums2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   matrixStats::colSums2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
 })
@@ -22,6 +21,17 @@ setMethod("colMeans2", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
             dgCMatrix_colMeans2(x, na_rm = na.rm))
 
+
+# Median
+
+setGeneric("colMedians", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colMedians(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+setMethod("colMedians", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            dgCMatrix_colMedians(x, na_rm = na.rm))
+
 # Vars
 
 
@@ -32,6 +42,41 @@ setGeneric("colVars", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
 setMethod("colVars", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
             dgCMatrix_colVars(x, na_rm = na.rm))
+
+
+# Sds
+
+
+setGeneric("colSds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colSds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+setMethod("colSds", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            sqrt(dgCMatrix_colVars(x, na_rm = na.rm)))
+
+
+# LogSumExp
+
+setGeneric("colLogSumExps", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colLogSumExps(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+})
+
+setMethod("colLogSumExps", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            exp(dgCMatrix_colSums2(log(x), na_rm = na.rm)))
+
+
+# Prods
+
+setGeneric("colProds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+})
+
+setMethod("colProds", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            dgCMatrix_colProds(x, na_rm = na.rm))
+
 
 
 # Min
@@ -66,3 +111,50 @@ setGeneric("colCounts", function(x, rows = NULL, cols = NULL, value = TRUE, na.r
 setMethod("colCounts", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
             dgCMatrix_colCounts(x, value, na_rm = na.rm))
+
+
+# AnyNA
+
+setGeneric("colAnyNAs", function(x, rows = NULL, cols = NULL, ...){
+  matrixStats::colAnyNAs(as.matrix(x), rows = rows, cols = cols, ...)
+})
+
+setMethod("colAnyNAs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, ...)
+            dgCMatrix_colAnyNAs(x))
+
+
+# Anys
+
+setGeneric("colAnys", function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+  matrixStats::colAnys(as.matrix(x), rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
+})
+
+setMethod("colAnys", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
+            dgCMatrix_colAnys(x, value, na_rm=na.rm))
+
+
+
+# Alls
+
+setGeneric("colAlls", function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+  matrixStats::colAlls(as.matrix(x), rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
+})
+
+setMethod("colAlls", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
+            dgCMatrix_colAlls(x, value, na_rm=na.rm))
+
+
+
+# Collapse
+
+setGeneric("colCollapse", function(x, idxs, rows = NULL, cols = NULL,  ...){
+  matrixStats::colCollapse(as.matrix(x), idxs, rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
+})
+
+setMethod("colCollapse", signature(x = "dgCMatrix"),
+          function(x, idxs, rows = NULL, cols = NULL, ...)
+            x[, idxs])
+
