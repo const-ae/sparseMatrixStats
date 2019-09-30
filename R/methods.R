@@ -80,15 +80,15 @@ setMethod("colSds", signature(x = "dgCMatrix"),
 
 #' @inherit matrixStats::colLogSumExps
 #' @export
-setGeneric("colLogSumExps", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colLogSumExps(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+setGeneric("colLogSumExps", function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colLogSumExps
 #' @export
-setMethod("colLogSumExps", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            exp(dgCMatrix_colSums2(log(x), na_rm = na.rm)))
+setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
+          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            dgCMatrix_colLogSumExps(lx, na_rm = na.rm))
 
 
 # Prods

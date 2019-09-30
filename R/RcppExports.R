@@ -29,6 +29,10 @@ dgCMatrix_colMaxs <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colMaxs', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
+dgCMatrix_colLogSumExps <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colLogSumExps', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
 dgCMatrix_colProds <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colProds', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }

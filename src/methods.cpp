@@ -213,6 +213,32 @@ NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
+NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
+  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+    auto max_iter = std::max_element(values.begin(), values.end(), [](double a, double b) -> bool {
+      return a < b;
+    });
+    if(max_iter == values.end()){
+      return number_of_zeros > 0 ? log(number_of_zeros) : R_NegInf;
+    }else{
+      double max = *max_iter;
+      if(NumericVector::is_na(max)){
+        return max;
+      }
+      double sum = std::accumulate(values.begin(), values.end(), 0.0, [max](double a, double b) -> double {
+        return a + exp(b-max);
+      });
+      sum += exp(-max) * number_of_zeros;
+      return max + log(sum);
+      // sum += number_of_zeros * (-max);
+      // sum += number_of_zeros;
+      // return log(sum);
+    }
+  });
+}
+
+
+// [[Rcpp::export]]
 NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double {
     if(na_rm){

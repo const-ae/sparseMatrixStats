@@ -85,6 +85,12 @@ test_that("colAlls works", {
 })
 
 
+test_that("colLogSumExps works", {
+  expect_equal(colLogSumExps(sp_mat), matrixStats::colLogSumExps(mat))
+  expect_equal(colLogSumExps(sp_mat, na.rm=TRUE), matrixStats::colLogSumExps(mat, na.rm=TRUE))
+})
+
+
 test_that("colProds works", {
   expect_equal(colProds(sp_mat), matrixStats::colProds(mat))
   expect_equal(colProds(sp_mat, na.rm=TRUE), matrixStats::colProds(mat, na.rm=TRUE))
