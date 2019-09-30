@@ -287,7 +287,7 @@ setGeneric("rowCumsums", function(x, rows = NULL, cols = NULL, ...){
 #' @export
 setMethod("rowCumsums", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, ...)
-            dgCMatrix_colCumsums(t(x)))
+            t(dgCMatrix_colCumsums(t(x))))
 
 
 
@@ -303,7 +303,7 @@ setGeneric("rowCumprods", function(x, rows = NULL, cols = NULL, ...){
 #' @export
 setMethod("rowCumprods", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, ...)
-            dgCMatrix_colCumprods(t(x)))
+            t(dgCMatrix_colCumprods(t(x))))
 
 
 
@@ -319,7 +319,7 @@ setGeneric("rowCummins", function(x, rows = NULL, cols = NULL, ...){
 #' @export
 setMethod("rowCummins", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, ...)
-            dgCMatrix_colCummins(t(x)))
+            t(dgCMatrix_colCummins(t(x))))
 
 
 
@@ -335,5 +335,5 @@ setGeneric("rowCummaxs", function(x, rows = NULL, cols = NULL, ...){
 #' @export
 setMethod("rowCummaxs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, ...)
-            dgCMatrix_colCummaxs(t(x)))
+            t(dgCMatrix_colCummaxs(t(x))))
 
