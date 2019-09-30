@@ -3,6 +3,7 @@
 #include "ColumnView.hpp"
 #include "VectorSubsetView.hpp"
 #include "SkipNAVectorSubsetView.hpp"
+#include "quantile.hpp"
 
 using namespace Rcpp;
 
@@ -123,55 +124,10 @@ NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
       // Easy escape hatch
       return 0.0;
     }
-    int total_size = size + number_of_zeros;
-    if(total_size == 0){
+    if(size + number_of_zeros == 0){
       return NA_REAL;
     }
-    std::vector<double> sorted_values;
-    std::copy(values.begin(), values.end(), std::back_inserter(sorted_values));
-    std::sort(sorted_values.begin(), sorted_values.end());
-    double left_center = NA_REAL;
-    double right_center = NA_REAL;
-    bool left_of_zero = sorted_values[0] < 0;
-    bool right_of_zero = !left_of_zero && number_of_zeros == 0;
-    int zero_counter = 0;
-    int vec_counter = 0;
-    for(int i = 0; i < sorted_values.size() + number_of_zeros; i++){
-      if(i == std::floor((total_size-1)/2.0)){
-        if(! left_of_zero && ! right_of_zero){
-          left_center = 0;
-        }else{
-          left_center = sorted_values[vec_counter];
-        }
-      }
-      if(i == std::ceil((total_size-1)/2.0)){
-        if(! left_of_zero && ! right_of_zero){
-          right_center = 0;
-        }else{
-          right_center = sorted_values[vec_counter];
-        }
-        break;
-      }
-
-      if(left_of_zero){
-        vec_counter++;
-        if(sorted_values[vec_counter] > 0){
-          left_of_zero = false;
-          vec_counter--;
-        }
-      }
-      if(! left_of_zero && ! right_of_zero){
-        if(zero_counter < number_of_zeros){
-          zero_counter++;
-        }else{
-          right_of_zero = true;
-        }
-      }
-      if(right_of_zero){
-        vec_counter++;
-      }
-    }
-    return (left_center + right_center)/2.0;
+    return quantile_sparse(values, number_of_zeros, 0.5);
   });
 }
 

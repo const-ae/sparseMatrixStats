@@ -49,6 +49,10 @@ dgCMatrix_colAlls <- function(matrix, value, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colAlls', PACKAGE = 'sparseMatrixStats', matrix, value, na_rm)
 }
 
+quantile_sparse <- function(values, number_of_zeros, prob) {
+    .Call('_sparseMatrixStats_quantile_sparse', PACKAGE = 'sparseMatrixStats', values, number_of_zeros, prob)
+}
+
 subset_sum <- function(v, start, end) {
     .Call('_sparseMatrixStats_subset_sum', PACKAGE = 'sparseMatrixStats', v, start, end)
 }
