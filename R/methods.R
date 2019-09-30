@@ -178,3 +178,85 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
   mat
 })
 
+
+
+# colIQRs
+
+setGeneric("colIQRs", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colIQRs(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+setMethod("colIQRs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm)
+  col_q[,2] - col_q[,1]
+})
+
+
+
+# colRanges
+
+
+setGeneric("colRanges", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colRanges(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+setMethod("colRanges", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+            col_max <- colMaxs(x, rows, cols, na.rm = na.rm)
+            col_min <- colMins(x, rows, cols, na.rm = na.rm)
+            unname(cbind(col_min, col_max))
+          })
+
+
+
+# colCumsums
+
+
+setGeneric("colCumsums", function(x, rows = NULL, cols = NULL, ...){
+  matrixStats::colCumsums(as.matrix(x), rows = rows, cols = cols, ...)
+})
+
+setMethod("colCumsums", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, ...)
+            dgCMatrix_colCumsums(x))
+
+
+
+# colCumprods
+
+
+setGeneric("colCumprods", function(x, rows = NULL, cols = NULL, ...){
+  matrixStats::colCumprods(as.matrix(x), rows = rows, cols = cols, ...)
+})
+
+setMethod("colCumprods", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, ...)
+            dgCMatrix_colCumprods(x))
+
+
+
+# colCummins
+
+
+setGeneric("colCummins", function(x, rows = NULL, cols = NULL, ...){
+  matrixStats::colCummins(as.matrix(x), rows = rows, cols = cols, ...)
+})
+
+setMethod("colCummins", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, ...)
+            dgCMatrix_colCummins(x))
+
+
+
+# colCummaxs
+
+
+setGeneric("colCummaxs", function(x, rows = NULL, cols = NULL, ...){
+  matrixStats::colCummaxs(as.matrix(x), rows = rows, cols = cols, ...)
+})
+
+setMethod("colCummaxs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, ...)
+            dgCMatrix_colCummaxs(x))
+

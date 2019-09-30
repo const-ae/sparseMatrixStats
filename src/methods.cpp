@@ -78,7 +78,7 @@ LogicalVector reduce_matrix_lgl(S4 matrix, bool na_rm, Functor op){
 
 
 template<typename Functor>
-NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_columns, Functor op){
+NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_columns, bool transpose, Functor op){
   dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
   ColumnView cv(&sp_mat);
   std::vector<std::vector<double> > result;
@@ -97,7 +97,11 @@ NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_colu
                    });
   }
   std::vector<double> result_flat = flatten(result);
-  return transpose(NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+  if(transpose){
+    return Rcpp::transpose(NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+  }else{
+    return NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin());
+  }
 }
 
 
@@ -368,7 +372,7 @@ LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
 
 // [[Rcpp::export]]
 NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm){
-  return reduce_matrix_num_matrix(matrix, na_rm, probs.size(), [na_rm, probs](auto values, auto row_indices, int number_of_zeros) -> std::vector<double> {
+  return reduce_matrix_num_matrix(matrix, na_rm, probs.size(), true, [na_rm, probs](auto values, auto row_indices, int number_of_zeros) -> std::vector<double> {
     if(! na_rm){
       bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
         return NumericVector::is_na(d);
@@ -390,3 +394,133 @@ NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm)
     return result;
   });
 }
+
+
+
+
+/*---------------Cumulative functions-----------------*/
+
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colCumsums(S4 matrix){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+    std::vector<double> result(nrows);
+    double acc = 0;
+    auto row_it = row_indices.begin();
+    auto val_it = values.begin();
+    auto res_it = result.begin();
+    for(int i = 0; i < nrows; ++i, ++res_it){
+      if(row_it != row_indices.end() && i == *row_it){
+        acc += *val_it;
+        ++row_it;
+        ++val_it;
+      }
+      *res_it = acc;
+    }
+    return result;
+  });
+}
+
+
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colCumprods(S4 matrix){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+    std::vector<double> result(nrows);
+    double acc = 1;
+    auto row_it = row_indices.begin();
+    auto val_it = values.begin();
+    auto res_it = result.begin();
+    for(int i = 0; i < nrows; ++i, ++res_it){
+      if(row_it != row_indices.end() && i == *row_it){
+        acc *= *val_it;
+        ++row_it;
+        ++val_it;
+      }else{
+        acc = 0 * acc;
+      }
+      *res_it = acc;
+    }
+    return result;
+  });
+}
+
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colCummins(S4 matrix){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+    std::vector<double> result(nrows);
+    auto row_it = row_indices.begin();
+    auto val_it = values.begin();
+    auto res_it = result.begin();
+    int i = 0;
+    double acc = 0.0;
+    if(row_it != row_indices.end() && i == *row_it){
+      acc = *val_it;
+      ++row_it;
+      ++val_it;
+    }else{
+      acc = 0.0;
+    }
+    *res_it = acc;
+    ++res_it;
+    for(i = 1; i < nrows; ++i, ++res_it){
+      if(NumericVector::is_na(acc)){
+        // Do nothing it will always stay NA
+      }else if(row_it != row_indices.end() && i == *row_it){
+        acc = std::min(*val_it, acc);
+        ++row_it;
+        ++val_it;
+      }else{
+        acc = std::min(0.0, acc);
+      }
+      *res_it = acc;
+    }
+    return result;
+  });
+}
+
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+    std::vector<double> result(nrows);
+    auto row_it = row_indices.begin();
+    auto val_it = values.begin();
+    auto res_it = result.begin();
+    int i = 0;
+    double acc = 0.0;
+    if(row_it != row_indices.end() && i == *row_it){
+      acc = *val_it;
+      ++row_it;
+      ++val_it;
+    }else{
+      acc = 0.0;
+    }
+    *res_it = acc;
+    ++res_it;
+    for(i = 1; i < nrows; ++i, ++res_it){
+      if(NumericVector::is_na(acc)){
+        // Do nothing it will always stay NA
+      }else if(row_it != row_indices.end() && i == *row_it){
+        acc = std::max(*val_it, acc);
+        ++row_it;
+        ++val_it;
+      }else{
+        acc = std::max(0.0, acc);
+      }
+      *res_it = acc;
+    }
+    return result;
+  });
+}
+
+

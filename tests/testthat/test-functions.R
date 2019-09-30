@@ -1,3 +1,4 @@
+# source("tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow=10, ncol=6)
 sp_mat <- as(mat, "dgCMatrix")
 
@@ -90,6 +91,16 @@ test_that("colProds works", {
 test_that("colQuantiles works", {
   expect_equal(colQuantiles(sp_mat), matrixStats::colQuantiles(mat))
   expect_equal(colQuantiles(sp_mat, na.rm=TRUE), matrixStats::colQuantiles(mat, na.rm=TRUE))
+})
+
+
+
+test_that("cumulative functions work", {
+  expect_equal(colCumsums(sp_mat), matrixStats::colCumsums(mat))
+  expect_equal(colCumprods(sp_mat), matrixStats::colCumprods(mat))
+  expect_equal(colCummins(sp_mat), matrixStats::colCummins(mat))
+  expect_equal(colCummaxs(sp_mat), matrixStats::colCummaxs(mat))
+  # There is no na.rm version
 })
 
 

@@ -162,6 +162,50 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colCumsums
+NumericMatrix dgCMatrix_colCumsums(S4 matrix);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCumsums(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCumsums(matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colCumprods
+NumericMatrix dgCMatrix_colCumprods(S4 matrix);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCumprods(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCumprods(matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colCummins
+NumericMatrix dgCMatrix_colCummins(S4 matrix);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCummins(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCummins(matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colCummaxs
+NumericMatrix dgCMatrix_colCummaxs(S4 matrix);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCummaxs(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colCummaxs(matrix));
+    return rcpp_result_gen;
+END_RCPP
+}
 // quantile_sparse
 double quantile_sparse(NumericVector values, int number_of_zeros, double prob);
 RcppExport SEXP _sparseMatrixStats_quantile_sparse(SEXP valuesSEXP, SEXP number_of_zerosSEXP, SEXP probSEXP) {
@@ -229,6 +273,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colAnys", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnys, 3},
     {"_sparseMatrixStats_dgCMatrix_colAlls", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAlls, 3},
     {"_sparseMatrixStats_dgCMatrix_colQuantiles", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colQuantiles, 3},
+    {"_sparseMatrixStats_dgCMatrix_colCumsums", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCumsums, 1},
+    {"_sparseMatrixStats_dgCMatrix_colCumprods", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCumprods, 1},
+    {"_sparseMatrixStats_dgCMatrix_colCummins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCummins, 1},
+    {"_sparseMatrixStats_dgCMatrix_colCummaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCummaxs, 1},
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},

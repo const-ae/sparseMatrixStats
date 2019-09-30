@@ -53,6 +53,22 @@ dgCMatrix_colQuantiles <- function(matrix, probs, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colQuantiles', PACKAGE = 'sparseMatrixStats', matrix, probs, na_rm)
 }
 
+dgCMatrix_colCumsums <- function(matrix) {
+    .Call('_sparseMatrixStats_dgCMatrix_colCumsums', PACKAGE = 'sparseMatrixStats', matrix)
+}
+
+dgCMatrix_colCumprods <- function(matrix) {
+    .Call('_sparseMatrixStats_dgCMatrix_colCumprods', PACKAGE = 'sparseMatrixStats', matrix)
+}
+
+dgCMatrix_colCummins <- function(matrix) {
+    .Call('_sparseMatrixStats_dgCMatrix_colCummins', PACKAGE = 'sparseMatrixStats', matrix)
+}
+
+dgCMatrix_colCummaxs <- function(matrix) {
+    .Call('_sparseMatrixStats_dgCMatrix_colCummaxs', PACKAGE = 'sparseMatrixStats', matrix)
+}
+
 quantile_sparse <- function(values, number_of_zeros, prob) {
     .Call('_sparseMatrixStats_quantile_sparse', PACKAGE = 'sparseMatrixStats', values, number_of_zeros, prob)
 }
