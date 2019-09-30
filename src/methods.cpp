@@ -4,6 +4,7 @@
 #include "VectorSubsetView.hpp"
 #include "SkipNAVectorSubsetView.hpp"
 #include "quantile.hpp"
+#include "my_utils.hpp"
 
 using namespace Rcpp;
 
@@ -75,6 +76,29 @@ LogicalVector reduce_matrix_lgl(S4 matrix, bool na_rm, Functor op){
   return wrap(result);
 }
 
+
+template<typename Functor>
+NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_columns, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<std::vector<double> > result;
+  result.reserve(sp_mat.ncol);
+  if(na_rm){
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> std::vector<double> {
+                     SkipNAVectorSubsetView<REALSXP> values_wrapper(&col.values);
+                     SkipNAVectorSubsetView<INTSXP> row_indices_wrapper(&col.row_indices);
+                     return op(values_wrapper, row_indices_wrapper, col.number_of_zeros);
+                   });
+  }else{
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> std::vector<double> {
+                     return op(col.values, col.row_indices, col.number_of_zeros);
+                   });
+  }
+  std::vector<double> result_flat = flatten(result);
+  return transpose(NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+}
 
 
 /*---------------Simple Aggregation Functions-----------------*/
@@ -339,4 +363,30 @@ LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
 }
 
 
+/*---------------Return matrix functions-----------------*/
 
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm){
+  return reduce_matrix_num_matrix(matrix, na_rm, probs.size(), [na_rm, probs](auto values, auto row_indices, int number_of_zeros) -> std::vector<double> {
+    if(! na_rm){
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(any_na){
+        std::vector<double> result(probs.size(), NA_REAL);
+        return result;
+      }
+    }
+    if(values.size() + number_of_zeros == 0){
+      std::vector<double> result(probs.size(), NA_REAL);
+      return result;
+    }
+    std::vector<double> result;
+    result.reserve(probs.size());
+    std::transform(probs.begin(), probs.end(), back_inserter(result), [values, number_of_zeros](double prob) -> double{
+      return quantile_sparse(values, number_of_zeros, prob);
+    });
+    return result;
+  });
+}

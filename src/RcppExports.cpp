@@ -149,6 +149,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colQuantiles
+NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colQuantiles(SEXP matrixSEXP, SEXP probsSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type probs(probsSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colQuantiles(matrix, probs, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // quantile_sparse
 double quantile_sparse(NumericVector values, int number_of_zeros, double prob);
 RcppExport SEXP _sparseMatrixStats_quantile_sparse(SEXP valuesSEXP, SEXP number_of_zerosSEXP, SEXP probSEXP) {
@@ -215,6 +228,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colAnyNAs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnyNAs, 1},
     {"_sparseMatrixStats_dgCMatrix_colAnys", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnys, 3},
     {"_sparseMatrixStats_dgCMatrix_colAlls", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAlls, 3},
+    {"_sparseMatrixStats_dgCMatrix_colQuantiles", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colQuantiles, 3},
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},

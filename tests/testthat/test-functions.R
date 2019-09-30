@@ -87,3 +87,9 @@ test_that("colProds works", {
   expect_equal(colProds(sp_mat, na.rm=TRUE), matrixStats::colProds(mat, na.rm=TRUE))
 })
 
+test_that("colQuantiles works", {
+  expect_equal(colQuantiles(sp_mat), matrixStats::colQuantiles(mat))
+  expect_equal(colQuantiles(sp_mat, na.rm=TRUE), matrixStats::colQuantiles(mat, na.rm=TRUE))
+})
+
+

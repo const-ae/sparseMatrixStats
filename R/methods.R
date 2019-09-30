@@ -158,3 +158,23 @@ setMethod("colCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, rows = NULL, cols = NULL, ...)
             x[, idxs])
 
+
+
+
+# colQuantiles
+
+
+setGeneric("colQuantiles", function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
+  matrixStats::colQuantiles(as.matrix(x), rows = rows, cols = cols, probs = probs, na.rm = na.rm, ...)
+})
+
+setMethod("colQuantiles", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
+  mat <- dgCMatrix_colQuantiles(x, probs, na_rm = na.rm)
+  # Add dim names
+  digits <- max(2L, getOption("digits"))
+  colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
+  rownames(mat) <- rownames(x)
+  mat
+})
+
