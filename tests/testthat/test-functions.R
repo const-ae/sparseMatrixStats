@@ -1,6 +1,8 @@
 # source("tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow=10, ncol=6)
 sp_mat <- as(mat, "dgCMatrix")
+mat2 <- t(mat)
+sp_mat2 <- t(sp_mat)
 
 
 

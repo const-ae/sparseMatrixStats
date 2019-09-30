@@ -7,3 +7,10 @@ NULL
 
 #' @useDynLib sparseMatrixStats
 NULL
+
+
+
+#' @importFrom Matrix t
+NULL
+
+

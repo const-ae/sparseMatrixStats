@@ -14,7 +14,7 @@ setMethod("colSums2", signature(x = "dgCMatrix"),
 
 # Mean
 setGeneric("colMeans2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colSums2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+  matrixStats::colMeans2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 setMethod("colMeans2", signature(x = "dgCMatrix"),
