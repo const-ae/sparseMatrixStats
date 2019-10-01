@@ -250,6 +250,40 @@ NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
+NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
+  return reduce_matrix_double(matrix, na_rm, [na_rm, scale_factor](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(! na_rm){
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(any_na){
+        return NA_REAL;
+      }
+    }
+    R_len_t size = values.size();
+    if(number_of_zeros > size/2.0){
+      // Easy escape hatch
+      return 0.0;
+    }
+    if(size + number_of_zeros == 0){
+      return NA_REAL;
+    }
+    double med = quantile_sparse(values, number_of_zeros, 0.5);
+    NumericVector complete_vector(size + number_of_zeros, std::abs(med));
+    auto val_it = values.begin();
+    auto ind_it = row_indices.begin();
+    while(val_it != values.end() && ind_it != row_indices.end()){
+      complete_vector[*ind_it] = std::abs(*val_it - med);
+      ++val_it;
+      ++ind_it;
+    }
+    return median(complete_vector) * scale_factor;
+  });
+}
+
+
+
+// [[Rcpp::export]]
 NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     auto min = std::min_element(values.begin(), values.end(), [](double a, double b) -> bool {

@@ -76,6 +76,21 @@ setMethod("colSds", signature(x = "dgCMatrix"),
             sqrt(dgCMatrix_colVars(x, na_rm = na.rm)))
 
 
+# Mads
+
+#' @inherit matrixStats::colMads
+#' @export
+setGeneric("colMads", function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  matrixStats::colMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+})
+
+#' @rdname colMads
+#' @export
+setMethod("colMads", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...)
+            dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant))
+
+
 # LogSumExp
 
 #' @inherit matrixStats::colLogSumExps

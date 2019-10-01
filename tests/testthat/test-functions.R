@@ -31,6 +31,10 @@ test_that("colVars works", {
 })
 
 
+test_that("colMads works", {
+  expect_equal(colMads(sp_mat), matrixStats::colMads(mat))
+  expect_equal(colMads(sp_mat, na.rm=TRUE), matrixStats::colMads(mat, na.rm=TRUE))
+})
 
 test_that("colMins works", {
   expect_equal(colMins(sp_mat), matrixStats::colMins(mat))

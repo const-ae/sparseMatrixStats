@@ -75,6 +75,22 @@ setMethod("rowSds", signature(x = "dgCMatrix"),
             sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm)))
 
 
+
+# Mads
+
+#' @rdname colMads
+#' @export
+setGeneric("rowMads", function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  matrixStats::rowMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+})
+
+#' @rdname colSds
+#' @export
+setMethod("rowMads", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...)
+            dgCMatrix_colVars(t(x), constant = constant, na_rm = na.rm))
+
+
 # LogSumExp
 
 #' @rdname colLogSumExps
