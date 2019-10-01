@@ -99,6 +99,7 @@ matrixStats_functions <- sort(
                              getNamespaceExports("matrixStats"), 
                              value = TRUE)))
 DelayedMatrixStats_functions <- grep("^(col|row)", getNamespaceExports("DelayedMatrixStats"), value=TRUE)
+DelayedArray_functions <- grep("^(col|row)", getNamespaceExports("DelayedArray"), value=TRUE)
 sparseMatrixStats_functions <- grep("^(col|row)", getNamespaceExports("sparseMatrixStats"), value=TRUE)
 
 notes <- c("colAnyMissings"="Not implemented because it is deprecated",
@@ -109,7 +110,7 @@ notes <- c("colAnyMissings"="Not implemented because it is deprecated",
 api_df <- data.frame(
   Method = paste0(matrixStats_functions, "()"),
   matrixStats = ifelse(matrixStats_functions %in% matrixStats_functions, "✔", "❌"),
-  DelayedMatrixStats = ifelse(matrixStats_functions %in% DelayedMatrixStats_functions, "✔", "❌"),
+  DelayedMatrixStats = ifelse(matrixStats_functions %in% c(DelayedMatrixStats_functions, DelayedArray_functions), "✔", "❌"),
   sparseMatrixStats = ifelse(matrixStats_functions %in%sparseMatrixStats_functions, "✔", "❌"),
   Notes = ifelse(matrixStats_functions %in% names(notes), notes[matrixStats_functions], ""),
   stringsAsFactors = FALSE

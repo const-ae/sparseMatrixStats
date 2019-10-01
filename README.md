@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  25.69µs  29.14µs   33277.     7.76KB     16.6
-#> 2 matrixStats         1.99ms   2.06ms     479.   162.31KB      0  
-#> 3 apply              13.96ms  15.02ms      66.1   17.23MB    140.
+#> 1 sparseMatrixStats  26.45µs  29.66µs   32975.     7.76KB     16.5
+#> 2 matrixStats         1.99ms   2.08ms     473.   162.31KB      0  
+#> 3 apply              13.73ms  14.11ms      69.5   17.23MB    139.
 ```
 
 As you can see `sparseMatrixStats` is ca. 70 times fast than
@@ -119,18 +119,18 @@ have:
 | colLogSumExps()      | ✔           | ✔                  | ✔                 |                                          |
 | colMadDiffs()        | ✔           | ✔                  | ❌                 |                                          |
 | colMads()            | ✔           | ✔                  | ❌                 |                                          |
-| colMaxs()            | ✔           | ❌                  | ✔                 |                                          |
+| colMaxs()            | ✔           | ✔                  | ✔                 |                                          |
 | colMeans2()          | ✔           | ✔                  | ✔                 |                                          |
 | colMedians()         | ✔           | ✔                  | ✔                 |                                          |
-| colMins()            | ✔           | ❌                  | ✔                 |                                          |
+| colMins()            | ✔           | ✔                  | ✔                 |                                          |
 | colOrderStats()      | ✔           | ✔                  | ❌                 |                                          |
 | colProds()           | ✔           | ✔                  | ✔                 |                                          |
 | colQuantiles()       | ✔           | ✔                  | ✔                 |                                          |
-| colRanges()          | ✔           | ❌                  | ✔                 |                                          |
+| colRanges()          | ✔           | ✔                  | ✔                 |                                          |
 | colRanks()           | ✔           | ✔                  | ❌                 |                                          |
 | colSdDiffs()         | ✔           | ✔                  | ❌                 |                                          |
 | colSds()             | ✔           | ✔                  | ✔                 |                                          |
-| colsum()             | ✔           | ❌                  | ❌                 | Base R function                          |
+| colsum()             | ✔           | ✔                  | ❌                 | Base R function                          |
 | colSums2()           | ✔           | ✔                  | ✔                 |                                          |
 | colTabulates()       | ✔           | ✔                  | ❌                 |                                          |
 | colVarDiffs()        | ✔           | ✔                  | ❌                 |                                          |
@@ -157,18 +157,18 @@ have:
 | rowLogSumExps()      | ✔           | ✔                  | ✔                 |                                          |
 | rowMadDiffs()        | ✔           | ✔                  | ❌                 |                                          |
 | rowMads()            | ✔           | ✔                  | ❌                 |                                          |
-| rowMaxs()            | ✔           | ❌                  | ✔                 |                                          |
+| rowMaxs()            | ✔           | ✔                  | ✔                 |                                          |
 | rowMeans2()          | ✔           | ✔                  | ✔                 |                                          |
 | rowMedians()         | ✔           | ✔                  | ✔                 |                                          |
-| rowMins()            | ✔           | ❌                  | ✔                 |                                          |
+| rowMins()            | ✔           | ✔                  | ✔                 |                                          |
 | rowOrderStats()      | ✔           | ✔                  | ❌                 |                                          |
 | rowProds()           | ✔           | ✔                  | ✔                 |                                          |
 | rowQuantiles()       | ✔           | ✔                  | ✔                 |                                          |
-| rowRanges()          | ✔           | ❌                  | ✔                 |                                          |
+| rowRanges()          | ✔           | ✔                  | ✔                 |                                          |
 | rowRanks()           | ✔           | ✔                  | ❌                 |                                          |
 | rowSdDiffs()         | ✔           | ✔                  | ❌                 |                                          |
 | rowSds()             | ✔           | ✔                  | ✔                 |                                          |
-| rowsum()             | ✔           | ❌                  | ❌                 | Base R function                          |
+| rowsum()             | ✔           | ✔                  | ❌                 | Base R function                          |
 | rowSums2()           | ✔           | ✔                  | ✔                 |                                          |
 | rowTabulates()       | ✔           | ✔                  | ❌                 |                                          |
 | rowVarDiffs()        | ✔           | ✔                  | ❌                 |                                          |
