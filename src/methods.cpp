@@ -230,9 +230,6 @@ NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
       });
       sum += exp(-max) * number_of_zeros;
       return max + log(sum);
-      // sum += number_of_zeros * (-max);
-      // sum += number_of_zeros;
-      // return log(sum);
     }
   });
 }
