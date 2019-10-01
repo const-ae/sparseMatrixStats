@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  26.45µs  29.66µs   32975.     7.76KB     16.5
-#> 2 matrixStats         1.99ms   2.08ms     473.   162.31KB      0  
-#> 3 apply              13.73ms  14.11ms      69.5   17.23MB    139.
+#> 1 sparseMatrixStats     28µs  33.53µs   28532.     7.76KB     14.3
+#> 2 matrixStats            2ms   2.12ms     465.   162.31KB      0  
+#> 3 apply               13.9ms  15.83ms      63.1   17.23MB    126.
 ```
 
 As you can see `sparseMatrixStats` is ca. 70 times fast than
@@ -127,7 +127,7 @@ have:
 | colProds()           | ✔           | ✔                  | ✔                 |                                          |
 | colQuantiles()       | ✔           | ✔                  | ✔                 |                                          |
 | colRanges()          | ✔           | ✔                  | ✔                 |                                          |
-| colRanks()           | ✔           | ✔                  | ❌                 |                                          |
+| colRanks()           | ✔           | ✔                  | ✔                 |                                          |
 | colSdDiffs()         | ✔           | ✔                  | ❌                 |                                          |
 | colSds()             | ✔           | ✔                  | ✔                 |                                          |
 | colsum()             | ✔           | ✔                  | ❌                 | Base R function                          |
@@ -165,7 +165,7 @@ have:
 | rowProds()           | ✔           | ✔                  | ✔                 |                                          |
 | rowQuantiles()       | ✔           | ✔                  | ✔                 |                                          |
 | rowRanges()          | ✔           | ✔                  | ✔                 |                                          |
-| rowRanks()           | ✔           | ✔                  | ❌                 |                                          |
+| rowRanks()           | ✔           | ✔                  | ✔                 |                                          |
 | rowSdDiffs()         | ✔           | ✔                  | ❌                 |                                          |
 | rowSds()             | ✔           | ✔                  | ✔                 |                                          |
 | rowsum()             | ✔           | ✔                  | ❌                 | Base R function                          |

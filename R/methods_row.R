@@ -342,7 +342,6 @@ setMethod("rowCummaxs", signature(x = "dgCMatrix"),
 # Ranks
 
 #' @rdname colRanks
-#' @param
 #' @export
 setGeneric("rowRanks", function(x, rows = NULL, cols = NULL, ties.method = c("max", "average", "min"), preserve.shape = TRUE, ...){
   matrixStats::rowRanks(as.matrix(x), rows = rows, cols = cols, ties.method = ties.method, preserveShape = preserve.shape, ...)

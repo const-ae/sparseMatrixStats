@@ -343,7 +343,12 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
 # colRanks
 
 #' @inherit matrixStats::colRanks
-#' @param
+#' @param preserve.shape a boolean that specifies if the returned matrix has the same
+#'   dimensions as the input matrix. By default this is true for `rowRanks()`, but false for
+#'   `colRanks()`.
+#' @param na.handling string specifying how `NA`s are handled. They can either be preserved with an `NA` rank
+#'   ('keep') or sorted in at the end ('last'). Default is 'keep' derived from the behavior of the equivalent
+#'   `matrixStats` function.
 #' @export
 setGeneric("colRanks", function(x, rows = NULL, cols = NULL, ties.method = c("max", "average", "min"), preserve.shape = FALSE, ...){
   matrixStats::colRanks(as.matrix(x), rows = rows, cols = cols, ties.method = ties.method, preserveShape = preserve.shape, ...)

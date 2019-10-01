@@ -9,9 +9,9 @@
 \title{Accurately computes the logarithm of the sum of exponentials across rows or
 columns}
 \usage{
-colLogSumExps(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+colLogSumExps(lx, rows = NULL, cols = NULL, na.rm = FALSE, ...)
 
-\S4method{colLogSumExps}{dgCMatrix}(x, rows = NULL, cols = NULL,
+\S4method{colLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL,
   na.rm = FALSE, ...)
 
 rowLogSumExps(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
@@ -20,6 +20,9 @@ rowLogSumExps(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
   na.rm = FALSE, ...)
 }
 \arguments{
+\item{lx}{A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.
+Typically \code{lx} are \eqn{log(x)} values.}
+
 \item{rows}{A \code{\link[base]{vector}} indicating subset of rows
 (and/or columns) to operate over. If \code{\link[base]{NULL}}, no subsetting
 is done.}
