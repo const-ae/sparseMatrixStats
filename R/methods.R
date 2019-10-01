@@ -337,3 +337,28 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, ...)
             dgCMatrix_colCummaxs(x))
 
+
+
+
+# colRanks
+
+#' @inherit matrixStats::colRanks
+#' @param
+#' @export
+setGeneric("colRanks", function(x, rows = NULL, cols = NULL, ties.method = c("max", "average", "min"), preserve.shape = FALSE, ...){
+  matrixStats::colRanks(as.matrix(x), rows = rows, cols = cols, ties.method = ties.method, preserveShape = preserve.shape, ...)
+})
+
+#' @rdname colRanks
+#' @export
+setMethod("colRanks", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = FALSE, na.handling = c("keep", "last"), ...){
+  ties.method <- match.arg(ties.method,  c("max", "average", "min"))
+  na.handling <- match.arg(na.handling, c("keep", "last"))
+  if(ties.method == "average"){
+    dgCMatrix_colRanks_num(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserve.shape)
+  }else{
+    dgCMatrix_colRanks_int(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserve.shape)
+  }
+})
+

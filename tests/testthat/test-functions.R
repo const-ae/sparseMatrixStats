@@ -112,3 +112,12 @@ test_that("cumulative functions work", {
 })
 
 
+
+test_that("colRanks works", {
+  expect_equal(colRanks(sp_mat), matrixStats::colRanks(mat))
+  expect_equal(colRanks(sp_mat, ties.method = "average"), matrixStats::colRanks(mat, ties.method = "average"))
+
+  expect_equal(rowRanks(sp_mat), matrixStats::rowRanks(mat))
+  expect_equal(rowRanks(sp_mat, ties.method = "average"), matrixStats::rowRanks(mat, ties.method = "average"))
+})
+

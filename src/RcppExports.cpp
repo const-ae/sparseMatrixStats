@@ -218,6 +218,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colRanks_num
+NumericMatrix dgCMatrix_colRanks_num(S4 matrix, std::string ties_method, std::string na_handling, bool preserve_shape);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colRanks_num(SEXP matrixSEXP, SEXP ties_methodSEXP, SEXP na_handlingSEXP, SEXP preserve_shapeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< std::string >::type ties_method(ties_methodSEXP);
+    Rcpp::traits::input_parameter< std::string >::type na_handling(na_handlingSEXP);
+    Rcpp::traits::input_parameter< bool >::type preserve_shape(preserve_shapeSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colRanks_num(matrix, ties_method, na_handling, preserve_shape));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colRanks_int
+IntegerMatrix dgCMatrix_colRanks_int(S4 matrix, std::string ties_method, std::string na_handling, bool preserve_shape);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colRanks_int(SEXP matrixSEXP, SEXP ties_methodSEXP, SEXP na_handlingSEXP, SEXP preserve_shapeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< std::string >::type ties_method(ties_methodSEXP);
+    Rcpp::traits::input_parameter< std::string >::type na_handling(na_handlingSEXP);
+    Rcpp::traits::input_parameter< bool >::type preserve_shape(preserve_shapeSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colRanks_int(matrix, ties_method, na_handling, preserve_shape));
+    return rcpp_result_gen;
+END_RCPP
+}
 // quantile_sparse
 double quantile_sparse(NumericVector values, int number_of_zeros, double prob);
 RcppExport SEXP _sparseMatrixStats_quantile_sparse(SEXP valuesSEXP, SEXP number_of_zerosSEXP, SEXP probSEXP) {
@@ -290,6 +318,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colCumprods", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCumprods, 1},
     {"_sparseMatrixStats_dgCMatrix_colCummins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCummins, 1},
     {"_sparseMatrixStats_dgCMatrix_colCummaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCummaxs, 1},
+    {"_sparseMatrixStats_dgCMatrix_colRanks_num", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_num, 4},
+    {"_sparseMatrixStats_dgCMatrix_colRanks_int", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_int, 4},
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
     {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
     {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},

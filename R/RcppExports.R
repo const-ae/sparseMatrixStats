@@ -73,6 +73,14 @@ dgCMatrix_colCummaxs <- function(matrix) {
     .Call('_sparseMatrixStats_dgCMatrix_colCummaxs', PACKAGE = 'sparseMatrixStats', matrix)
 }
 
+dgCMatrix_colRanks_num <- function(matrix, ties_method, na_handling, preserve_shape) {
+    .Call('_sparseMatrixStats_dgCMatrix_colRanks_num', PACKAGE = 'sparseMatrixStats', matrix, ties_method, na_handling, preserve_shape)
+}
+
+dgCMatrix_colRanks_int <- function(matrix, ties_method, na_handling, preserve_shape) {
+    .Call('_sparseMatrixStats_dgCMatrix_colRanks_int', PACKAGE = 'sparseMatrixStats', matrix, ties_method, na_handling, preserve_shape)
+}
+
 quantile_sparse <- function(values, number_of_zeros, prob) {
     .Call('_sparseMatrixStats_quantile_sparse', PACKAGE = 'sparseMatrixStats', values, number_of_zeros, prob)
 }

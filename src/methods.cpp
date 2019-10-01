@@ -4,6 +4,7 @@
 #include "VectorSubsetView.hpp"
 #include "SkipNAVectorSubsetView.hpp"
 #include "quantile.hpp"
+#include "sample_rank.hpp"
 #include "my_utils.hpp"
 
 using namespace Rcpp;
@@ -103,6 +104,71 @@ NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_colu
     return NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin());
   }
 }
+
+template<typename Functor>
+NumericMatrix reduce_matrix_num_matrix_with_na(S4 matrix, R_len_t n_res_columns, bool transpose, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<std::vector<double> > result;
+  result.reserve(sp_mat.ncol);
+  std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                 [op](ColumnView::col_container col) -> std::vector<double> {
+                   return op(col.values, col.row_indices, col.number_of_zeros);
+                 });
+  std::vector<double> result_flat = flatten(result);
+  if(transpose){
+    return Rcpp::transpose(NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+  }else{
+    return NumericMatrix(n_res_columns, sp_mat.ncol, result_flat.begin());
+  }
+}
+
+
+template<typename Functor>
+IntegerMatrix reduce_matrix_int_matrix(S4 matrix, bool na_rm, R_len_t n_res_columns, bool transpose, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<std::vector<int> > result;
+  result.reserve(sp_mat.ncol);
+  if(na_rm){
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> std::vector<int> {
+                     SkipNAVectorSubsetView<REALSXP> values_wrapper(&col.values);
+                     SkipNAVectorSubsetView<INTSXP> row_indices_wrapper(&col.row_indices);
+                     return op(values_wrapper, row_indices_wrapper, col.number_of_zeros);
+                   });
+  }else{
+    std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                   [op](ColumnView::col_container col) -> std::vector<int> {
+                     return op(col.values, col.row_indices, col.number_of_zeros);
+                   });
+  }
+  std::vector<int> result_flat = flatten(result);
+  if(transpose){
+    return Rcpp::transpose(IntegerMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+  }else{
+    return IntegerMatrix(n_res_columns, sp_mat.ncol, result_flat.begin());
+  }
+}
+
+template<typename Functor>
+IntegerMatrix reduce_matrix_int_matrix_with_na(S4 matrix, R_len_t n_res_columns, bool transpose, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  std::vector<std::vector<int> > result;
+  result.reserve(sp_mat.ncol);
+  std::transform(cv.begin(), cv.end(), std::back_inserter(result),
+                 [op](ColumnView::col_container col) -> std::vector<int> {
+                   return op(col.values, col.row_indices, col.number_of_zeros);
+                 });
+  std::vector<int> result_flat = flatten(result);
+  if(transpose){
+    return Rcpp::transpose(IntegerMatrix(n_res_columns, sp_mat.ncol, result_flat.begin()));
+  }else{
+    return IntegerMatrix(n_res_columns, sp_mat.ncol, result_flat.begin());
+  }
+}
+
 
 
 /*---------------Simple Aggregation Functions-----------------*/
@@ -428,7 +494,7 @@ NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm)
 NumericMatrix dgCMatrix_colCumsums(S4 matrix){
   Rcpp::IntegerVector dim = matrix.slot("Dim");
   R_len_t nrows = dim[0];
-  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+  return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
     double acc = 0;
     auto row_it = row_indices.begin();
@@ -452,7 +518,7 @@ NumericMatrix dgCMatrix_colCumsums(S4 matrix){
 NumericMatrix dgCMatrix_colCumprods(S4 matrix){
   Rcpp::IntegerVector dim = matrix.slot("Dim");
   R_len_t nrows = dim[0];
-  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+  return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
     double acc = 1;
     auto row_it = row_indices.begin();
@@ -477,7 +543,7 @@ NumericMatrix dgCMatrix_colCumprods(S4 matrix){
 NumericMatrix dgCMatrix_colCummins(S4 matrix){
   Rcpp::IntegerVector dim = matrix.slot("Dim");
   R_len_t nrows = dim[0];
-  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+  return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
     auto row_it = row_indices.begin();
     auto val_it = values.begin();
@@ -514,7 +580,7 @@ NumericMatrix dgCMatrix_colCummins(S4 matrix){
 NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
   Rcpp::IntegerVector dim = matrix.slot("Dim");
   R_len_t nrows = dim[0];
-  return reduce_matrix_num_matrix(matrix, false, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
+  return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
     auto row_it = row_indices.begin();
     auto val_it = values.begin();
@@ -545,5 +611,32 @@ NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
     return result;
   });
 }
+
+
+/*------------------Ranking function------------------*/
+
+// [[Rcpp::export]]
+NumericMatrix dgCMatrix_colRanks_num(S4 matrix, std::string ties_method, std::string na_handling, bool preserve_shape){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_num_matrix_with_na(matrix, nrows, !preserve_shape,
+      [na_handling, ties_method](VectorSubsetView<REALSXP> values, VectorSubsetView<INTSXP> row_indices, int number_of_zeros) -> std::vector<double>{
+    return calculate_sparse_rank<double>(values, row_indices, number_of_zeros, ties_method, na_handling);
+  });
+}
+
+
+// [[Rcpp::export]]
+IntegerMatrix dgCMatrix_colRanks_int(S4 matrix, std::string ties_method, std::string na_handling, bool preserve_shape){
+  Rcpp::IntegerVector dim = matrix.slot("Dim");
+  R_len_t nrows = dim[0];
+  return reduce_matrix_int_matrix_with_na(matrix, nrows, !preserve_shape,
+    [na_handling, ties_method](VectorSubsetView<REALSXP> values, VectorSubsetView<INTSXP> row_indices, int number_of_zeros) -> std::vector<int>{
+      return calculate_sparse_rank<int>(values, row_indices, number_of_zeros, ties_method, na_handling);
+  });
+}
+
+
+
 
 

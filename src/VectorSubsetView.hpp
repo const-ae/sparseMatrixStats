@@ -93,6 +93,10 @@ public:
     return size_m == 0;
   }
 
+  Proxy operator[](R_len_t i) {
+    return vec[start + i];
+  }
+
 };
 
 
