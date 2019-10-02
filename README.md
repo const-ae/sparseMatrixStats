@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 The goal of `sparseMatrixStats` is to make the API of the
-[matixStats](https://github.com/HenrikBengtsson/matrixStats) available
+[matrixStats](https://github.com/HenrikBengtsson/matrixStats) available
 for sparse matrices.
 
 ## Installation
@@ -63,7 +63,7 @@ On this small example data, all methods are basically equally fast, but
 if we have a much larger dataset, the optimizations for the sparse data
 start to show.
 
-I generate a dataset with 10,000 rows and 50 columsn that is 99% empty
+I generate a dataset with 10,000 rows and 50 columns that is 99% empty
 
 ``` r
 big_mat <- matrix(0, nrow=1e4, ncol=50)
@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  28.64µs  31.84µs   30627.     7.76KB    15.3 
-#> 2 matrixStats         1.99ms   2.07ms     479.   162.31KB     2.01
-#> 3 apply              14.95ms  15.86ms      62.4   17.23MB    99.9
+#> 1 sparseMatrixStats  28.58µs  32.35µs   29981.     7.76KB    15.0 
+#> 2 matrixStats         1.99ms   2.06ms     481.   162.31KB     2.01
+#> 3 apply              14.42ms  15.61ms      64.1   17.23MB   103.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
