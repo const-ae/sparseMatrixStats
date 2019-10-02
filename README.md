@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats   27.8µs  32.18µs   29798.     7.76KB     14.9
-#> 2 matrixStats         2.05ms   2.15ms     455.   162.31KB      0  
-#> 3 apply              15.35ms  16.36ms      60.3   17.23MB    114.
+#> 1 sparseMatrixStats  29.58µs  33.04µs   29285.     7.76KB     14.6
+#> 2 matrixStats         2.05ms   2.15ms     450.   162.31KB      0  
+#> 3 apply              15.57ms  17.16ms      58.0   17.23MB    116.
 ```
 
 As you can see `sparseMatrixStats` is ca. 70 times fast than
@@ -123,7 +123,7 @@ have:
 | colMeans2()          | ✔           | ✔                  | ✔                 |                                                                                          |
 | colMedians()         | ✔           | ✔                  | ✔                 |                                                                                          |
 | colMins()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colOrderStats()      | ✔           | ✔                  | ❌                 |                                                                                          |
+| colOrderStats()      | ✔           | ✔                  | ✔                 |                                                                                          |
 | colProds()           | ✔           | ✔                  | ✔                 |                                                                                          |
 | colQuantiles()       | ✔           | ✔                  | ✔                 |                                                                                          |
 | colRanges()          | ✔           | ✔                  | ✔                 |                                                                                          |
@@ -161,7 +161,7 @@ have:
 | rowMeans2()          | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowMedians()         | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowMins()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowOrderStats()      | ✔           | ✔                  | ❌                 |                                                                                          |
+| rowOrderStats()      | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowProds()           | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowQuantiles()       | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowRanges()          | ✔           | ✔                  | ✔                 |                                                                                          |

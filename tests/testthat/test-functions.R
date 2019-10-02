@@ -117,6 +117,21 @@ test_that("colTabulates works", {
 })
 
 
+test_that("colOrderStats works", {
+  no_na_mat <- mat
+  no_na_mat[is.na(no_na_mat)] <- 99
+  no_na_sp_mat <- as(no_na_mat, "dgCMatrix")
+
+  expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
+  expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
+  expect_error(colOrderStats(no_na_sp_mat, which = 11))
+  expect_error(matrixStats::colOrderStats(no_na_mat, which = 11))
+  skip("matrixStats::xxxOrderStats() does not support missing values")
+  expect_equal(colOrderStats(sp_mat, which = 6), matrixStats::colOrderStats(mat, which = 6))
+  expect_equal(colOrderStats(sp_mat, which = 10, na.rm=TRUE), matrixStats::colOrderStats(mat, which = 6, na.rm=TRUE))
+})
+
+
 
 test_that("cumulative functions work", {
   expect_equal(colCumsums(sp_mat), matrixStats::colCumsums(mat))

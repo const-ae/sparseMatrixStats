@@ -100,6 +100,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colOrderStats
+NumericVector dgCMatrix_colOrderStats(S4 matrix, int which, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colOrderStats(SEXP matrixSEXP, SEXP whichSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< int >::type which(whichSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colOrderStats(matrix, which, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dgCMatrix_colLogSumExps
 NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colLogSumExps(SEXP matrixSEXP, SEXP na_rmSEXP) {
@@ -359,6 +372,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colMads", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMads, 3},
     {"_sparseMatrixStats_dgCMatrix_colMins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMins, 2},
     {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
+    {"_sparseMatrixStats_dgCMatrix_colOrderStats", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colOrderStats, 3},
     {"_sparseMatrixStats_dgCMatrix_colLogSumExps", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colLogSumExps, 2},
     {"_sparseMatrixStats_dgCMatrix_colProds", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colProds, 2},
     {"_sparseMatrixStats_dgCMatrix_colWeightedMeans", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colWeightedMeans, 3},

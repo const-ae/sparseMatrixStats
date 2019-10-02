@@ -313,6 +313,66 @@ NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
+NumericVector dgCMatrix_colOrderStats(S4 matrix, int which, bool na_rm){
+  return reduce_matrix_double(matrix, na_rm, [na_rm, which](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(! na_rm){
+      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+        return NumericVector::is_na(d);
+      });
+      if(any_na){
+        return NA_REAL;
+      }
+    }
+    R_len_t size = values.size();
+    double used_which = std::min(which, size + number_of_zeros);
+    if(used_which == 0){
+      return NA_REAL;
+    }else if(size == 0){
+      return 0.0;
+    }
+    std::vector<double> sorted_values;
+    std::copy(values.begin(), values.end(), std::back_inserter(sorted_values));
+    std::sort(sorted_values.begin(), sorted_values.end(),[](double i1, double i2){
+      if(Rcpp::NumericVector::is_na(i1)) return false;
+      if(Rcpp::NumericVector::is_na(i2)) return true;
+      return i1 < i2;
+    });
+    bool left_of_zero = sorted_values[0] < 0;
+    bool right_of_zero = !left_of_zero && number_of_zeros == 0;
+    int zero_counter = ! left_of_zero && ! right_of_zero;
+    int vec_counter = 0;
+    for(int i = 0; i < sorted_values.size() + number_of_zeros; i++){
+      // Rcout << i << " " << vec_counter << " " << zero_counter << " " << left_of_zero << " " << right_of_zero << " " << std::endl;
+      if(i == used_which - 1){
+        if(! left_of_zero && ! right_of_zero){
+          return 0;
+        }else{
+          return sorted_values[vec_counter];
+        }
+      }
+
+      if(left_of_zero){
+        vec_counter++;
+        if(vec_counter == size || sorted_values[vec_counter] > 0){
+          left_of_zero = false;
+        }
+      }
+      if(right_of_zero){
+        vec_counter++;
+      }
+      if(! left_of_zero && ! right_of_zero){
+        zero_counter++;
+        if(zero_counter > number_of_zeros){
+          right_of_zero = true;
+        }
+      }
+    }
+    return NA_REAL;
+  });
+}
+
+
+// [[Rcpp::export]]
 NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
     auto max_iter = std::max_element(values.begin(), values.end(), [](double a, double b) -> bool {

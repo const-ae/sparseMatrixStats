@@ -152,6 +152,26 @@ setMethod("colMaxs", signature(x = "dgCMatrix"),
             dgCMatrix_colMaxs(x, na_rm = na.rm))
 
 
+# OrderStats
+
+#' @inherit matrixStats::colOrderStats
+#' @export
+setGeneric("colOrderStats", function(x, rows = NULL, cols = NULL, which, ...){
+  matrixStats::colOrderStats(as.matrix(x), rows = rows, cols = cols, which = which, ...)
+})
+
+#' @rdname colOrderStats
+#' @export
+setMethod("colOrderStats", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE, ...){
+  if(which < 1 || which > nrow(x)){
+    stop("Argument 'which' is out of range.")
+  }
+  dgCMatrix_colOrderStats(x, which = which, na_rm = na.rm)
+})
+
+
+
 
 # Weighted Means
 
