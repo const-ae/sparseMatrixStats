@@ -105,7 +105,9 @@ sparseMatrixStats_functions <- grep("^(col|row)", getNamespaceExports("sparseMat
 notes <- c("colAnyMissings"="Not implemented because it is deprecated",
            "rowAnyMissings"="Not implemented because it is deprecated",
            "colsum"="Base R function",
-           "rowsum"="Base R function")
+           "rowsum"="Base R function",
+           "colWeightedMads"="Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`.",
+           "rowWeightedMads"="Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`.")
 
 api_df <- data.frame(
   Method = paste0(matrixStats_functions, "()"),

@@ -152,6 +152,138 @@ setMethod("colMaxs", signature(x = "dgCMatrix"),
             dgCMatrix_colMaxs(x, na_rm = na.rm))
 
 
+
+# Weighted Means
+
+#' @inherit matrixStats::colWeightedMeans
+#' @export
+setGeneric("colWeightedMeans", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colWeightedMeans(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedMeans
+#' @export
+setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(is.null(w)){
+    dgCMatrix_colMeans2(x, na_rm = na.rm)
+  }else{
+    dgCMatrix_colWeightedMeans(x, weights = w, na_rm = na.rm)
+  }
+})
+
+
+
+# Weighted Medians
+
+#' @inherit matrixStats::colWeightedMedians
+#' @export
+setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
+                                          ties = NULL, ...){
+  matrixStats::colWeightedMedians(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm,
+                                  interpolate = FALSE, ties = ties, ...)
+})
+
+#' @rdname colWeightedMedians
+#' @export
+setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
+                   ties = NULL, ...){
+  if(is.null(w)){
+    dgCMatrix_colMedians(x, na_rm = na.rm)
+  }else{
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      if(length(values) == 0){
+        return(0.0)
+      }else{
+        new_vec <- c(0, values)
+        zero_weight <- sum(w[-(row_indices + 1)])
+        new_weights <- c(zero_weight, w[row_indices + 1])
+        matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ties = ties)
+      }
+    })
+  }
+})
+
+
+# Weighted Vars
+
+#' @inherit matrixStats::colWeightedVars
+#' @export
+setGeneric("colWeightedVars", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colWeightedVars(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedVars
+#' @export
+setMethod("colWeightedVars", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(is.null(w)){
+    dgCMatrix_colVars(x, na_rm = na.rm)
+  }else{
+    dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm)
+  }
+})
+
+
+
+# Weighted Sds
+
+#' @inherit matrixStats::colWeightedSds
+#' @export
+setGeneric("colWeightedSds", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colWeightedSds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedSds
+#' @export
+setMethod("colWeightedSds", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(is.null(w)){
+    sqrt(dgCMatrix_colVars(x, na_rm = na.rm))
+  }else{
+    sqrt(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm))
+  }
+})
+
+
+
+# Weighted Mads
+
+#' @inherit matrixStats::colWeightedMads
+#' @export
+setGeneric("colWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  matrixStats::colWeightedMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedMads
+#' @export
+setMethod("colWeightedMads", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE,
+                   ties = NULL, ...){
+  if(is.null(w)){
+    dgCMatrix_colMads(x, na_rm = na.rm)
+  }else{
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      if(length(values) == 0){
+        0.0
+      }else{
+        new_vec <- c(0, values)
+        zero_weight <- sum(w[-(row_indices + 1)])
+        new_weights <- c(zero_weight, w[row_indices + 1])
+        center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ties = ties)
+        x <- abs(new_vec - center)
+        sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE, ties = ties)
+        # Rescale for normal distributions
+        sigma <- constant * sigma
+        sigma
+      }
+    })
+  }
+})
+
+
+
 # Count
 
 #' @inherit matrixStats::colCounts

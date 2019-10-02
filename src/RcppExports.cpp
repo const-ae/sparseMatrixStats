@@ -124,6 +124,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colWeightedMeans
+NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colWeightedMeans(SEXP matrixSEXP, SEXP weightsSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colWeightedMeans(matrix, weights, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dgCMatrix_colWeightedVars
+NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colWeightedVars(SEXP matrixSEXP, SEXP weightsSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colWeightedVars(matrix, weights, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dgCMatrix_colCounts
 IntegerVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCounts(SEXP matrixSEXP, SEXP valueSEXP, SEXP na_rmSEXP) {
@@ -323,6 +349,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
     {"_sparseMatrixStats_dgCMatrix_colLogSumExps", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colLogSumExps, 2},
     {"_sparseMatrixStats_dgCMatrix_colProds", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colProds, 2},
+    {"_sparseMatrixStats_dgCMatrix_colWeightedMeans", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colWeightedMeans, 3},
+    {"_sparseMatrixStats_dgCMatrix_colWeightedVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colWeightedVars, 3},
     {"_sparseMatrixStats_dgCMatrix_colCounts", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCounts, 3},
     {"_sparseMatrixStats_dgCMatrix_colAnyNAs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnyNAs, 1},
     {"_sparseMatrixStats_dgCMatrix_colAnys", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnys, 3},

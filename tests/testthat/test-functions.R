@@ -125,3 +125,39 @@ test_that("colRanks works", {
   expect_equal(rowRanks(sp_mat, ties.method = "average"), matrixStats::rowRanks(mat, ties.method = "average"))
 })
 
+
+
+test_that("colWeightedMeans works", {
+  weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+  expect_equal(colWeightedMeans(sp_mat, w=weights), matrixStats::colWeightedMeans(mat, w=weights))
+  expect_equal(colWeightedMeans(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMeans(mat, na.rm=TRUE, w=weights))
+})
+
+
+test_that("colWeightedMedians works", {
+  weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+  expect_equal(colWeightedMedians(sp_mat, w=weights), matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE))
+  expect_equal(colWeightedMedians(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMedians(mat, w=weights, na.rm=TRUE, interpolate = FALSE))
+})
+
+
+test_that("colWeightedMads works", {
+  skip("different result than matrixStats version, because sparseMatrixStats uses `interpolate=FALSE`.")
+  weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+  expect_equal(colWeightedMads(sp_mat, w=weights), matrixStats::colWeightedMads(mat, w=weights))
+  expect_equal(colWeightedMads(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMads(mat, w=weights, na.rm=TRUE))
+})
+
+
+test_that("colWeightedVars works", {
+  weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+  expect_equal(colWeightedVars(sp_mat, w=weights), matrixStats::colWeightedVars(mat, w=weights))
+  expect_equal(colWeightedVars(sp_mat, na.rm=TRUE), matrixStats::colWeightedVars(mat, na.rm=TRUE))
+})
+
+
+test_that("colWeightedSds works", {
+  weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+  expect_equal(colWeightedSds(sp_mat, w=weights), matrixStats::colWeightedSds(mat, w=weights))
+  expect_equal(colWeightedSds(sp_mat, na.rm=TRUE), matrixStats::colWeightedSds(mat, na.rm=TRUE))
+})

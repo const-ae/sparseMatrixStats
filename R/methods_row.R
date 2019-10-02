@@ -152,6 +152,94 @@ setMethod("rowMaxs", signature(x = "dgCMatrix"),
             dgCMatrix_colMaxs(t(x), na_rm = na.rm))
 
 
+
+# Weighted Means
+
+#' @rdname colWeightedMeans
+#' @export
+setGeneric("rowWeightedMeans", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::rowWeightedMeans(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedMeans
+#' @export
+setMethod("rowWeightedMeans", signature(x = "dgCMatrix"),
+    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  colWeightedMeans(t(x), w, rows = rows, cols = cols, na.rm = na.rm)
+})
+
+
+# Weighted Medians
+
+#' @rdname colWeightedMedians
+#' @export
+setGeneric("rowWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::rowWeightedMedians(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedMedians
+#' @export
+setMethod("rowWeightedMedians", signature(x = "dgCMatrix"),
+    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  colWeightedMedians(t(x), w, rows = rows, cols = cols, na.rm = na.rm)
+})
+
+
+# Weighted Vars
+
+#' @rdname colWeightedVars
+#' @export
+setGeneric("rowWeightedVars", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::rowWeightedVars(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedVars
+#' @export
+setMethod("rowWeightedVars", signature(x = "dgCMatrix"),
+function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  colWeightedVars(t(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+
+
+# Weighted Sds
+
+#' @rdname colWeightedSds
+#' @export
+setGeneric("rowWeightedSds", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::rowWeightedSds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedSds
+#' @export
+setMethod("rowWeightedSds", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+            if(is.null(w)){
+              sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
+            }else{
+              sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm))
+            }
+          })
+
+
+# Weighted Mads
+
+#' @rdname colWeightedMads
+#' @export
+setGeneric("rowWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  matrixStats::rowWeightedMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+})
+
+#' @rdname colWeightedMads
+#' @export
+setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
+          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE,
+                   ties = NULL, ...){
+  colWeightedMads(t(x), w=w, rows=rows, cols=cols, constant = constant, na.rm=na.rm, ties = ties, ...)
+})
+
+
+
 # Count
 
 #' @rdname colCounts

@@ -362,6 +362,78 @@ NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
 }
 
 
+
+/*---------------Weighted Aggregation Functions---------------*/
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool na_rm){
+  double total_weights = sum(weights);
+  return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    double accum = 0.0;
+    double remaining_weights = total_weights;
+    auto val_it = values.begin();
+    auto ind_it = row_indices.begin();
+    while(val_it != values.end() && ind_it != row_indices.end()){
+      double v = *val_it;
+      if(NumericVector::is_na(v)){
+        if(! na_rm){
+          return NA_REAL;
+        }
+        remaining_weights -=  weights[*ind_it];
+      }else{
+        accum += v * weights[*ind_it];
+      }
+      ++val_it;
+      ++ind_it;
+    }
+    if(NumericVector::is_na(accum)){
+      return accum;
+    }else if(remaining_weights < pow(10, -9)){
+      return R_NaN;
+    }else{
+      return accum / remaining_weights;
+    }
+  });
+}
+
+
+// [[Rcpp::export]]
+NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool na_rm){
+  double total_weights = sum(weights);
+  return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    double accum = 0.0;
+    double accum2 = 0.0;
+    double remaining_weights = total_weights;
+    auto val_it = values.begin();
+    auto ind_it = row_indices.begin();
+    while(val_it != values.end() && ind_it != row_indices.end()){
+      double v = *val_it;
+      double w = weights[*ind_it];
+      if(NumericVector::is_na(v)){
+        if(! na_rm){
+          return NA_REAL;
+        }
+        remaining_weights -= w;
+      }else{
+        if(w > 0){
+          accum += v * w;
+          accum2 += pow(v, 2) * w;
+        }
+      }
+      ++val_it;
+      ++ind_it;
+    }
+    if(NumericVector::is_na(accum)){
+      return accum;
+    }else if(total_weights <= 1){
+      return NA_REAL;    // Yes, var(3) actually returns NA instead of NaN
+    }else{
+      return ((accum2) - pow(accum , 2)/ total_weights)  / (total_weights-1);
+    }
+  });
+}
+
+
 /*---------------Simple Detect Functions-----------------*/
 
 // [[Rcpp::export]]

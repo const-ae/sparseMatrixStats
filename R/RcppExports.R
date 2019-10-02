@@ -41,6 +41,14 @@ dgCMatrix_colProds <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colProds', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
+dgCMatrix_colWeightedMeans <- function(matrix, weights, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colWeightedMeans', PACKAGE = 'sparseMatrixStats', matrix, weights, na_rm)
+}
+
+dgCMatrix_colWeightedVars <- function(matrix, weights, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_colWeightedVars', PACKAGE = 'sparseMatrixStats', matrix, weights, na_rm)
+}
+
 dgCMatrix_colCounts <- function(matrix, value, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colCounts', PACKAGE = 'sparseMatrixStats', matrix, value, na_rm)
 }
