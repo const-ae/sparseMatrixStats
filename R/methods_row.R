@@ -95,15 +95,15 @@ setMethod("rowMads", signature(x = "dgCMatrix"),
 
 #' @rdname colLogSumExps
 #' @export
-setGeneric("rowLogSumExps", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colLogSumExps(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+setGeneric("rowLogSumExps", function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
 })
 
 #' @rdname colLogSumExps
 #' @export
-setMethod("rowLogSumExps", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            exp(dgCMatrix_colSums2(log(t(x)), na_rm = na.rm)))
+setMethod("rowLogSumExps", signature(lx = "dgCMatrix"),
+          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...)
+            dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm))
 
 
 # Prods

@@ -1,3 +1,4 @@
+set.seed(1)
 # source("tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow=10, ncol=6)
 sp_mat <- as(mat, "dgCMatrix")

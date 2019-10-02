@@ -47,9 +47,11 @@ The method will return \code{\link[base:logical]{TRUE}} as soon as a missing
 value is detected.
 }
 \examples{
-x <- rnorm(n = 1000)
- x[seq(300, length(x), by = 100)] <- NA
- stopifnot(anyMissing(x) == any(is.na(x)))
+  mat <- matrix(0, nrow=10, ncol=5)
+  mat[sample(seq_len(5 *10), 5)] <- NA
+  sp_mat <- as(mat, "dgCMatrix")
+  colAnyNAs(sp_mat)
+
 }
 \seealso{
 Starting with R v3.1.0, there is \code{anyNA()} in the \pkg{base},

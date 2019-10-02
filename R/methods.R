@@ -302,6 +302,13 @@ setMethod("colCounts", signature(x = "dgCMatrix"),
 # AnyNA
 
 #' @inherit matrixStats::colAnyNAs
+#'
+#' @examples
+#'   mat <- matrix(0, nrow=10, ncol=5)
+#'   mat[sample(seq_len(5 *10), 5)] <- NA
+#'   sp_mat <- as(mat, "dgCMatrix")
+#'   colAnyNAs(sp_mat)
+#'
 #' @export
 setGeneric("colAnyNAs", function(x, rows = NULL, cols = NULL, ...){
   matrixStats::colAnyNAs(as.matrix(x), rows = rows, cols = cols, ...)

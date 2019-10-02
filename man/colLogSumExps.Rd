@@ -14,9 +14,9 @@ colLogSumExps(lx, rows = NULL, cols = NULL, na.rm = FALSE, ...)
 \S4method{colLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL,
   na.rm = FALSE, ...)
 
-rowLogSumExps(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+rowLogSumExps(lx, rows = NULL, cols = NULL, na.rm = FALSE, ...)
 
-\S4method{rowLogSumExps}{dgCMatrix}(x, rows = NULL, cols = NULL,
+\S4method{rowLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL,
   na.rm = FALSE, ...)
 }
 \arguments{
