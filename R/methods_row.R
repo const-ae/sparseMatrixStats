@@ -21,7 +21,7 @@ setMethod("rowSums2", signature(x = "dgCMatrix"),
 #' @rdname colMeans2
 #' @export
 setGeneric("rowMeans2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colSums2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+  matrixStats::rowMeans2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colMeans2
@@ -96,7 +96,7 @@ setMethod("rowMads", signature(x = "dgCMatrix"),
 #' @rdname colLogSumExps
 #' @export
 setGeneric("rowLogSumExps", function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+  matrixStats::rowLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
 })
 
 #' @rdname colLogSumExps
