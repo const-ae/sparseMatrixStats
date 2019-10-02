@@ -213,6 +213,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_colTabulate
+IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_values);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colTabulate(SEXP matrixSEXP, SEXP sorted_unique_valuesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sorted_unique_values(sorted_unique_valuesSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colTabulate(matrix, sorted_unique_values));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dgCMatrix_colCumsums
 NumericMatrix dgCMatrix_colCumsums(S4 matrix);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colCumsums(SEXP matrixSEXP) {
@@ -356,6 +368,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colAnys", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAnys, 3},
     {"_sparseMatrixStats_dgCMatrix_colAlls", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colAlls, 3},
     {"_sparseMatrixStats_dgCMatrix_colQuantiles", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colQuantiles, 3},
+    {"_sparseMatrixStats_dgCMatrix_colTabulate", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colTabulate, 2},
     {"_sparseMatrixStats_dgCMatrix_colCumsums", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCumsums, 1},
     {"_sparseMatrixStats_dgCMatrix_colCumprods", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCumprods, 1},
     {"_sparseMatrixStats_dgCMatrix_colCummins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colCummins, 1},

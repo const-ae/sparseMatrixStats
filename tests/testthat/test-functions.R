@@ -106,6 +106,16 @@ test_that("colQuantiles works", {
 })
 
 
+test_that("colTabulates works", {
+  int_mat <- matrix(as.integer(mat), nrow = nrow(mat), ncol = ncol(mat))
+  int_sp_mat <- as(int_mat, "dgCMatrix")
+  expect_equal(colTabulates(int_sp_mat), matrixStats::colTabulates(int_mat))
+  values <- c(0, -2, NA, 3, 17)
+  expect_equal(colTabulates(int_sp_mat, values = values), matrixStats::colTabulates(int_mat, values = values))
+  expect_equal(rowTabulates(int_sp_mat, values = values), matrixStats::rowTabulates(int_mat, values = values))
+})
+
+
 
 test_that("cumulative functions work", {
   expect_equal(colCumsums(sp_mat), matrixStats::colCumsums(mat))

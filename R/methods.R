@@ -385,6 +385,38 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
 
 
 
+# colTabulates
+
+#' @inherit matrixStats::colTabulates
+#' @export
+setGeneric("colTabulates", function(x, rows = NULL, cols = NULL, values = NULL, ...){
+  matrixStats::colTabulates(as.matrix(x), rows = rows, cols = cols, values = values, ...)
+})
+
+#' @rdname colTabulates
+#' @export
+setMethod("colTabulates", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, values = NULL, ...){
+  if(is.null(values)){
+    values <- c(x@x, 0)
+    unique_values <- sort(unique(values), na.last = TRUE)
+  }else{
+    unique_values <- unique(values)
+  }
+
+  mat <- dgCMatrix_colTabulate(x, unique_values)
+  # Add dim names
+  colnames(mat) <- unique_values
+  rownames(mat) <- rownames(x)
+  if(all(mat[, "0"] == 0)){
+    # Remove zero column is there is not a single zero in x
+    mat <- mat[, -which(colnames(mat) == "0"), drop=FALSE]
+  }
+  mat
+})
+
+
+
 # colIQRs
 
 #' @inherit matrixStats::colIQRs

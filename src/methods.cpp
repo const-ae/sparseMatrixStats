@@ -592,6 +592,52 @@ NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm)
 
 
 
+// [[Rcpp::export]]
+IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_values){
+  // std::set<int> unique_elements(values.begin(), values.end());
+  // unique_elements.insert(0);
+  // std::vector<int> sorted_elements;
+  // std::copy(unique_elements.begin(), unique_elements.end(), std::back_inserter(sorted_elements));
+  // sort(sorted_elements.begin(),sorted_elements.end(),[](int i1, int i2){
+  //   if(Rcpp::IntegerVector::is_na(i1)) return false;
+  //   if(Rcpp::IntegerVector::is_na(i2)) return true;
+  //   return i1 < i2;
+  // });
+  std::map<double,int> lookup_map;
+  bool count_nas = false;
+  int na_indx = -1;
+  for(int i = 0; i < sorted_unique_values.size(); ++i){
+    double value = sorted_unique_values[i];
+    if(Rcpp::NumericVector::is_na(value)){
+      count_nas = true;
+      na_indx = i;
+    }else{
+      lookup_map[value] = i;
+    }
+  }
+  return reduce_matrix_int_matrix_with_na(matrix, lookup_map.size() + count_nas, true,
+      [&lookup_map, count_nas, na_indx](auto values, auto row_indices, int number_of_zeros) -> std::vector<int> {
+    std::vector<int> result(lookup_map.size() + count_nas, 0);
+    int na_count = 0;
+    for(double v: values){
+      if(Rcpp::NumericVector::is_na(v)){
+        ++na_count;
+      }else{
+        auto search = lookup_map.find(v);
+        if(search != lookup_map.end()){
+          result[search->second] += 1;
+        }
+      }
+    }
+    result[lookup_map.at(0)] = number_of_zeros;
+    if(count_nas){
+      result[na_indx] = na_count;
+    }
+    return result;
+  });
+}
+
+
 
 /*---------------Cumulative functions-----------------*/
 

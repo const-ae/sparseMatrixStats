@@ -6,7 +6,6 @@
 \alias{colSds,dgCMatrix-method}
 \alias{rowSds}
 \alias{rowSds,dgCMatrix-method}
-\alias{rowMads,dgCMatrix-method}
 \title{Standard deviation estimates for each row (column) in a matrix}
 \usage{
 colSds(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
@@ -18,9 +17,6 @@ rowSds(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
 
 \S4method{rowSds}{dgCMatrix}(x, rows = NULL, cols = NULL,
   na.rm = FALSE, ...)
-
-\S4method{rowMads}{dgCMatrix}(x, rows = NULL, cols = NULL,
-  constant = 1.4826, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.}
@@ -38,8 +34,6 @@ are excluded first, otherwise not.}
 
 \item{...}{Additional arguments passed to \code{rowMeans()} and
 \code{rowSums()}.}
-
-\item{constant}{A scale factor.  See \code{\link[stats]{mad}} for details.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

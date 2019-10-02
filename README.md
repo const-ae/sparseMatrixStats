@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats   28.8µs  31.95µs   30433.     7.76KB     15.2
-#> 2 matrixStats            2ms   2.08ms     473.   162.31KB      0  
-#> 3 apply               14.4ms  15.78ms      62.7   17.23MB    125.
+#> 1 sparseMatrixStats   27.8µs  32.18µs   29798.     7.76KB     14.9
+#> 2 matrixStats         2.05ms   2.15ms     455.   162.31KB      0  
+#> 3 apply              15.35ms  16.36ms      60.3   17.23MB    114.
 ```
 
 As you can see `sparseMatrixStats` is ca. 70 times fast than
@@ -132,7 +132,7 @@ have:
 | colSds()             | ✔           | ✔                  | ✔                 |                                                                                          |
 | colsum()             | ✔           | ✔                  | ❌                 | Base R function                                                                          |
 | colSums2()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| colTabulates()       | ✔           | ✔                  | ❌                 |                                                                                          |
+| colTabulates()       | ✔           | ✔                  | ✔                 |                                                                                          |
 | colVarDiffs()        | ✔           | ✔                  | ❌                 |                                                                                          |
 | colVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | colWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
@@ -170,7 +170,7 @@ have:
 | rowSds()             | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowsum()             | ✔           | ✔                  | ❌                 | Base R function                                                                          |
 | rowSums2()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowTabulates()       | ✔           | ✔                  | ❌                 |                                                                                          |
+| rowTabulates()       | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowVarDiffs()        | ✔           | ✔                  | ❌                 |                                                                                          |
 | rowVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |

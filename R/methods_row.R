@@ -84,11 +84,11 @@ setGeneric("rowMads", function(x, rows = NULL, cols = NULL, constant = 1.4826, n
   matrixStats::rowMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
 })
 
-#' @rdname colSds
+#' @rdname colMads
 #' @export
 setMethod("rowMads", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...)
-            dgCMatrix_colVars(t(x), constant = constant, na_rm = na.rm))
+            colMads(t(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...))
 
 
 # LogSumExp
@@ -338,6 +338,23 @@ setMethod("rowQuantiles", signature(x = "dgCMatrix"),
             rownames(mat) <- rownames(x)
             mat
           })
+
+
+
+# Tabulates
+
+#' @rdname colTabulates
+#' @export
+setGeneric("rowTabulates", function(x, rows = NULL, cols = NULL, values = NULL, ...){
+  matrixStats::rowTabulates(as.matrix(x), rows = rows, cols = cols, values = values, ...)
+})
+
+#' @rdname colTabulates
+#' @export
+setMethod("rowTabulates", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, values = NULL, ...){
+  colTabulates(t(x), rows = rows, cols = cols, values = values)
+})
 
 
 

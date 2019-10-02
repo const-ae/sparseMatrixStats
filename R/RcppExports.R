@@ -69,6 +69,10 @@ dgCMatrix_colQuantiles <- function(matrix, probs, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colQuantiles', PACKAGE = 'sparseMatrixStats', matrix, probs, na_rm)
 }
 
+dgCMatrix_colTabulate <- function(matrix, sorted_unique_values) {
+    .Call('_sparseMatrixStats_dgCMatrix_colTabulate', PACKAGE = 'sparseMatrixStats', matrix, sorted_unique_values)
+}
+
 dgCMatrix_colCumsums <- function(matrix) {
     .Call('_sparseMatrixStats_dgCMatrix_colCumsums', PACKAGE = 'sparseMatrixStats', matrix)
 }

@@ -5,6 +5,7 @@
 \alias{colMads}
 \alias{colMads,dgCMatrix-method}
 \alias{rowMads}
+\alias{rowMads,dgCMatrix-method}
 \title{Standard deviation estimates for each row (column) in a matrix}
 \usage{
 colMads(x, rows = NULL, cols = NULL, constant = 1.4826,
@@ -15,6 +16,9 @@ colMads(x, rows = NULL, cols = NULL, constant = 1.4826,
 
 rowMads(x, rows = NULL, cols = NULL, constant = 1.4826,
   na.rm = FALSE, ...)
+
+\S4method{rowMads}{dgCMatrix}(x, rows = NULL, cols = NULL,
+  constant = 1.4826, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.}
