@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `sparseMatrixStats` is to make the API of the [matixStats](https://github.com/HenrikBengtsson/matrixStats) available
+The goal of `sparseMatrixStats` is to make the API of the [matrixStats](https://github.com/HenrikBengtsson/matrixStats) available
 for sparse matrices.
 
 ## Installation
@@ -62,7 +62,7 @@ sparseMatrixStats::colVars(sparse_mat)
 On this small example data, all methods are basically equally fast, but if we have a much larger dataset, the 
 optimizations for the sparse data start to show.
 
-I generate a dataset with 10,000 rows and 50 columsn that is 99% empty
+I generate a dataset with 10,000 rows and 50 columns that is 99% empty
 
 ```{r}
 big_mat <- matrix(0, nrow=1e4, ncol=50)
