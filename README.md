@@ -83,27 +83,28 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  29.58µs  33.04µs   29285.     7.76KB     14.6
-#> 2 matrixStats         2.05ms   2.15ms     450.   162.31KB      0  
-#> 3 apply              15.57ms  17.16ms      58.0   17.23MB    116.
+#> 1 sparseMatrixStats  28.64µs  31.84µs   30627.     7.76KB    15.3 
+#> 2 matrixStats         1.99ms   2.07ms     479.   162.31KB     2.01
+#> 3 apply              14.95ms  15.86ms      62.4   17.23MB    99.9
 ```
 
-As you can see `sparseMatrixStats` is ca. 70 times fast than
+As you can see `sparseMatrixStats` is ca. 60 times fast than
 `matrixStats`, which in turn is 7 times faster than the `apply()`
 version.
 
 # API
 
 The package is still work in progress. For example, it is still
-completely lacking any documentation. Not all methods have yet been
+completely lacking any documentation. Most functions have already been
 optimized for `dgCMatrix` input. The following list gives an overview
-which already
-have:
+which already have. In particular the `colXXXDiff()` functions have not
+yet been
+implemented.
 
 | Method               | matrixStats | DelayedMatrixStats | sparseMatrixStats | Notes                                                                                    |
 | :------------------- | :---------- | :----------------- | :---------------- | :--------------------------------------------------------------------------------------- |
 | colAlls()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated                                                 |
+| colAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated in favor of `colAnyNAs()`                       |
 | colAnyNAs()          | ✔           | ✔                  | ✔                 |                                                                                          |
 | colAnys()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | colAvgsPerRowSet()   | ✔           | ✔                  | ❌                 |                                                                                          |
@@ -137,11 +138,11 @@ have:
 | colVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | colWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
 | colWeightedMeans()   | ✔           | ✔                  | ✔                 |                                                                                          |
-| colWeightedMedians() | ✔           | ✔                  | ✔                 |                                                                                          |
+| colWeightedMedians() | ✔           | ✔                  | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
 | colWeightedSds()     | ✔           | ✔                  | ✔                 |                                                                                          |
 | colWeightedVars()    | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowAlls()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated                                                 |
+| rowAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated in favor of `rowAnyNAs()`                       |
 | rowAnyNAs()          | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowAnys()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowAvgsPerColSet()   | ✔           | ✔                  | ❌                 |                                                                                          |
@@ -175,6 +176,6 @@ have:
 | rowVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
 | rowWeightedMeans()   | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowWeightedMedians() | ✔           | ✔                  | ✔                 |                                                                                          |
+| rowWeightedMedians() | ✔           | ✔                  | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
 | rowWeightedSds()     | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowWeightedVars()    | ✔           | ✔                  | ✔                 |                                                                                          |
