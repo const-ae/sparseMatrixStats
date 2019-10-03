@@ -187,3 +187,52 @@ test_that("colWeightedSds works", {
   expect_equal(colWeightedSds(sp_mat, w=weights), matrixStats::colWeightedSds(mat, w=weights))
   expect_equal(colWeightedSds(sp_mat, na.rm=TRUE), matrixStats::colWeightedSds(mat, na.rm=TRUE))
 })
+
+
+
+
+
+test_that("diff methods works", {
+  expect_equal(colVarDiffs(sp_mat, diff = 0), matrixStats::colVarDiffs(mat, diff = 0))
+  expect_equal(colVarDiffs(sp_mat, diff = 1), matrixStats::colVarDiffs(mat, diff = 1))
+  expect_equal(colVarDiffs(sp_mat, diff = 3), matrixStats::colVarDiffs(mat, diff = 3))
+  expect_equal(colVarDiffs(sp_mat, na.rm=TRUE), matrixStats::colVarDiffs(mat, na.rm=TRUE))
+
+  expect_equal(colSdDiffs(sp_mat, diff = 0), matrixStats::colSdDiffs(mat, diff = 0))
+  expect_equal(colSdDiffs(sp_mat, diff = 1), matrixStats::colSdDiffs(mat, diff = 1))
+  expect_equal(colSdDiffs(sp_mat, diff = 3), matrixStats::colSdDiffs(mat, diff = 3))
+  expect_equal(colSdDiffs(sp_mat, na.rm=TRUE), matrixStats::colSdDiffs(mat, na.rm=TRUE))
+
+  expect_equal(colMadDiffs(sp_mat, diff = 0), matrixStats::colMadDiffs(mat, diff = 0))
+  expect_equal(colMadDiffs(sp_mat, diff = 1), matrixStats::colMadDiffs(mat, diff = 1))
+  expect_equal(colMadDiffs(sp_mat, diff = 3), matrixStats::colMadDiffs(mat, diff = 3))
+  expect_equal(colMadDiffs(sp_mat, na.rm=TRUE), matrixStats::colMadDiffs(mat, na.rm=TRUE))
+
+  expect_equal(colIQRDiffs(sp_mat, diff = 0), matrixStats::colIQRDiffs(mat, diff = 0))
+  expect_equal(colIQRDiffs(sp_mat, diff = 1), matrixStats::colIQRDiffs(mat, diff = 1))
+  expect_equal(colIQRDiffs(sp_mat, diff = 3), matrixStats::colIQRDiffs(mat, diff = 3))
+  expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
+
+
+
+  expect_equal(rowVarDiffs(sp_mat, diff = 0), matrixStats::rowVarDiffs(mat, diff = 0))
+  expect_equal(rowVarDiffs(sp_mat, diff = 1), matrixStats::rowVarDiffs(mat, diff = 1))
+  expect_equal(rowVarDiffs(sp_mat, diff = 3), matrixStats::rowVarDiffs(mat, diff = 3))
+  expect_equal(rowVarDiffs(sp_mat, na.rm=TRUE), matrixStats::rowVarDiffs(mat, na.rm=TRUE))
+
+  expect_equal(rowSdDiffs(sp_mat, diff = 0), matrixStats::rowSdDiffs(mat, diff = 0))
+  expect_equal(rowSdDiffs(sp_mat, diff = 1), matrixStats::rowSdDiffs(mat, diff = 1))
+  expect_equal(rowSdDiffs(sp_mat, diff = 3), matrixStats::rowSdDiffs(mat, diff = 3))
+  expect_equal(rowSdDiffs(sp_mat, na.rm=TRUE), matrixStats::rowSdDiffs(mat, na.rm=TRUE))
+
+  expect_equal(rowMadDiffs(sp_mat, diff = 0), matrixStats::rowMadDiffs(mat, diff = 0))
+  expect_equal(rowMadDiffs(sp_mat, diff = 1), matrixStats::rowMadDiffs(mat, diff = 1))
+  expect_equal(rowMadDiffs(sp_mat, diff = 3), matrixStats::rowMadDiffs(mat, diff = 3))
+  expect_equal(rowMadDiffs(sp_mat, na.rm=TRUE), matrixStats::rowMadDiffs(mat, na.rm=TRUE))
+
+  expect_equal(rowIQRDiffs(sp_mat, diff = 0), matrixStats::rowIQRDiffs(mat, diff = 0))
+  expect_equal(rowIQRDiffs(sp_mat, diff = 1), matrixStats::rowIQRDiffs(mat, diff = 1))
+  expect_equal(rowIQRDiffs(sp_mat, diff = 3), matrixStats::rowIQRDiffs(mat, diff = 3))
+  expect_equal(rowIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::rowIQRDiffs(mat, na.rm=TRUE))
+})
+

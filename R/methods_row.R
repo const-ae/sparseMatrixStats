@@ -493,3 +493,72 @@ setMethod("rowRanks", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = TRUE, na.handling = c("keep", "last"), ...){
   colRanks(t(x), ties.method = ties.method, preserve.shape = !preserve.shape, na.handling = na.handling, ...)
 })
+
+
+# VarDiffs
+
+#' @rdname colVarDiffs
+#' @export
+setGeneric("rowVarDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  matrixStats::rowVarDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colVarDiffs
+#' @export
+setMethod("rowVarDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  colVarDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+
+
+# SdDiffs
+
+#' @rdname colSdDiffs
+#' @export
+setGeneric("rowSdDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  matrixStats::rowSdDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colSdDiffs
+#' @export
+setMethod("rowSdDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  colSdDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+
+
+# MadDiffs
+
+#' @rdname colMadDiffs
+#' @export
+setGeneric("rowMadDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
+  matrixStats::rowMadDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, constant = constant, ...)
+})
+
+#' @rdname colMadDiffs
+#' @export
+setMethod("rowMadDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
+  colMadDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, constant = constant, ...)
+})
+
+
+
+# IQRDiffs
+
+#' @rdname colIQRDiffs
+#' @export
+setGeneric("rowIQRDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  matrixStats::rowIQRDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colIQRDiffs
+#' @export
+setMethod("rowIQRDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  colIQRDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+

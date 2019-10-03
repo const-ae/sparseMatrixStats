@@ -573,3 +573,107 @@ setMethod("colRanks", signature(x = "dgCMatrix"),
   }
 })
 
+
+
+#' @inherit matrixStats::varDiff
+#'
+#' @export
+setGeneric("colVarDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0,...){
+  matrixStats::colVarDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colVarDiffs
+#' @export
+setMethod("colVarDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(diff == 0){
+    dgCMatrix_colVars(x, na_rm = na.rm)
+  }else{
+    n <- nrow(x)
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      tmp <- rep(0, n)
+      tmp[row_indices+1] <- values
+      matrixStats::varDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+    })
+  }
+})
+
+
+
+
+#' @inherit matrixStats::varDiff
+#'
+#' @export
+setGeneric("colSdDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0,...){
+  matrixStats::colSdDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colSdDiffs
+#' @export
+setMethod("colSdDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(diff == 0){
+    sqrt(dgCMatrix_colVars(x, na_rm = na.rm))
+  }else{
+    n <- nrow(x)
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      tmp <- rep(0, n)
+      tmp[row_indices+1] <- values
+      matrixStats::sdDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+    })
+  }
+})
+
+
+
+#' @inherit matrixStats::varDiff
+#'
+#' @export
+setGeneric("colMadDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826,...){
+  matrixStats::colMadDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, constant = constant, ...)
+})
+
+#' @rdname colMadDiffs
+#' @export
+setMethod("colMadDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
+  if(diff == 0){
+    dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant)
+  }else{
+    n <- nrow(x)
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      tmp <- rep(0, n)
+      tmp[row_indices+1] <- values
+      matrixStats::madDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, constant = constant, ...)
+    })
+  }
+})
+
+
+
+#' @inherit matrixStats::varDiff
+#'
+#' @export
+setGeneric("colIQRDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0,...){
+  matrixStats::colIQRDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
+})
+
+#' @rdname colIQRDiffs
+#' @export
+setMethod("colIQRDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(diff == 0){
+    colIQRs(x, na_rm = na.rm, ...)
+  }else{
+    n <- nrow(x)
+    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+      tmp <- rep(0, n)
+      tmp[row_indices+1] <- values
+      matrixStats::iqrDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+    })
+  }
+})
+
+
+
+

@@ -9,7 +9,7 @@ make_matrix <- function(nrow, ncol, frac_zero = 0.8, frac_na = 0){
 }
 
 make_matrix_with_all_features <- function(nrow, ncol){
-  if(ncol < 5){
+  if(ncol < 6){
     stop("Too few columns")
   }
   mat <- make_matrix(nrow, ncol, frac_zero = 0.8)
@@ -21,6 +21,8 @@ make_matrix_with_all_features <- function(nrow, ncol){
   mat[1, 3] <- NA
   # All missing
   mat[,4] <- NA
+  # Some infinite
+  # mat[1, 5] <- Inf
 
   mat
 }
