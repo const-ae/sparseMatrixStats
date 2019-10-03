@@ -193,10 +193,13 @@ test_that("colWeightedSds works", {
 
 
 test_that("diff methods works", {
+  expect_equal(colDiffs(sp_mat, diff = 1), matrixStats::colDiffs(mat, diff = 1))
+  expect_equal(colDiffs(sp_mat, diff = 3), matrixStats::colDiffs(mat, diff = 3))
+  expect_equal(colDiffs(sp_mat, diff = 3, lag= 2), matrixStats::colDiffs(mat, diff = 3, lag = 2))
+
   expect_equal(colVarDiffs(sp_mat, diff = 0), matrixStats::colVarDiffs(mat, diff = 0))
   expect_equal(colVarDiffs(sp_mat, diff = 1), matrixStats::colVarDiffs(mat, diff = 1))
   expect_equal(colVarDiffs(sp_mat, diff = 3), matrixStats::colVarDiffs(mat, diff = 3))
-  expect_equal(colVarDiffs(sp_mat, na.rm=TRUE), matrixStats::colVarDiffs(mat, na.rm=TRUE))
 
   expect_equal(colSdDiffs(sp_mat, diff = 0), matrixStats::colSdDiffs(mat, diff = 0))
   expect_equal(colSdDiffs(sp_mat, diff = 1), matrixStats::colSdDiffs(mat, diff = 1))
@@ -214,6 +217,10 @@ test_that("diff methods works", {
   expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
 
 
+
+  expect_equal(rowDiffs(sp_mat, diff = 1), matrixStats::rowDiffs(mat, diff = 1))
+  expect_equal(rowDiffs(sp_mat, diff = 3), matrixStats::rowDiffs(mat, diff = 3))
+  expect_equal(rowDiffs(sp_mat, diff = 3, lag= 2), matrixStats::rowDiffs(mat, diff = 3, lag = 2))
 
   expect_equal(rowVarDiffs(sp_mat, diff = 0), matrixStats::rowVarDiffs(mat, diff = 0))
   expect_equal(rowVarDiffs(sp_mat, diff = 1), matrixStats::rowVarDiffs(mat, diff = 1))

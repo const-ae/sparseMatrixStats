@@ -495,6 +495,22 @@ setMethod("rowRanks", signature(x = "dgCMatrix"),
 })
 
 
+
+#' @rdname colDiffs
+#'
+#' @export
+setGeneric("rowDiffs", function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L,...){
+  matrixStats::rowDiffs(as.matrix(x), rows = rows, cols = cols, lag = lag, differences=differences, ...)
+})
+
+#' @rdname colDiffs
+#' @export
+setMethod("rowDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...){
+  t(colDiffs(t(x), lag = lag, differences = differences, ...))
+})
+
+
 # VarDiffs
 
 #' @rdname colVarDiffs

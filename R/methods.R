@@ -575,6 +575,30 @@ setMethod("colRanks", signature(x = "dgCMatrix"),
 
 
 
+#' @inherit matrixStats::colDiffs
+#'
+#' @export
+setGeneric("colDiffs", function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L,...){
+  matrixStats::colDiffs(as.matrix(x), rows = rows, cols = cols, lag = lag, differences=differences, ...)
+})
+
+#' @rdname colDiffs
+#' @export
+setMethod("colDiffs", signature(x = "dgCMatrix"),
+          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...){
+  if(differences == 0){
+    x
+  }else{
+    reduce_sparse_matrix_to_matrix(x, n_result_rows = nrow(x) - differences * lag, function(values, row_indices, number_of_zeros){
+      tmp <- rep(0,  nrow(x))
+      tmp[row_indices+1] <- values
+      matrixStats::diff2(tmp, na.rm=na.rm, lag = lag, differences = differences, ...)
+    })
+  }
+})
+
+
+
 #' @inherit matrixStats::varDiff
 #'
 #' @export
