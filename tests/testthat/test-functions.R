@@ -2,8 +2,6 @@ set.seed(1)
 # source("tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow=15, ncol=10)
 sp_mat <- as(mat, "dgCMatrix")
-mat2 <- t(mat)
-sp_mat2 <- t(sp_mat)
 
 
 
@@ -194,7 +192,7 @@ test_that("colWeightedSds works", {
 
 
 
-test_that("diff methods works", {
+test_that("colXXdiff methods works", {
   expect_equal(colDiffs(sp_mat, diff = 1), matrixStats::colDiffs(mat, diff = 1))
   expect_equal(colDiffs(sp_mat, diff = 3), matrixStats::colDiffs(mat, diff = 3))
   expect_equal(colDiffs(sp_mat, diff = 3, lag= 2), matrixStats::colDiffs(mat, diff = 3, lag = 2))
@@ -218,30 +216,5 @@ test_that("diff methods works", {
   expect_equal(colIQRDiffs(sp_mat, diff = 3), matrixStats::colIQRDiffs(mat, diff = 3))
   expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
 
-
-
-  expect_equal(rowDiffs(sp_mat, diff = 1), matrixStats::rowDiffs(mat, diff = 1))
-  expect_equal(rowDiffs(sp_mat, diff = 3), matrixStats::rowDiffs(mat, diff = 3))
-  expect_equal(rowDiffs(sp_mat, diff = 3, lag= 2), matrixStats::rowDiffs(mat, diff = 3, lag = 2))
-
-  expect_equal(rowVarDiffs(sp_mat, diff = 0), matrixStats::rowVarDiffs(mat, diff = 0))
-  expect_equal(rowVarDiffs(sp_mat, diff = 1), matrixStats::rowVarDiffs(mat, diff = 1))
-  expect_equal(rowVarDiffs(sp_mat, diff = 3), matrixStats::rowVarDiffs(mat, diff = 3))
-  expect_equal(rowVarDiffs(sp_mat, na.rm=TRUE), matrixStats::rowVarDiffs(mat, na.rm=TRUE))
-
-  expect_equal(rowSdDiffs(sp_mat, diff = 0), matrixStats::rowSdDiffs(mat, diff = 0))
-  expect_equal(rowSdDiffs(sp_mat, diff = 1), matrixStats::rowSdDiffs(mat, diff = 1))
-  expect_equal(rowSdDiffs(sp_mat, diff = 3), matrixStats::rowSdDiffs(mat, diff = 3))
-  expect_equal(rowSdDiffs(sp_mat, na.rm=TRUE), matrixStats::rowSdDiffs(mat, na.rm=TRUE))
-
-  expect_equal(rowMadDiffs(sp_mat, diff = 0), matrixStats::rowMadDiffs(mat, diff = 0))
-  expect_equal(rowMadDiffs(sp_mat, diff = 1), matrixStats::rowMadDiffs(mat, diff = 1))
-  expect_equal(rowMadDiffs(sp_mat, diff = 3), matrixStats::rowMadDiffs(mat, diff = 3))
-  expect_equal(rowMadDiffs(sp_mat, na.rm=TRUE), matrixStats::rowMadDiffs(mat, na.rm=TRUE))
-
-  expect_equal(rowIQRDiffs(sp_mat, diff = 0), matrixStats::rowIQRDiffs(mat, diff = 0))
-  expect_equal(rowIQRDiffs(sp_mat, diff = 1), matrixStats::rowIQRDiffs(mat, diff = 1))
-  expect_equal(rowIQRDiffs(sp_mat, diff = 3), matrixStats::rowIQRDiffs(mat, diff = 3))
-  expect_equal(rowIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::rowIQRDiffs(mat, na.rm=TRUE))
 })
 
