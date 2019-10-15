@@ -124,7 +124,7 @@ test_that("colOrderStats works", {
 
   expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
   expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
-  expect_error(colOrderStats(no_na_sp_mat, which = 110))
+  expect_error(colOrderStats(no_na_sp_mat, which = 110)) # which should be larger than ncol(no_na_mat)
   expect_error(matrixStats::colOrderStats(no_na_mat, which = 110))
   skip("matrixStats::xxxOrderStats() does not support missing values")
   expect_equal(colOrderStats(sp_mat, which = 6), matrixStats::colOrderStats(mat, which = 6))

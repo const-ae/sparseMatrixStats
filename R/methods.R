@@ -108,7 +108,19 @@ setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
 
 # Prods
 
+#' Calculates the product for each row (column) in a matrix
+#'
+#' Calculates the product for each row (column) in a matrix
+#'
+#'
+#' Attention: This method ignores the order of the values, because it assumes that
+#' the product is commutative. Unfortunately, for 'double' this is not true.
+#' For example `NaN * NA = NaN`, but `NA * NaN = NA`. This is relevant for this
+#' function if there are `+-Inf`, because `Inf * 0 = NaN`. This function returns
+#' `NA` whenever there is `NA` in the input. This is different from `matrixStats::colProds()`.
+#'
 #' @inherit matrixStats::colProds
+#'
 #' @export
 setGeneric("colProds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   matrixStats::colProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)

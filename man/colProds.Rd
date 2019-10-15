@@ -39,14 +39,14 @@ Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
 length N (K).
 }
 \description{
-Calculates the product for each row (column) in a matrix.
+Calculates the product for each row (column) in a matrix
 }
 \details{
-If \code{method = "expSumLog"}, then then \code{\link{product}}() function is
-used, which calculates the produce via the logarithmic transform (treating
-negative values specially).  This improves the precision and lowers the risk
-for numeric overflow.  If \code{method = "direct"}, the direct product is
-calculated via the \code{\link[base]{prod}}() function.
+Attention: This method ignores the order of the values, because it assumes that
+the product is commutative. Unfortunately, for 'double' this is not true.
+For example `NaN * NA = NaN`, but `NA * NaN = NA`. This is relevant for this
+function if there are `+-Inf`, because `Inf * 0 = NaN`. This function returns
+`NA` whenever there is `NA` in the input. This is different from `matrixStats::colProds()`.
 }
 \section{Missing values}{
 
