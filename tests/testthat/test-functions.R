@@ -1,6 +1,6 @@
 set.seed(1)
 # source("tests/testthat/setup.R")
-mat <- make_matrix_with_all_features(nrow=10, ncol=6)
+mat <- make_matrix_with_all_features(nrow=15, ncol=10)
 sp_mat <- as(mat, "dgCMatrix")
 mat2 <- t(mat)
 sp_mat2 <- t(sp_mat)
@@ -124,8 +124,8 @@ test_that("colOrderStats works", {
 
   expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
   expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
-  expect_error(colOrderStats(no_na_sp_mat, which = 11))
-  expect_error(matrixStats::colOrderStats(no_na_mat, which = 11))
+  expect_error(colOrderStats(no_na_sp_mat, which = 110))
+  expect_error(matrixStats::colOrderStats(no_na_mat, which = 110))
   skip("matrixStats::xxxOrderStats() does not support missing values")
   expect_equal(colOrderStats(sp_mat, which = 6), matrixStats::colOrderStats(mat, which = 6))
   expect_equal(colOrderStats(sp_mat, which = 10, na.rm=TRUE), matrixStats::colOrderStats(mat, which = 6, na.rm=TRUE))

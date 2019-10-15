@@ -385,6 +385,9 @@ NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
       if(NumericVector::is_na(max)){
         return max;
       }
+      if(max == R_PosInf){
+        return R_PosInf;
+      }
       double sum = std::accumulate(values.begin(), values.end(), 0.0, [max](double a, double b) -> double {
         return a + exp(b-max);
       });
@@ -398,9 +401,14 @@ NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double {
+    bool any_inf = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
+      return d == R_PosInf || d == R_NegInf;
+    });
     if(na_rm){
-      if(number_of_zeros > 0){
+      if(number_of_zeros > 0 && !any_inf){
         return 0.0;
+      }else if(number_of_zeros > 0 && any_inf){
+        return R_NaN;
       }else{
         return std::accumulate(values.begin(), values.end(), 1.0, [](double a, double b) -> double { return a * b;});
       }
@@ -411,8 +419,10 @@ NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
       if(any_na){
         return NA_REAL;
       }else{
-        if(number_of_zeros > 0){
+        if(number_of_zeros > 0 && !any_inf){
           return 0.0;
+        }else if(number_of_zeros > 0 && any_inf){
+          return R_NaN;
         }else{
           return std::accumulate(values.begin(), values.end(), 1.0, [](double a, double b) { return a * b; });
         }

@@ -68,7 +68,13 @@ double quantile_sparse(T values, int number_of_zeros, double prob){
       }
     }
   }
-  return left_of_pivot + (right_of_pivot - left_of_pivot) * std::fmod(pivot, 1.0);
+  if(left_of_pivot == R_NegInf){
+    return R_NegInf;
+  }else if(right_of_pivot == R_PosInf){
+    return R_PosInf;
+  }else{
+    return left_of_pivot + (right_of_pivot - left_of_pivot) * std::fmod(pivot, 1.0);
+  }
 }
 
 // [[Rcpp::export]]
