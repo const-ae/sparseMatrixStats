@@ -108,7 +108,9 @@ test_that("colQuantiles works", {
 
 
 test_that("colTabulates works", {
-  int_mat <- matrix(as.integer(mat), nrow = nrow(mat), ncol = ncol(mat))
+  suppressWarnings({ # Suppress warning of Inf -> NA
+    int_mat <- matrix(as.integer(mat), nrow = nrow(mat), ncol = ncol(mat))
+  })
   int_sp_mat <- as(int_mat, "dgCMatrix")
   expect_equal(colTabulates(int_sp_mat), matrixStats::colTabulates(int_mat))
   values <- c(0, -2, NA, 3, 17)
