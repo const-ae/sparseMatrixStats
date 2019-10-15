@@ -1,5 +1,6 @@
 set.seed(1)
 # source("tests/testthat/setup.R")
+
 mat <- t(make_matrix_with_all_features(nrow=15, ncol=10))
 sp_mat <- as(mat, "dgCMatrix")
 
