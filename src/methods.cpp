@@ -767,6 +767,10 @@ NumericMatrix dgCMatrix_colCummins(S4 matrix){
   R_len_t nrows = dim[0];
   return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
+    if(nrows == 0){
+      // Without this escape hatch, the following code would segfault
+      return result;
+    }
     auto row_it = row_indices.begin();
     auto val_it = values.begin();
     auto res_it = result.begin();
@@ -804,6 +808,10 @@ NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
   R_len_t nrows = dim[0];
   return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
+    if(nrows == 0){
+      // Without this escape hatch, the following code would segfault
+      return result;
+    }
     auto row_it = row_indices.begin();
     auto val_it = values.begin();
     auto res_it = result.begin();
