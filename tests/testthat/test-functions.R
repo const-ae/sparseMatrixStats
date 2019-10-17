@@ -6,17 +6,18 @@ zero_col_mat <- matrix(numeric(0), nrow = 5, ncol = 0)
 empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
 matrix_with_zeros_only <- matrix(0, nrow = 15, ncol=10)
 matrix_list <- list(diverse_mat,
-                    # zero_row_mat,
+                    zero_row_mat,
                     # zero_col_mat,
                     # empty_mat,
                     matrix_with_zeros_only)
+# sp_mat <- as(mat, "dgCMatrix")
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
-                       # as(zero_row_mat, "dgCMatrix"),
+                       as(zero_row_mat, "dgCMatrix"),
                        # as(zero_col_mat, "dgCMatrix"),
                        # as(empty_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"))
 descriptions <- list("diverse",
-                     # "zero row",
+                     "zero row",
                      # "zero col",
                      # "empty",
                      "only zeros inside")
@@ -80,16 +81,11 @@ for(idx in seq_along(matrix_list)){
 
 
   test_that("colAnyNAs works", {
-    empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
-    sp_empty_mat <- as(empty_mat, "dgCMatrix")
     expect_equal(colAnyNAs(sp_mat), matrixStats::colAnyNAs(mat))
-    expect_equal(colAnyNAs(sp_empty_mat), matrixStats::colAnyNAs(empty_mat))
   })
 
 
   test_that("colAnys works", {
-    empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
-    sp_empty_mat <- as(empty_mat, "dgCMatrix")
     expect_equal(colAnys(sp_mat, value=0), matrixStats::colAnys(mat, value=0))
     expect_equal(colAnys(sp_mat, na.rm=TRUE, value=0), matrixStats::colAnys(mat, na.rm=TRUE, value = 0))
     # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
@@ -100,8 +96,6 @@ for(idx in seq_along(matrix_list)){
 
 
   test_that("colAlls works", {
-    empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
-    sp_empty_mat <- as(empty_mat, "dgCMatrix")
     expect_equal(colAlls(sp_mat, value=0), matrixStats::colAlls(mat, value=0))
     expect_equal(colAlls(sp_mat, na.rm=TRUE, value=0), matrixStats::colAlls(mat, na.rm=TRUE, value = 0))
     # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
@@ -136,7 +130,6 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colTabulates(int_sp_mat), matrixStats::colTabulates(int_mat))
     values <- c(0, -2, NA, 3, 17)
     expect_equal(colTabulates(int_sp_mat, values = values), matrixStats::colTabulates(int_mat, values = values))
-    expect_equal(rowTabulates(int_sp_mat, values = values), matrixStats::rowTabulates(int_mat, values = values))
   })
 
 
@@ -145,9 +138,11 @@ for(idx in seq_along(matrix_list)){
     no_na_mat[is.na(no_na_mat)] <- 99
     no_na_sp_mat <- as(no_na_mat, "dgCMatrix")
 
-    expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
-    expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
-    expect_error(colOrderStats(no_na_sp_mat, which = 110)) # which should be larger than ncol(no_na_mat)
+    if(nrow(no_na_mat) >= 6){
+      expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
+      expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
+    }
+    expect_error(colOrderStats(no_na_sp_mat, which = 110)) # which should be larger than nrow(no_na_mat)
     expect_error(matrixStats::colOrderStats(no_na_mat, which = 110))
     skip("matrixStats::xxxOrderStats() does not support missing values")
     expect_equal(colOrderStats(sp_mat, which = 6), matrixStats::colOrderStats(mat, which = 6))
@@ -169,9 +164,6 @@ for(idx in seq_along(matrix_list)){
   test_that("colRanks works", {
     expect_equal(colRanks(sp_mat), matrixStats::colRanks(mat))
     expect_equal(colRanks(sp_mat, ties.method = "average"), matrixStats::colRanks(mat, ties.method = "average"))
-
-    expect_equal(rowRanks(sp_mat), matrixStats::rowRanks(mat))
-    expect_equal(rowRanks(sp_mat, ties.method = "average"), matrixStats::rowRanks(mat, ties.method = "average"))
   })
 
 

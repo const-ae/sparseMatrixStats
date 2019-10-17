@@ -225,8 +225,10 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
     dgCMatrix_colMedians(x, na_rm = na.rm)
   }else{
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
-      if(length(values) == 0){
+      if(length(values) == 0 && number_of_zeros > 0){
         return(0.0)
+      }else if(length(values) == 0 && number_of_zeros > 0){
+        return(NA)
       }else{
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])
@@ -437,9 +439,11 @@ setGeneric("colTabulates", function(x, rows = NULL, cols = NULL, values = NULL, 
 setMethod("colTabulates", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, values = NULL, ...){
   if(is.null(values)){
+    zero_explicit_in_values <- FALSE
     values <- c(x@x, 0)
     unique_values <- sort(unique(values), na.last = TRUE)
   }else{
+    zero_explicit_in_values <- any(values == 0, na.rm=TRUE)
     unique_values <- unique(values)
   }
 
@@ -447,7 +451,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
   # Add dim names
   colnames(mat) <- unique_values
   rownames(mat) <- rownames(x)
-  if(all(mat[, "0"] == 0)){
+  if(! zero_explicit_in_values && all(mat[, "0"] == 0)){
     # Remove zero column is there is not a single zero in x
     mat <- mat[, -which(colnames(mat) == "0"), drop=FALSE]
   }
@@ -601,7 +605,7 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
   if(differences == 0){
     x
   }else{
-    reduce_sparse_matrix_to_matrix(x, n_result_rows = nrow(x) - differences * lag, function(values, row_indices, number_of_zeros){
+    reduce_sparse_matrix_to_matrix(x, n_result_rows = max(nrow(x) - differences * lag, 0), function(values, row_indices, number_of_zeros){
       tmp <- rep(0,  nrow(x))
       tmp[row_indices+1] <- values
       matrixStats::diff2(tmp, na.rm=na.rm, lag = lag, differences = differences, ...)

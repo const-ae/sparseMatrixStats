@@ -145,9 +145,6 @@ test_that("cumulative functions work", {
 test_that("rowRanks works", {
   expect_equal(rowRanks(sp_mat), matrixStats::rowRanks(mat))
   expect_equal(rowRanks(sp_mat, ties.method = "average"), matrixStats::rowRanks(mat, ties.method = "average"))
-
-  expect_equal(rowRanks(sp_mat), matrixStats::rowRanks(mat))
-  expect_equal(rowRanks(sp_mat, ties.method = "average"), matrixStats::rowRanks(mat, ties.method = "average"))
 })
 
 
