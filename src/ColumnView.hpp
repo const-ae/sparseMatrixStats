@@ -31,7 +31,11 @@ public:
     using pointer = col_container*;
     using difference_type = void;
 
-    iterator(ColumnView* cv_): cv(cv_), index(0) {}
+    iterator(ColumnView* cv_): cv(cv_), index(0) {
+      if(cv->matrix->ncol == 0){
+        cv = nullptr;
+      }
+    }
 
     col_container operator*() const {
       int start_pos = cv->matrix->col_ptrs[index];

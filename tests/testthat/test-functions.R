@@ -7,19 +7,18 @@ empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
 matrix_with_zeros_only <- matrix(0, nrow = 15, ncol=10)
 matrix_list <- list(diverse_mat,
                     zero_row_mat,
-                    # zero_col_mat,
-                    # empty_mat,
+                    zero_col_mat,
+                    empty_mat,
                     matrix_with_zeros_only)
-# sp_mat <- as(mat, "dgCMatrix")
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
-                       # as(zero_col_mat, "dgCMatrix"),
-                       # as(empty_mat, "dgCMatrix"),
+                       as(zero_col_mat, "dgCMatrix"),
+                       as(empty_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"))
 descriptions <- list("diverse",
                      "zero row",
-                     # "zero col",
-                     # "empty",
+                     "zero col",
+                     "empty",
                      "only zeros inside")
 
 
