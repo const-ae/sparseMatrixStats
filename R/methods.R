@@ -190,7 +190,7 @@ setMethod("colOrderStats", signature(x = "dgCMatrix"),
 #' @inherit matrixStats::colWeightedMeans
 #' @export
 setGeneric("colWeightedMeans", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colWeightedMeans(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+  matrixStats::colWeightedMeans(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colWeightedMeans
@@ -208,7 +208,7 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
 
 # Weighted Medians
 
-#' @inherit matrixStats::colWeightedMedians
+#' #inherit matrixStats::colWeightedMedians
 #' @export
 setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
                                           ties = NULL, ...){
@@ -285,6 +285,21 @@ setMethod("colWeightedSds", signature(x = "dgCMatrix"),
 # Weighted Mads
 
 #' @inherit matrixStats::colWeightedMads
+#'
+#' @examples
+#'   mat <- matrix(0, nrow=10, ncol=5)
+#'   mat[sample(prod(dim(mat)), 25)] <- rpois(n=25, 5)
+#'   sp_mat <- as(mat, "dgCMatrix")
+#'   weights <- rnorm(10, mean=1, sd=0.1)
+#'
+#'   # sparse version
+#'   sparseMatrixStats::colWeightedMads(sp_mat, weights)
+#'
+#'   # Attention the result differs from matrixStats
+#'   # because it always uses 'interpolate=FALSE'.
+#'   matrixStats::colWeightedMads(mat, weights)
+#'
+#'
 #' @export
 setGeneric("colWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
   matrixStats::colWeightedMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
