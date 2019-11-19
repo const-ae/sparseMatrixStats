@@ -208,11 +208,11 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
 
 # Weighted Medians
 
-#' #inherit matrixStats::colWeightedMedians
+#' @inherit matrixStats::colWeightedMedians
 #' @export
 setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
                                           ties = NULL, ...){
-  matrixStats::colWeightedMedians(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm,
+  matrixStats::colWeightedMedians(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm,
                                   interpolate = FALSE, ties = ties, ...)
 })
 
@@ -245,7 +245,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
 #' @inherit matrixStats::colWeightedVars
 #' @export
 setGeneric("colWeightedVars", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colWeightedVars(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+  matrixStats::colWeightedVars(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colWeightedVars
@@ -266,7 +266,7 @@ setMethod("colWeightedVars", signature(x = "dgCMatrix"),
 #' @inherit matrixStats::colWeightedSds
 #' @export
 setGeneric("colWeightedSds", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colWeightedSds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
+  matrixStats::colWeightedSds(as.matrix(x),w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colWeightedSds
@@ -302,7 +302,7 @@ setMethod("colWeightedSds", signature(x = "dgCMatrix"),
 #'
 #' @export
 setGeneric("colWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
-  matrixStats::colWeightedMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+  matrixStats::colWeightedMads(as.matrix(x), w = w, rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
 })
 
 #' @rdname colWeightedMads
