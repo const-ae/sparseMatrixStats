@@ -210,10 +210,8 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
 
 #' @inherit matrixStats::colWeightedMedians
 #' @export
-setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
-                                          ties = NULL, ...){
-  matrixStats::colWeightedMedians(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm,
-                                  interpolate = FALSE, ties = ties, ...)
+setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  matrixStats::colWeightedMedians(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
 })
 
 #' @rdname colWeightedMedians
