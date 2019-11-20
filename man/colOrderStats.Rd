@@ -33,6 +33,8 @@ is done.}
 indicating which order statistic to be returned.}
 
 \item{...}{Not used.}
+
+\item{na.rm}{If TRUE, NAs are excluded first, otherwise not.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

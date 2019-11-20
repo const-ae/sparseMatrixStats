@@ -252,9 +252,8 @@ setGeneric("rowWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, co
 #' @rdname colWeightedMads
 #' @export
 setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE,
-                   ties = NULL, ...){
-  colWeightedMads(t(x), w=w, rows=rows, cols=cols, constant = constant, na.rm=na.rm, ties = ties, ...)
+          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  colWeightedMads(t(x), w=w, rows=rows, cols=cols, constant = constant, na.rm=na.rm, ...)
 })
 
 

@@ -12,13 +12,13 @@ colWeightedMads(x, w = NULL, rows = NULL, cols = NULL,
   constant = 1.4826, na.rm = FALSE, ...)
 
 \S4method{colWeightedMads}{dgCMatrix}(x, w = NULL, rows = NULL,
-  cols = NULL, constant = 1.4826, na.rm = FALSE, ties = NULL, ...)
+  cols = NULL, constant = 1.4826, na.rm = FALSE, ...)
 
 rowWeightedMads(x, w = NULL, rows = NULL, cols = NULL,
   constant = 1.4826, na.rm = FALSE, ...)
 
 \S4method{rowWeightedMads}{dgCMatrix}(x, w = NULL, rows = NULL,
-  cols = NULL, constant = 1.4826, na.rm = FALSE, ties = NULL, ...)
+  cols = NULL, constant = 1.4826, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{a \code{\link[base]{numeric}} \code{\link[base]{vector}} containing
@@ -60,32 +60,19 @@ if argument \code{na.rm} is \code{\link[base:logical]{TRUE}}, otherwise not.
 }
 
 \examples{
-x <- 1:10
-n <- length(x)
+  mat <- matrix(0, nrow=10, ncol=5)
+  mat[sample(prod(dim(mat)), 25)] <- rpois(n=25, 5)
+  sp_mat <- as(mat, "dgCMatrix")
+  weights <- rnorm(10, mean=1, sd=0.1)
 
-m1 <- mad(x)
-m2 <- weightedMad(x)
-stopifnot(identical(m1, m2))
+  # sparse version
+  sparseMatrixStats::colWeightedMads(sp_mat, weights)
 
-w <- rep(1, times = n)
-m1 <- weightedMad(x, w)
-stopifnot(identical(m1, m2))
+  # Attention the result differs from matrixStats
+  # because it always uses 'interpolate=FALSE'.
+  matrixStats::colWeightedMads(mat, weights)
 
-# All weight on the first value
-w[1] <- Inf
-m <- weightedMad(x, w)
-stopifnot(m  == 0)
 
-# All weight on the first two values
-w[1:2] <- Inf
-m1 <- mad(x[1:2])
-m2 <- weightedMad(x, w)
-stopifnot(identical(m1, m2))
-
-# All weights set to zero
-w <- rep(0, times = n)
-m <- weightedMad(x, w)
-stopifnot(is.na(m))
 }
 \seealso{
 For the non-weighted MAD, see \code{\link[stats]{mad}}.  Internally

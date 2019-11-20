@@ -9,10 +9,10 @@
 \title{Calculates the weighted medians for each row (column) in a matrix}
 \usage{
 colWeightedMedians(x, w = NULL, rows = NULL, cols = NULL,
-  na.rm = FALSE, ties = NULL, ...)
+  na.rm = FALSE, ...)
 
 \S4method{colWeightedMedians}{dgCMatrix}(x, w = NULL, rows = NULL,
-  cols = NULL, na.rm = FALSE, ties = NULL, ...)
+  cols = NULL, na.rm = FALSE, ...)
 
 rowWeightedMedians(x, w = NULL, rows = NULL, cols = NULL,
   na.rm = FALSE, ...)

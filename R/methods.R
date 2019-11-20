@@ -167,6 +167,8 @@ setMethod("colMaxs", signature(x = "dgCMatrix"),
 # OrderStats
 
 #' @inherit matrixStats::colOrderStats
+#' @param na.rm If TRUE, NAs are excluded first, otherwise not.
+#'
 #' @export
 setGeneric("colOrderStats", function(x, rows = NULL, cols = NULL, which, ...){
   matrixStats::colOrderStats(as.matrix(x), rows = rows, cols = cols, which = which, ...)
@@ -217,8 +219,7 @@ setGeneric("colWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL,
 #' @rdname colWeightedMedians
 #' @export
 setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,
-                   ties = NULL, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(is.null(w)){
     dgCMatrix_colMedians(x, na_rm = na.rm)
   }else{
@@ -231,7 +232,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
-        matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ties = ties)
+        matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ...)
       }
     })
   }
@@ -306,8 +307,7 @@ setGeneric("colWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, co
 #' @rdname colWeightedMads
 #' @export
 setMethod("colWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE,
-                   ties = NULL, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
   if(is.null(w)){
     dgCMatrix_colMads(x, na_rm = na.rm)
   }else{
@@ -318,9 +318,9 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
-        center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ties = ties)
+        center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ...)
         x <- abs(new_vec - center)
-        sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE, ties = ties)
+        sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE, ...)
         # Rescale for normal distributions
         sigma <- constant * sigma
         sigma
@@ -621,7 +621,7 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
     reduce_sparse_matrix_to_matrix(x, n_result_rows = max(nrow(x) - differences * lag, 0), function(values, row_indices, number_of_zeros){
       tmp <- rep(0,  nrow(x))
       tmp[row_indices+1] <- values
-      matrixStats::diff2(tmp, na.rm=na.rm, lag = lag, differences = differences, ...)
+      matrixStats::diff2(tmp, lag = lag, differences = differences, ...)
     })
   }
 })
