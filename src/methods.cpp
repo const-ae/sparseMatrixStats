@@ -547,13 +547,17 @@ LogicalVector dgCMatrix_colAnys(S4 matrix, double value, bool na_rm){
     if(na_rm && value == 0.0){
       return number_of_zeros > 0;
     }else if(! na_rm && value == 0.0){
-      bool all_na = std::all_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
-      if(all_na && !values.is_empty()){
-        return NA_LOGICAL;
+      if(number_of_zeros > 0){
+        return true;
       }else{
-        return number_of_zeros > 0;
+        bool all_na = std::all_of(values.begin(), values.end(), [](const double d) -> bool {
+          return NumericVector::is_na(d);
+        });
+        if(all_na && !values.is_empty()){
+          return NA_LOGICAL;
+        }else{
+          return false;
+        }
       }
     }else if(na_rm){
       return std::any_of(values.begin(), values.end(),  [value](const double d) -> bool{
