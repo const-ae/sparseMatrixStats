@@ -32,7 +32,7 @@ public:
     using difference_type = void;
 
     iterator(ColumnView* cv_): cv(cv_), index(0) {
-      if(cv->matrix->ncol == 0){
+      if(cv != nullptr && cv->matrix->ncol == 0){
         cv = nullptr;
       }
     }

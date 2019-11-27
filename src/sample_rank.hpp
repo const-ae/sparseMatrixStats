@@ -23,7 +23,7 @@ std::vector<R> calculate_sparse_rank(VT vec, IT positions, int number_of_zeros,
   });
 
   // rank observed values
-  bool left_of_zero = vec[indx[0]] < 0;
+  bool left_of_zero = vec_size > 0 && vec[indx[0]] < 0;
   int zero_start_rank = 1;
   for(int n, i=0;i < vec_size; i += n){
     // This n stuff is for resolving ties.
