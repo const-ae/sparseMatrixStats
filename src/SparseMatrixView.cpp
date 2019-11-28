@@ -17,15 +17,15 @@ dgCMatrixView wrap_dgCMatrix(Rcpp::S4 sp_mat){
 }
 
 
-// [[Rcpp::export]]
-void print_matrix(Rcpp::S4 matrix){
-  auto sp_mat = wrap_dgCMatrix(matrix);
-
-  Rcout << "Hello Rcpp" << std::endl;
-  Rcout << sp_mat.ncol << std::endl;
-  Rcout << sp_mat.values.at(0) << std::endl;
-  Rcout << &sp_mat.values.get_ref().at(0) << std::endl;
-}
+// // [[Rcpp::export]]
+// void print_matrix(Rcpp::S4 matrix){
+//   auto sp_mat = wrap_dgCMatrix(matrix);
+//
+//   Rcout << "Hello Rcpp" << std::endl;
+//   Rcout << sp_mat.ncol << std::endl;
+//   Rcout << sp_mat.values.at(0) << std::endl;
+//   Rcout << &sp_mat.values.get_ref().at(0) << std::endl;
+// }
 
 
 

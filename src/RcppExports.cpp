@@ -5,16 +5,6 @@
 
 using namespace Rcpp;
 
-// print_matrix
-void print_matrix(Rcpp::S4 matrix);
-RcppExport SEXP _sparseMatrixStats_print_matrix(SEXP matrixSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::S4 >::type matrix(matrixSEXP);
-    print_matrix(matrix);
-    return R_NilValue;
-END_RCPP
-}
 // dgCMatrix_colSums2
 NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colSums2(SEXP matrixSEXP, SEXP na_rmSEXP) {
@@ -364,7 +354,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sparseMatrixStats_print_matrix", (DL_FUNC) &_sparseMatrixStats_print_matrix, 1},
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMeans2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMedians", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMedians, 2},
