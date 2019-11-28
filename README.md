@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats   28.4µs   32.5µs   30012.     7.76KB    18.0 
-#> 2 matrixStats            2ms    2.1ms     472.   162.31KB     2.03
-#> 3 apply                 13ms   15.4ms      65.3   17.23MB   131.
+#> 1 sparseMatrixStats   27.7µs  31.48µs   31103.     7.76KB    18.7 
+#> 2 matrixStats          1.9ms   2.03ms     484.   162.31KB     2.03
+#> 3 apply               13.4ms  14.15ms      69.5   17.23MB   120.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
@@ -179,3 +179,17 @@ implemented.
 | rowWeightedMedians() | ✔           | ✔                  | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
 | rowWeightedSds()     | ✔           | ✔                  | ✔                 |                                                                                          |
 | rowWeightedVars()    | ✔           | ✔                  | ✔                 |                                                                                          |
+
+## Build package from source on Windows
+
+The package uses modern C++ and thus requires a compiler that supports
+the C++14 standard. On Windows, it might be necessary to add the
+following lines to the `%HOMEPATH%/Documents/.R/Makevars.win` file:
+
+``` make
+CXX14=$(BINPREF)g++
+CXX14STD=-std=c++1y
+```
+
+See also the section of the *Writing R Extensions* manual on
+[C++14](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-C_002b_002b14-code).
