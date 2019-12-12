@@ -96,7 +96,7 @@ setMethod("rowMads", signature(x = "dgCMatrix"),
 #' @rdname colLogSumExps
 #' @export
 setGeneric("rowLogSumExps", function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+  matrixStats::rowLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, ...)
 })
 
 #' @rdname colLogSumExps
@@ -111,7 +111,7 @@ setMethod("rowLogSumExps", signature(lx = "dgCMatrix"),
 #' @rdname colProds
 #' @export
 setGeneric("rowProds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+  matrixStats::rowProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, ...)
 })
 
 #' @rdname colProds

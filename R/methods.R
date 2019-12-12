@@ -123,7 +123,7 @@ setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
 #'
 #' @export
 setGeneric("colProds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., ...)
+  matrixStats::colProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, ...)
 })
 
 #' @rdname colProds
