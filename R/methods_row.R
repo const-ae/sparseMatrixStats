@@ -2,77 +2,83 @@
 
 # Sum
 
-#' @rdname colSums2
-#' @export
-setGeneric("rowSums2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowSums2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colSums2
+#' @rdname colSums2-dgCMatrix-method
 #' @export
 setMethod("rowSums2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colSums2(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colSums2(t(x), na_rm = na.rm)
+})
 
 
 
 # Mean
 
-#' @rdname colMeans2
-#' @export
-setGeneric("rowMeans2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowMeans2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colMeans2
+#' @rdname colMeans2-dgCMatrix-method
 #' @export
 setMethod("rowMeans2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colMeans2(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colMeans2(t(x), na_rm = na.rm)
+})
 
 
 # Median
 
-#' @rdname colMedians
-#' @export
-setGeneric("rowMedians", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowMedians(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colMedians
+#' @rdname colMedians-dgCMatrix-method
 #' @export
 setMethod("rowMedians", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colMedians(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colMedians(t(x), na_rm = na.rm)
+})
+
 
 # Vars
 
-#' @rdname colVars
-#' @export
-setGeneric("rowVars", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowVars(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colVars
+#' @rdname colVars-dgCMatrix-method
 #' @export
 setMethod("rowVars", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colVars(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colVars(t(x), na_rm = na.rm)
+})
 
 
 # Sds
 
-#' @rdname colSds
-#' @export
-setGeneric("rowSds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowSds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colSds
+#' @rdname colSds-dgCMatrix-method
 #' @export
 setMethod("rowSds", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm)))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
+})
 
 
 
@@ -124,32 +130,34 @@ setMethod("rowProds", signature(x = "dgCMatrix"),
 
 # Min
 
-#' @rdname colMins
-#' @export
-setGeneric("rowMins", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowMins(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colMins
+#' @rdname colMins-dgCMatrix-method
 #' @export
 setMethod("rowMins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colMins(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colMins(t(x), na_rm = na.rm)
+})
 
 
 # Max
 
-#' @rdname colMaxs
-#' @export
-setGeneric("rowMaxs", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowMaxs(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colMaxs
+#' @rdname colMaxs-dgCMatrix-method
 #' @export
 setMethod("rowMaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colMaxs(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colMaxs(t(x), na_rm = na.rm)
+})
 
 
 # OrderStats
@@ -396,21 +404,21 @@ setMethod("rowIQRs", signature(x = "dgCMatrix"),
 
 # Ranges
 
-#' @rdname colRanges
-#' @export
-setGeneric("rowRanges", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowRanges(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colRanges
+#' @rdname colRanges-dgCMatrix-method
 #' @export
 setMethod("rowRanges", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-            tx <- t(x)
-            row_max <- colMaxs(tx, rows, cols, na.rm = na.rm)
-            row_max <- colMins(tx, rows, cols, na.rm = na.rm)
-            unname(cbind(row_max, row_max))
-          })
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  tx <- t(x)
+  row_max <- colMaxs(tx, rows, cols, na.rm = na.rm)
+  row_max <- colMins(tx, rows, cols, na.rm = na.rm)
+  unname(cbind(row_max, row_max))
+})
 
 
 
