@@ -18,6 +18,7 @@ LinkingTo:
 Imports: 
     Rcpp,
     Matrix,
+    MatrixGenerics,
     matrixStats,
     methods
 Suggests: 

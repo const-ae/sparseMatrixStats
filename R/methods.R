@@ -2,17 +2,20 @@
 
 # Sum
 
-#' @inherit matrixStats::colSums2
-#' @export
-setGeneric("colSums2", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::colSums2(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
 
-#' @rdname colSums2
+#' @inherit MatrixGenerics::colSums2
+#'
 #' @export
 setMethod("colSums2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colSums2(x, na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colSums2(x, na_rm = na.rm)
+})
 
 
 

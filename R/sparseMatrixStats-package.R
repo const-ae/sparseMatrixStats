@@ -13,4 +13,5 @@ NULL
 #' @importFrom Matrix t
 NULL
 
-
+#' @import MatrixGenerics
+NULL
