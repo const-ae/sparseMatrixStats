@@ -232,4 +232,13 @@ for(idx in seq_along(matrix_list)){
 
   })
 
+
+  test_that("colCollapse works", {
+
+    expect_equal(colCollapse(sp_mat, idxs = 1), matrixStats::colCollapse(mat, idxs = 1))
+    expect_equal(colCollapse(sp_mat, idxs = c(1,3)), matrixStats::colCollapse(mat, idxs = c(1,3)))
+    expect_equal(colCollapse(sp_mat, idxs = 1:5, cols = min(ncol(mat), 3)), matrixStats::colCollapse(mat, idxs = 1:5, cols = min(ncol(mat), 3)))
+
+  })
+
 }

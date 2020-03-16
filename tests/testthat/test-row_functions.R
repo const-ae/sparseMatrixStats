@@ -214,4 +214,12 @@ test_that("rowXXDiffs work", {
 })
 
 
+test_that("rowCollapse works", {
+
+  expect_equal(rowCollapse(sp_mat, idxs = 1), matrixStats::rowCollapse(mat, idxs = 1))
+  expect_equal(rowCollapse(sp_mat, idxs = c(1,3)), matrixStats::rowCollapse(mat, idxs = c(1,3)))
+  expect_equal(rowCollapse(sp_mat, idxs = 1:5, cols = 3), matrixStats::rowCollapse(mat, idxs = 1:5, cols = 3))
+
+})
+
 

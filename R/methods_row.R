@@ -341,6 +341,18 @@ setGeneric("rowCollapse", function(x, idxs, rows = NULL, cols = NULL,  ...){
 setMethod("rowCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, rows = NULL, cols = NULL, ...)
             x[idxs, ])
+          function(x, idxs, rows = NULL, ...){
+  if (!is.null(rows)) {
+    x <- x[rows, , drop = FALSE]
+    idxs <- idxs[rows]
+  }
+  idxs <- rep(idxs, length.out = nrow(x))
+  cols <- seq_len(ncol(x)) - 1L
+  cols <- cols[idxs]
+  idxs <- nrow(x) * cols + seq_len(nrow(x))
+  cols <- NULL
+  x[idxs]
+})
 
 
 
