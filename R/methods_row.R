@@ -84,47 +84,50 @@ setMethod("rowSds", signature(x = "dgCMatrix"),
 
 # Mads
 
-#' @rdname colMads
-#' @export
-setGeneric("rowMads", function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
-  matrixStats::rowMads(as.matrix(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
-})
-
-#' @rdname colMads
+#' @rdname colMads-dgCMatrix-method
 #' @export
 setMethod("rowMads", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...)
-            colMads(t(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...))
+          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  colMads(t(x), rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
+})
 
 
 # LogSumExp
 
-#' @rdname colLogSumExps
-#' @export
-setGeneric("rowLogSumExps", function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowLogSumExps(as.matrix(lx), rows = rows, cols = cols, na.rm = na.rm, center = center, ...)
-})
-
-#' @rdname colLogSumExps
+#' @rdname colLogSumExps-dgCMatrix-method
 #' @export
 setMethod("rowLogSumExps", signature(lx = "dgCMatrix"),
-          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm))
+          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm)
+})
 
 
 # Prods
 
-#' @rdname colProds
-#' @export
-setGeneric("rowProds", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowProds(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, center = center, ...)
-})
-
-#' @rdname colProds
+#' @rdname colProds-dgCMatrix-method
 #' @export
 setMethod("rowProds", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...)
-            dgCMatrix_colProds(t(x), na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colProds(t(x), na_rm = na.rm)
+})
 
 
 
@@ -162,18 +165,18 @@ setMethod("rowMaxs", signature(x = "dgCMatrix"),
 
 # OrderStats
 
-#' @rdname colOrderStats
-#' @export
-setGeneric("rowOrderStats", function(x, rows = NULL, cols = NULL, which, ...){
-  matrixStats::rowOrderStats(as.matrix(x), rows = rows, cols = cols, which = which, ...)
-})
-
-#' @rdname colOrderStats
+#' @rdname colOrderStats-dgCMatrix-method
 #' @export
 setMethod("rowOrderStats", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE, ...){
   if(which < 1 || which > ncol(x)){
     stop("Argument 'which' is out of range.")
+  }
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
   }
   dgCMatrix_colOrderStats(t(x), which = which, na_rm = na.rm)
 })
@@ -182,13 +185,7 @@ setMethod("rowOrderStats", signature(x = "dgCMatrix"),
 
 # Weighted Means
 
-#' @rdname colWeightedMeans
-#' @export
-setGeneric("rowWeightedMeans", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowWeightedMeans(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colWeightedMeans
+#' @rdname colWeightedMeans-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMeans", signature(x = "dgCMatrix"),
     function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
@@ -198,13 +195,7 @@ setMethod("rowWeightedMeans", signature(x = "dgCMatrix"),
 
 # Weighted Medians
 
-#' @rdname colWeightedMedians
-#' @export
-setGeneric("rowWeightedMedians", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowWeightedMedians(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colWeightedMedians
+#' @rdname colWeightedMedians-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMedians", signature(x = "dgCMatrix"),
     function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
@@ -214,13 +205,7 @@ setMethod("rowWeightedMedians", signature(x = "dgCMatrix"),
 
 # Weighted Vars
 
-#' @rdname colWeightedVars
-#' @export
-setGeneric("rowWeightedVars", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowWeightedVars(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colWeightedVars
+#' @rdname colWeightedVars-dgCMatrix-method
 #' @export
 setMethod("rowWeightedVars", signature(x = "dgCMatrix"),
 function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
@@ -231,112 +216,104 @@ function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
 
 # Weighted Sds
 
-#' @rdname colWeightedSds
-#' @export
-setGeneric("rowWeightedSds", function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowWeightedSds(as.matrix(x), w = w, rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colWeightedSds
+#' @rdname colWeightedSds-dgCMatrix-method
 #' @export
 setMethod("rowWeightedSds", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-            if(is.null(w)){
-              sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
-            }else{
-              sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm))
-            }
-          })
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  if(is.null(w)){
+    sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
+  }else{
+    sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm))
+  }
+})
 
 
 # Weighted Mads
 
-#' @rdname colWeightedMads
-#' @export
-setGeneric("rowWeightedMads", function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
-  matrixStats::rowWeightedMads(as.matrix(x), w = w, rows = rows, cols = cols, constant = constant, na.rm = na.rm, ...)
-})
-
-#' @rdname colWeightedMads
+#' @rdname colWeightedMads-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
-  colWeightedMads(t(x), w=w, rows=rows, cols=cols, constant = constant, na.rm=na.rm, ...)
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826, ...){
+  colWeightedMads(t(x), w=w, rows=rows, cols=cols, na.rm=na.rm, constant = constant, ...)
 })
 
 
 
 # Count
 
-#' @rdname colCounts
-#' @export
-setGeneric("rowCounts", function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
-  matrixStats::rowCounts(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colCounts
+#' @rdname colCounts-dgCMatrix-method
 #' @export
 setMethod("rowCounts", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
-            dgCMatrix_colCounts(t(x), value, na_rm = na.rm))
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colCounts(t(x), value, na_rm = na.rm)
+})
 
 
 # AnyNA
 
-#' @rdname colAnyNAs
-#' @export
-setGeneric("rowAnyNAs", function(x, rows = NULL, cols = NULL, ...){
-  matrixStats::rowAnyNAs(as.matrix(x), rows = rows, cols = cols, ...)
-})
-
-#' @rdname colAnyNAs
+#' @rdname colAnyNAs-dgCMatrix-method
 #' @export
 setMethod("rowAnyNAs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...)
-            dgCMatrix_colAnyNAs(t(x)))
+          function(x, rows = NULL, cols = NULL, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colAnyNAs(t(x))
+})
 
 
 # Anys
 
-#' @rdname colAnys
-#' @export
-setGeneric("rowAnys", function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
-  matrixStats::rowAnys(as.matrix(x), rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
-})
-
-#' @rdname colAnys
+#' @rdname colAnys-dgCMatrix-method
 #' @export
 setMethod("rowAnys", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
-            dgCMatrix_colAnys(t(x), value, na_rm=na.rm))
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colAnys(t(x), value, na_rm=na.rm)
+})
 
 
 
 # Alls
 
-#' @rdname colAlls
-#' @export
-setGeneric("rowAlls", function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
-  matrixStats::rowAlls(as.matrix(x), rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
-})
-
-#' @rdname colAlls
+#' @rdname colAlls-dgCMatrix-method
 #' @export
 setMethod("rowAlls", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...)
-            dgCMatrix_colAlls(t(x), value, na_rm=na.rm))
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  dgCMatrix_colAlls(t(x), value, na_rm=na.rm)
+})
 
 
 
 # Collapse
 
-#' @rdname colCollapse
-#' @export
-setGeneric("rowCollapse", function(x, idxs, rows = NULL, cols = NULL,  ...){
-  matrixStats::rowCollapse(as.matrix(x), idxs, rows = rows, cols = cols, value = value, na.rm = na.rm, ...)
-})
-
-#' @rdname colCollapse
+#' @rdname colCollapse-dgCMatrix-method
 #' @export
 setMethod("rowCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, rows = NULL, ...){
@@ -357,35 +334,29 @@ setMethod("rowCollapse", signature(x = "dgCMatrix"),
 
 # Quantiles
 
-#' @rdname colQuantiles
-#' @export
-setGeneric("rowQuantiles", function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
-  matrixStats::rowQuantiles(as.matrix(x), rows = rows, cols = cols, probs = probs, na.rm = na.rm, ...)
-})
-
-#' @rdname colQuantiles
+#' @rdname colQuantiles-dgCMatrix-method
 #' @export
 setMethod("rowQuantiles", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
-            mat <- dgCMatrix_colQuantiles(t(x), probs, na_rm = na.rm)
-            # Add dim names
-            digits <- max(2L, getOption("digits"))
-            colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
-            rownames(mat) <- rownames(x)
-            mat
-          })
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  mat <- dgCMatrix_colQuantiles(t(x), probs, na_rm = na.rm)
+  # Add dim names
+  digits <- max(2L, getOption("digits"))
+  colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
+  rownames(mat) <- rownames(x)
+  mat
+})
 
 
 
 # Tabulates
 
-#' @rdname colTabulates
-#' @export
-setGeneric("rowTabulates", function(x, rows = NULL, cols = NULL, values = NULL, ...){
-  matrixStats::rowTabulates(as.matrix(x), rows = rows, cols = cols, values = values, ...)
-})
-
-#' @rdname colTabulates
+#' @rdname colTabulates-dgCMatrix-method
 #' @export
 setMethod("rowTabulates", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, values = NULL, ...){
@@ -396,19 +367,19 @@ setMethod("rowTabulates", signature(x = "dgCMatrix"),
 
 # IQRs
 
-#' @rdname colIQRs
-#' @export
-setGeneric("rowIQRs", function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  matrixStats::rowIQRs(as.matrix(x), rows = rows, cols = cols, na.rm = na.rm, ...)
-})
-
-#' @rdname colIQRs
+#' @rdname colIQRs-dgCMatrix-method
 #' @export
 setMethod("rowIQRs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-            col_q <- colQuantiles(t(x), rows, cols, probs=c(0.25, 0.75), na.rm = na.rm)
-            col_q[,2] - col_q[,1]
-          })
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm)
+  col_q[,2] - col_q[,1]
+})
 
 
 
@@ -434,112 +405,116 @@ setMethod("rowRanges", signature(x = "dgCMatrix"),
 
 # Cumsums
 
-#' @rdname colCumsums
-#' @export
-setGeneric("rowCumsums", function(x, rows = NULL, cols = NULL, ...){
-  matrixStats::rowCumsums(as.matrix(x), rows = rows, cols = cols, ...)
-})
-
-#' @rdname colCumsums
+#' @rdname colCumsums-dgCMatrix-method
 #' @export
 setMethod("rowCumsums", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...)
-            t(dgCMatrix_colCumsums(t(x))))
+          function(x, rows = NULL, cols = NULL, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  t(dgCMatrix_colCumsums(t(x)))
+})
 
 
 
 # Cumprods
 
-#' @rdname colCumprods
-#' @export
-setGeneric("rowCumprods", function(x, rows = NULL, cols = NULL, ...){
-  matrixStats::rowCumprods(as.matrix(x), rows = rows, cols = cols, ...)
-})
-
-#' @rdname colCumprods
+#' @rdname colCumprods-dgCMatrix-method
 #' @export
 setMethod("rowCumprods", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...)
-            t(dgCMatrix_colCumprods(t(x))))
+          function(x, rows = NULL, cols = NULL, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  t(dgCMatrix_colCumprods(t(x)))
+})
 
 
 
 # Cummins
 
-#' @rdname colCummins
-#' @export
-setGeneric("rowCummins", function(x, rows = NULL, cols = NULL, ...){
-  matrixStats::rowCummins(as.matrix(x), rows = rows, cols = cols, ...)
-})
-
-#' @rdname colCummins
+#' @rdname colCummins-dgCMatrix-method
 #' @export
 setMethod("rowCummins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...)
-            t(dgCMatrix_colCummins(t(x))))
+          function(x, rows = NULL, cols = NULL, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  t(dgCMatrix_colCummins(t(x)))
+})
 
 
 
 # Cummaxs
 
-#' @rdname colCummaxs
-#' @export
-setGeneric("rowCummaxs", function(x, rows = NULL, cols = NULL, ...){
-  matrixStats::rowCummaxs(as.matrix(x), rows = rows, cols = cols, ...)
-})
-
-#' @rdname colCummaxs
+#' @rdname colCummaxs-dgCMatrix-method
 #' @export
 setMethod("rowCummaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...)
-            t(dgCMatrix_colCummaxs(t(x))))
+          function(x, rows = NULL, cols = NULL, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
+  t(dgCMatrix_colCummaxs(t(x)))
+})
 
 
 
 # Ranks
 
-#' @rdname colRanks
-#' @export
-setGeneric("rowRanks", function(x, rows = NULL, cols = NULL, ties.method = c("max", "average", "min"), preserve.shape = TRUE, ...){
-  matrixStats::rowRanks(as.matrix(x), rows = rows, cols = cols, ties.method = ties.method, preserveShape = preserve.shape, ...)
-})
-
-#' @rdname colRanks
+#' @rdname colRanks-dgCMatrix-method
 #' @export
 setMethod("rowRanks", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = TRUE, na.handling = c("keep", "last"), ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   colRanks(t(x), ties.method = ties.method, preserve.shape = !preserve.shape, na.handling = na.handling, ...)
 })
 
 
 
-#' @rdname colDiffs
-#'
-#' @export
-setGeneric("rowDiffs", function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L,...){
-  matrixStats::rowDiffs(as.matrix(x), rows = rows, cols = cols, lag = lag, differences=differences, ...)
-})
+#' @rdname colDiffs-dgCMatrix-method
 
-#' @rdname colDiffs
 #' @export
 setMethod("rowDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   t(colDiffs(t(x), lag = lag, differences = differences, ...))
 })
 
 
 # VarDiffs
 
-#' @rdname colVarDiffs
-#' @export
-setGeneric("rowVarDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
-  matrixStats::rowVarDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
-})
-
-#' @rdname colVarDiffs
+#' @rdname colVarDiffs-dgCMatrix-method
 #' @export
 setMethod("rowVarDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   colVarDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
 })
 
@@ -547,16 +522,16 @@ setMethod("rowVarDiffs", signature(x = "dgCMatrix"),
 
 # SdDiffs
 
-#' @rdname colSdDiffs
-#' @export
-setGeneric("rowSdDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
-  matrixStats::rowSdDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
-})
-
-#' @rdname colSdDiffs
+#' @rdname colSdDiffs-dgCMatrix-method
 #' @export
 setMethod("rowSdDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   colSdDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
 })
 
@@ -564,16 +539,16 @@ setMethod("rowSdDiffs", signature(x = "dgCMatrix"),
 
 # MadDiffs
 
-#' @rdname colMadDiffs
-#' @export
-setGeneric("rowMadDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
-  matrixStats::rowMadDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, constant = constant, ...)
-})
-
-#' @rdname colMadDiffs
+#' @rdname colMadDiffs-dgCMatrix-method
 #' @export
 setMethod("rowMadDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   colMadDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, constant = constant, ...)
 })
 
@@ -581,16 +556,16 @@ setMethod("rowMadDiffs", signature(x = "dgCMatrix"),
 
 # IQRDiffs
 
-#' @rdname colIQRDiffs
-#' @export
-setGeneric("rowIQRDiffs", function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
-  matrixStats::rowIQRDiffs(as.matrix(x), rows = rows, cols = cols, na.rm=na.rm, diff=diff, trim = trim, ...)
-})
-
-#' @rdname colIQRDiffs
+#' @rdname colIQRDiffs-dgCMatrix-method
 #' @export
 setMethod("rowIQRDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+  if(! is.null(rows)){
+    x <- x[rows, , drop = FALSE]
+  }
+  if(! is.null(cols)){
+    x <- x[, cols, drop = FALSE]
+  }
   colIQRDiffs(t(x), na.rm=na.rm, diff=diff, trim = trim, ...)
 })
 

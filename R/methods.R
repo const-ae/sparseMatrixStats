@@ -658,7 +658,7 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
 
 
 
-#' @inherit MatrixGenerics::varDiff
+#' @inherit MatrixGenerics::colVarDiffs
 #'
 #' @export
 setMethod("colVarDiffs", signature(x = "dgCMatrix"),
@@ -684,7 +684,7 @@ setMethod("colVarDiffs", signature(x = "dgCMatrix"),
 
 
 
-#' @inherit MatrixGenerics::varDiff
+#' @inherit MatrixGenerics::colSdDiffs
 #'
 #' @export
 setMethod("colSdDiffs", signature(x = "dgCMatrix"),
@@ -709,7 +709,7 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
 
 
 
-#' @inherit MatrixGenerics::varDiff
+#' @inherit MatrixGenerics::colMadDiffs
 #'
 #' @export
 setMethod("colMadDiffs", signature(x = "dgCMatrix"),
@@ -734,7 +734,7 @@ setMethod("colMadDiffs", signature(x = "dgCMatrix"),
 
 
 
-#' @inherit MatrixGenerics::varDiff
+#' @inherit MatrixGenerics::colIQRDiffs
 #'
 #' @export
 setMethod("colIQRDiffs", signature(x = "dgCMatrix"),
