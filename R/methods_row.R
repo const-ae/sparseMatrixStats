@@ -339,8 +339,6 @@ setGeneric("rowCollapse", function(x, idxs, rows = NULL, cols = NULL,  ...){
 #' @rdname colCollapse
 #' @export
 setMethod("rowCollapse", signature(x = "dgCMatrix"),
-          function(x, idxs, rows = NULL, cols = NULL, ...)
-            x[idxs, ])
           function(x, idxs, rows = NULL, ...){
   if (!is.null(rows)) {
     x <- x[rows, , drop = FALSE]
