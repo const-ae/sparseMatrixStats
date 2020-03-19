@@ -9,7 +9,7 @@ Description: High performance functions for row and column operations on sparse 
     the optimizations are limited to data in the column sparse format. In addition,
     row and column subsetting is not supported. This package is inspired by the 
     matrixStats package by Henrik Bengtsson.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
