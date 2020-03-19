@@ -313,45 +313,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// subset_sum
-double subset_sum(NumericVector v, R_len_t start, R_len_t end);
-RcppExport SEXP _sparseMatrixStats_subset_sum(SEXP vSEXP, SEXP startSEXP, SEXP endSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type start(startSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type end(endSEXP);
-    rcpp_result_gen = Rcpp::wrap(subset_sum(v, start, end));
-    return rcpp_result_gen;
-END_RCPP
-}
-// subset_sum_without_na
-double subset_sum_without_na(NumericVector v, R_len_t start, R_len_t end);
-RcppExport SEXP _sparseMatrixStats_subset_sum_without_na(SEXP vSEXP, SEXP startSEXP, SEXP endSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type start(startSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type end(endSEXP);
-    rcpp_result_gen = Rcpp::wrap(subset_sum_without_na(v, start, end));
-    return rcpp_result_gen;
-END_RCPP
-}
-// matrix_subset_sum
-NumericVector matrix_subset_sum(Rcpp::S4 matrix, R_len_t start, R_len_t end);
-RcppExport SEXP _sparseMatrixStats_matrix_subset_sum(SEXP matrixSEXP, SEXP startSEXP, SEXP endSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::S4 >::type matrix(matrixSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type start(startSEXP);
-    Rcpp::traits::input_parameter< R_len_t >::type end(endSEXP);
-    rcpp_result_gen = Rcpp::wrap(matrix_subset_sum(matrix, start, end));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
@@ -379,9 +340,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colRanks_num", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_num, 4},
     {"_sparseMatrixStats_dgCMatrix_colRanks_int", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_int, 4},
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
-    {"_sparseMatrixStats_subset_sum", (DL_FUNC) &_sparseMatrixStats_subset_sum, 3},
-    {"_sparseMatrixStats_subset_sum_without_na", (DL_FUNC) &_sparseMatrixStats_subset_sum_without_na, 3},
-    {"_sparseMatrixStats_matrix_subset_sum", (DL_FUNC) &_sparseMatrixStats_matrix_subset_sum, 3},
     {NULL, NULL, 0}
 };
 

@@ -101,15 +101,3 @@ quantile_sparse <- function(values, number_of_zeros, prob) {
     .Call('_sparseMatrixStats_quantile_sparse', PACKAGE = 'sparseMatrixStats', values, number_of_zeros, prob)
 }
 
-subset_sum <- function(v, start, end) {
-    .Call('_sparseMatrixStats_subset_sum', PACKAGE = 'sparseMatrixStats', v, start, end)
-}
-
-subset_sum_without_na <- function(v, start, end) {
-    .Call('_sparseMatrixStats_subset_sum_without_na', PACKAGE = 'sparseMatrixStats', v, start, end)
-}
-
-matrix_subset_sum <- function(matrix, start, end) {
-    .Call('_sparseMatrixStats_matrix_subset_sum', PACKAGE = 'sparseMatrixStats', matrix, start, end)
-}
-
