@@ -204,6 +204,7 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
+    w <- w[rows]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
@@ -225,6 +226,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
+    w <- w[rows]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
@@ -256,6 +258,7 @@ setMethod("colWeightedVars", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
+    w <- w[rows]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
@@ -277,6 +280,7 @@ setMethod("colWeightedSds", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
+    w <- w[rows]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
@@ -314,6 +318,7 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
   if(! is.null(center)) stop("colWeightedMads does not support the 'center' argument.")
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
+    w <- w[rows]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
@@ -422,9 +427,11 @@ setMethod("colCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, cols = NULL, ...){
   if (!is.null(cols)) {
     x <- x[, cols, drop = FALSE]
+    idxs <- rep(idxs, length.out = nrow(x))
     idxs <- idxs[cols]
+  }else{
+    idxs <- rep(idxs, length.out = ncol(x))
   }
-  idxs <- rep(idxs, length.out = ncol(x))
   rows <- seq_len(nrow(x))
   rows <- rows[idxs]
   idxs <- nrow(x) * (seq_len(ncol(x)) - 1L) + rows
