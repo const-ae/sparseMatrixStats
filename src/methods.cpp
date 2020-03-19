@@ -214,7 +214,7 @@ NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
       }
     }
     R_len_t size = values.size();
-    if(number_of_zeros > size/2.0){
+    if(number_of_zeros > size){
       // Easy escape hatch
       return 0.0;
     }
@@ -261,7 +261,7 @@ NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
       }
     }
     R_len_t size = values.size();
-    if(number_of_zeros > size/2.0){
+    if(number_of_zeros > size){
       // Easy escape hatch
       return 0.0;
     }
