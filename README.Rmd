@@ -115,7 +115,6 @@ notes <- c("colAnyMissings"="Not implemented because it is deprecated in favor o
 api_df <- data.frame(
   Method = paste0(matrixStats_functions, "()"),
   matrixStats = ifelse(matrixStats_functions %in% matrixStats_functions, "✔", "❌"),
-  DelayedMatrixStats = ifelse(matrixStats_functions %in% c(DelayedMatrixStats_functions, DelayedArray_functions), "✔", "❌"),
   sparseMatrixStats = ifelse(matrixStats_functions %in%sparseMatrixStats_functions, "✔", "❌"),
   Notes = ifelse(matrixStats_functions %in% names(notes), notes[matrixStats_functions], ""),
   stringsAsFactors = FALSE

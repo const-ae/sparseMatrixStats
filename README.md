@@ -83,9 +83,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats   27.7µs  31.48µs   31103.     7.76KB    18.7 
-#> 2 matrixStats          1.9ms   2.03ms     484.   162.31KB     2.03
-#> 3 apply               13.4ms  14.15ms      69.5   17.23MB   120.
+#> 1 sparseMatrixStats  29.42µs  32.31µs   29947.     7.76KB     15.0
+#> 2 matrixStats         2.05ms   2.13ms     462.   162.31KB      0  
+#> 3 apply              15.99ms  17.44ms      56.7   17.23MB    138.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
@@ -101,84 +101,84 @@ which already have. In particular the `colXXXDiff()` functions have not
 yet been
 implemented.
 
-| Method               | matrixStats | DelayedMatrixStats | sparseMatrixStats | Notes                                                                                    |
-| :------------------- | :---------- | :----------------- | :---------------- | :--------------------------------------------------------------------------------------- |
-| colAlls()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated in favor of `colAnyNAs()`                       |
-| colAnyNAs()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| colAnys()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colAvgsPerRowSet()   | ✔           | ✔                  | ❌                 |                                                                                          |
-| colCollapse()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| colCounts()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| colCummaxs()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| colCummins()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| colCumprods()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| colCumsums()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| colDiffs()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| colIQRDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| colIQRs()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colLogSumExps()      | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMadDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMads()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMaxs()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMeans2()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMedians()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| colMins()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colOrderStats()      | ✔           | ✔                  | ✔                 |                                                                                          |
-| colProds()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| colQuantiles()       | ✔           | ✔                  | ✔                 |                                                                                          |
-| colRanges()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| colRanks()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| colSdDiffs()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| colSds()             | ✔           | ✔                  | ✔                 |                                                                                          |
-| colsum()             | ✔           | ✔                  | ❌                 | Base R function                                                                          |
-| colSums2()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| colTabulates()       | ✔           | ✔                  | ✔                 |                                                                                          |
-| colVarDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| colVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| colWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
-| colWeightedMeans()   | ✔           | ✔                  | ✔                 |                                                                                          |
-| colWeightedMedians() | ✔           | ✔                  | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
-| colWeightedSds()     | ✔           | ✔                  | ✔                 |                                                                                          |
-| colWeightedVars()    | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowAlls()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowAnyMissings()     | ✔           | ✔                  | ❌                 | Not implemented because it is deprecated in favor of `rowAnyNAs()`                       |
-| rowAnyNAs()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowAnys()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowAvgsPerColSet()   | ✔           | ✔                  | ❌                 |                                                                                          |
-| rowCollapse()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowCounts()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowCummaxs()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowCummins()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowCumprods()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowCumsums()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowDiffs()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowIQRDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowIQRs()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowLogSumExps()      | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMadDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMads()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMaxs()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMeans2()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMedians()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowMins()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowOrderStats()      | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowProds()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowQuantiles()       | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowRanges()          | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowRanks()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowSdDiffs()         | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowSds()             | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowsum()             | ✔           | ✔                  | ❌                 | Base R function                                                                          |
-| rowSums2()           | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowTabulates()       | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowVarDiffs()        | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowVars()            | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowWeightedMads()    | ✔           | ✔                  | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
-| rowWeightedMeans()   | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowWeightedMedians() | ✔           | ✔                  | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
-| rowWeightedSds()     | ✔           | ✔                  | ✔                 |                                                                                          |
-| rowWeightedVars()    | ✔           | ✔                  | ✔                 |                                                                                          |
+| Method               | matrixStats | sparseMatrixStats | Notes                                                                                    |
+| :------------------- | :---------- | :---------------- | :--------------------------------------------------------------------------------------- |
+| colAlls()            | ✔           | ✔                 |                                                                                          |
+| colAnyMissings()     | ✔           | ❌                 | Not implemented because it is deprecated in favor of `colAnyNAs()`                       |
+| colAnyNAs()          | ✔           | ✔                 |                                                                                          |
+| colAnys()            | ✔           | ✔                 |                                                                                          |
+| colAvgsPerRowSet()   | ✔           | ❌                 |                                                                                          |
+| colCollapse()        | ✔           | ✔                 |                                                                                          |
+| colCounts()          | ✔           | ✔                 |                                                                                          |
+| colCummaxs()         | ✔           | ✔                 |                                                                                          |
+| colCummins()         | ✔           | ✔                 |                                                                                          |
+| colCumprods()        | ✔           | ✔                 |                                                                                          |
+| colCumsums()         | ✔           | ✔                 |                                                                                          |
+| colDiffs()           | ✔           | ✔                 |                                                                                          |
+| colIQRDiffs()        | ✔           | ✔                 |                                                                                          |
+| colIQRs()            | ✔           | ✔                 |                                                                                          |
+| colLogSumExps()      | ✔           | ✔                 |                                                                                          |
+| colMadDiffs()        | ✔           | ✔                 |                                                                                          |
+| colMads()            | ✔           | ✔                 |                                                                                          |
+| colMaxs()            | ✔           | ✔                 |                                                                                          |
+| colMeans2()          | ✔           | ✔                 |                                                                                          |
+| colMedians()         | ✔           | ✔                 |                                                                                          |
+| colMins()            | ✔           | ✔                 |                                                                                          |
+| colOrderStats()      | ✔           | ✔                 |                                                                                          |
+| colProds()           | ✔           | ✔                 |                                                                                          |
+| colQuantiles()       | ✔           | ✔                 |                                                                                          |
+| colRanges()          | ✔           | ✔                 |                                                                                          |
+| colRanks()           | ✔           | ✔                 |                                                                                          |
+| colSdDiffs()         | ✔           | ✔                 |                                                                                          |
+| colSds()             | ✔           | ✔                 |                                                                                          |
+| colsum()             | ✔           | ❌                 | Base R function                                                                          |
+| colSums2()           | ✔           | ✔                 |                                                                                          |
+| colTabulates()       | ✔           | ✔                 |                                                                                          |
+| colVarDiffs()        | ✔           | ✔                 |                                                                                          |
+| colVars()            | ✔           | ✔                 |                                                                                          |
+| colWeightedMads()    | ✔           | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
+| colWeightedMeans()   | ✔           | ✔                 |                                                                                          |
+| colWeightedMedians() | ✔           | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
+| colWeightedSds()     | ✔           | ✔                 |                                                                                          |
+| colWeightedVars()    | ✔           | ✔                 |                                                                                          |
+| rowAlls()            | ✔           | ✔                 |                                                                                          |
+| rowAnyMissings()     | ✔           | ❌                 | Not implemented because it is deprecated in favor of `rowAnyNAs()`                       |
+| rowAnyNAs()          | ✔           | ✔                 |                                                                                          |
+| rowAnys()            | ✔           | ✔                 |                                                                                          |
+| rowAvgsPerColSet()   | ✔           | ❌                 |                                                                                          |
+| rowCollapse()        | ✔           | ✔                 |                                                                                          |
+| rowCounts()          | ✔           | ✔                 |                                                                                          |
+| rowCummaxs()         | ✔           | ✔                 |                                                                                          |
+| rowCummins()         | ✔           | ✔                 |                                                                                          |
+| rowCumprods()        | ✔           | ✔                 |                                                                                          |
+| rowCumsums()         | ✔           | ✔                 |                                                                                          |
+| rowDiffs()           | ✔           | ✔                 |                                                                                          |
+| rowIQRDiffs()        | ✔           | ✔                 |                                                                                          |
+| rowIQRs()            | ✔           | ✔                 |                                                                                          |
+| rowLogSumExps()      | ✔           | ✔                 |                                                                                          |
+| rowMadDiffs()        | ✔           | ✔                 |                                                                                          |
+| rowMads()            | ✔           | ✔                 |                                                                                          |
+| rowMaxs()            | ✔           | ✔                 |                                                                                          |
+| rowMeans2()          | ✔           | ✔                 |                                                                                          |
+| rowMedians()         | ✔           | ✔                 |                                                                                          |
+| rowMins()            | ✔           | ✔                 |                                                                                          |
+| rowOrderStats()      | ✔           | ✔                 |                                                                                          |
+| rowProds()           | ✔           | ✔                 |                                                                                          |
+| rowQuantiles()       | ✔           | ✔                 |                                                                                          |
+| rowRanges()          | ✔           | ✔                 |                                                                                          |
+| rowRanks()           | ✔           | ✔                 |                                                                                          |
+| rowSdDiffs()         | ✔           | ✔                 |                                                                                          |
+| rowSds()             | ✔           | ✔                 |                                                                                          |
+| rowsum()             | ✔           | ❌                 | Base R function                                                                          |
+| rowSums2()           | ✔           | ✔                 |                                                                                          |
+| rowTabulates()       | ✔           | ✔                 |                                                                                          |
+| rowVarDiffs()        | ✔           | ✔                 |                                                                                          |
+| rowVars()            | ✔           | ✔                 |                                                                                          |
+| rowWeightedMads()    | ✔           | ✔                 | Sparse version behaves slightly differently, because it always uses `interpolate=FALSE`. |
+| rowWeightedMeans()   | ✔           | ✔                 |                                                                                          |
+| rowWeightedMedians() | ✔           | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
+| rowWeightedSds()     | ✔           | ✔                 |                                                                                          |
+| rowWeightedVars()    | ✔           | ✔                 |                                                                                          |
 
 ## Build package from source on Windows
 
