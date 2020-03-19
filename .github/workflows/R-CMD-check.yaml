@@ -53,6 +53,10 @@ jobs:
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
 
+      - name: Create .R/Makevars file on Windows
+        if: runner.os == 'Windows'
+        run: Rscript -e "dir.create('~/.R',  showWarnings = FALSE)" -e "cat('CXX14 = g++ -std=gnu++14 -m$(WIN)', file =  '~/.R/Makevars.win',  append = TRUE)"
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         env:
