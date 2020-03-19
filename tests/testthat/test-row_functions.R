@@ -164,6 +164,15 @@ test_that("cumulative functions work", {
   # There is no na.rm version
 })
 
+test_that("rowIQRs works", {
+  expect_equal(rowIQRs(sp_mat), matrixStats::rowIQRs(mat))
+  expect_equal(rowIQRs(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowIQRs(mat, rows = row_subset, cols = col_subset))
+})
+
+test_that("rowRanges works", {
+  expect_equal(rowRanges(sp_mat), matrixStats::rowRanges(mat))
+  expect_equal(rowRanges(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowRanges(mat, rows = row_subset, cols = col_subset))
+})
 
 
 test_that("rowRanks works", {
@@ -255,6 +264,7 @@ test_that("rowCollapse works", {
   expect_equal(rowCollapse(sp_mat, idxs = 1), matrixStats::rowCollapse(mat, idxs = 1))
   expect_equal(rowCollapse(sp_mat, idxs = c(1,3)), matrixStats::rowCollapse(mat, idxs = c(1,3)))
   expect_equal(rowCollapse(sp_mat, idxs = 1:5, cols = 3), matrixStats::rowCollapse(mat, idxs = 1:5, cols = 3))
+  expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), mat[row_subset, 1])
   skip("matrixStats has a bug if rowCollapse is combined with subsetting")
   expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), matrixStats::rowCollapse(mat, idxs = 1, rows = row_subset))
 

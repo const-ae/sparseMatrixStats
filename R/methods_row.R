@@ -235,7 +235,7 @@ setMethod("rowWeightedSds", signature(x = "dgCMatrix"),
 #' @export
 setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826, ...){
-  colWeightedMads(t(x), w=w, rows=rows, cols=cols, na.rm=na.rm, constant = constant, ...)
+  colWeightedMads(t(x), w=w, rows = cols, cols = rows, na.rm=na.rm, constant = constant, ...)
 })
 
 
@@ -312,12 +312,10 @@ setMethod("rowAlls", signature(x = "dgCMatrix"),
 #' @export
 setMethod("rowCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, rows = NULL, ...){
+  idxs <- rep(idxs, length.out = nrow(x))
   if (!is.null(rows)) {
     x <- x[rows, , drop = FALSE]
-    idxs <- rep(idxs, length.out = nrow(x))
     idxs <- idxs[rows]
-  }else{
-    idxs <- rep(idxs, length.out = nrow(x))
   }
   cols <- seq_len(ncol(x)) - 1L
   cols <- cols[idxs]
@@ -334,7 +332,7 @@ setMethod("rowCollapse", signature(x = "dgCMatrix"),
 #' @rdname colQuantiles-dgCMatrix-method
 #' @export
 setMethod("rowQuantiles", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, drop = TRUE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -346,7 +344,11 @@ setMethod("rowQuantiles", signature(x = "dgCMatrix"),
   digits <- max(2L, getOption("digits"))
   colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
   rownames(mat) <- rownames(x)
-  mat
+  if(drop && nrow(mat) == 1){
+    mat[1,]
+  }else{
+    mat
+  }
 })
 
 
@@ -374,7 +376,7 @@ setMethod("rowIQRs", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm)
+  col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
   col_q[,2] - col_q[,1]
 })
 
@@ -386,16 +388,10 @@ setMethod("rowIQRs", signature(x = "dgCMatrix"),
 #' @export
 setMethod("rowRanges", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  if(! is.null(rows)){
-    x <- x[rows, , drop = FALSE]
-  }
-  if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
-  }
   tx <- t(x)
-  row_max <- colMaxs(tx, rows, cols, na.rm = na.rm)
-  row_max <- colMins(tx, rows, cols, na.rm = na.rm)
-  unname(cbind(row_max, row_max))
+  row_max <- colMaxs(tx, rows = cols, cols = rows, na.rm = na.rm)
+  row_min <- colMins(tx, rows = cols, cols = rows, na.rm = na.rm)
+  unname(cbind(row_min, row_max))
 })
 
 

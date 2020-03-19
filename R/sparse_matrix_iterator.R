@@ -28,7 +28,7 @@ reduce_sparse_matrix_to_matrix <- function(sp_mat, n_result_rows, reduce_functio
       reduce_function(values, row_indices, number_of_zeros)
     }, FUN.VALUE = rep(0.0, n_result_rows))
     if(n_result_rows == 1){
-      as.matrix(res, nrow=1, ncol=length(res))
+      matrix(res, nrow=1, ncol=length(res))
     }else{
       res
     }

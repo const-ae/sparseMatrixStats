@@ -103,10 +103,10 @@ setMethod("colMads", signature(x = "dgCMatrix"),
 setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
           function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
-    x <- x[rows, , drop = FALSE]
+    lx <- lx[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
+    lx <- lx[, cols, drop = FALSE]
   }
   dgCMatrix_colLogSumExps(lx, na_rm = na.rm)
 })
@@ -425,12 +425,10 @@ setMethod("colAlls", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colCollapse", signature(x = "dgCMatrix"),
           function(x, idxs, cols = NULL, ...){
+  idxs <- rep(idxs, length.out = ncol(x))
   if (!is.null(cols)) {
     x <- x[, cols, drop = FALSE]
-    idxs <- rep(idxs, length.out = nrow(x))
     idxs <- idxs[cols]
-  }else{
-    idxs <- rep(idxs, length.out = ncol(x))
   }
   rows <- seq_len(nrow(x))
   rows <- rows[idxs]
@@ -447,7 +445,7 @@ setMethod("colCollapse", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colQuantiles
 #' @export
 setMethod("colQuantiles", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, drop = TRUE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -459,7 +457,11 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
   digits <- max(2L, getOption("digits"))
   colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
   rownames(mat) <- rownames(x)
-  mat
+  if(drop && nrow(mat) == 1){
+    mat[1,]
+  }else{
+    mat
+  }
 })
 
 
@@ -504,13 +506,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colIQRs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  if(! is.null(rows)){
-    x <- x[rows, , drop = FALSE]
-  }
-  if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
-  }
-  col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm)
+  col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
   col_q[,2] - col_q[,1]
 })
 
@@ -522,12 +518,6 @@ setMethod("colIQRs", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colRanges", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
-  if(! is.null(rows)){
-    x <- x[rows, , drop = FALSE]
-  }
-  if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
-  }
   col_max <- colMaxs(x, rows, cols, na.rm = na.rm)
   col_min <- colMins(x, rows, cols, na.rm = na.rm)
   unname(cbind(col_min, col_max))
@@ -753,7 +743,7 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    colIQRs(x, na_rm = na.rm, ...)
+    unname(colIQRs(x, na_rm = na.rm, ...))
   }else{
     n <- nrow(x)
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){

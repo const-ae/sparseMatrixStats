@@ -11,7 +11,7 @@
   cols = NULL,
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
-  ...
+  drop = TRUE
 )
 
 \S4method{rowQuantiles}{dgCMatrix}(
@@ -20,7 +20,7 @@
   cols = NULL,
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
-  ...
+  drop = TRUE
 )
 }
 \arguments{
@@ -37,7 +37,9 @@ columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
 
-\item{...}{Additional arguments passed to specific methods.}
+\item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.
+Note, that this is not a generic argument and not all implementation of this function
+have to provide it.}
 }
 \value{
 a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ}) \code{\link{matrix}}, where
