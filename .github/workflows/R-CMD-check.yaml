@@ -43,7 +43,7 @@ jobs:
         run: Rscript  -e "sessionInfo()"
 
       - name: Query dependencies
-        run: Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE, repo = c(getOption('repos'), 'BioConductor/MatrixGenerics')), 'depends.Rds', version = 2)"
+        run: Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds', version = 2)"
 
       - name: Cache R packages
         if: runner.os != 'Windows'
@@ -63,7 +63,7 @@ jobs:
           sudo -s eval "$sysreqs"
 
       - name: Install dependencies
-        run: Rscript -e "library(remotes)" -e "update(readRDS('depends.Rds'), repo = c(getOption('repos'), 'BioConductor/MatrixGenerics'))" -e "remotes::install_cran('rcmdcheck')"
+        run: Rscript -e "library(remotes)" -e "update(readRDS('depends.Rds'))" -e "remotes::install_cran('rcmdcheck')"
 
       - name: Install MatrixGenerics from GitHub
         run: Rscript -e "remotes::install_github('BioConductor/MatrixGenerics')"
