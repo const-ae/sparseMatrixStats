@@ -60,6 +60,11 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
   })
 
+  test_that("colSds works", {
+    expect_equal(colSds(sp_mat), matrixStats::colSds(mat))
+    expect_equal(colSds(sp_mat, na.rm=TRUE), matrixStats::colSds(mat, na.rm=TRUE))
+    expect_equal(colSds(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colSds(mat, rows = row_subset, cols = col_subset))
+  })
 
   test_that("colMads works", {
     expect_equal(colMads(sp_mat), matrixStats::colMads(mat))

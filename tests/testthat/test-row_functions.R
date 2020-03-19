@@ -34,6 +34,12 @@ test_that("rowVars works", {
   expect_equal(rowVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowVars(mat, rows = row_subset, cols = col_subset))
 })
 
+test_that("rowSds works", {
+  expect_equal(rowSds(sp_mat), matrixStats::rowSds(mat))
+  expect_equal(rowSds(sp_mat, na.rm=TRUE), matrixStats::rowSds(mat, na.rm=TRUE))
+  expect_equal(rowSds(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowSds(mat, rows = row_subset, cols = col_subset))
+})
+
 
 test_that("rowMads works", {
   expect_equal(rowMads(sp_mat), matrixStats::rowMads(mat))
