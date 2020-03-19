@@ -1,5 +1,5 @@
-#ifndef SparseMatrixView_hpp
-#define SparseMatrixView_hpp
+#ifndef SparseMatrixView_h
+#define SparseMatrixView_h
 
 #include <Rcpp.h>
 using namespace Rcpp;
@@ -20,4 +20,4 @@ public:
 
 dgCMatrixView wrap_dgCMatrix(Rcpp::S4 sp_mat);
 
-#endif /* SparseMatrixView_hpp */
+#endif /* SparseMatrixView_h */

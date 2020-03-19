@@ -1,5 +1,5 @@
-#ifndef VectorSubsetView_hpp
-#define VectorSubsetView_hpp
+#ifndef VectorSubsetView_h
+#define VectorSubsetView_h
 
 
 #include <Rcpp.h>
@@ -114,4 +114,4 @@ subset_sum(vec)
 
 
 
-# endif /* VectorSubsetView_hpp */
+# endif /* VectorSubsetView_h */

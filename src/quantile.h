@@ -1,9 +1,9 @@
-#ifndef quantile_hpp
-#define quantile_hpp
+#ifndef quantile_h
+#define quantile_h
 
 
 #include <Rcpp.h>
-#include "VectorSubsetView.hpp"
+#include "VectorSubsetView.h"
 #include <cmath>
 
 using namespace Rcpp;
@@ -83,7 +83,7 @@ double quantile_sparse(NumericVector values, int number_of_zeros, double prob){
   return quantile_sparse<VectorSubsetView<REALSXP> >(vsv, number_of_zeros, prob);
 }
 
-#endif /* quantile_hpp */
+#endif /* quantile_h */
 
 /*** R
 N <- rpois(1, lambda=2)

@@ -1,9 +1,9 @@
-#ifndef ColumnView_hpp
-#define ColumnView_hpp
+#ifndef ColumnView_h
+#define ColumnView_h
 
 #include <Rcpp.h>
-#include "SparseMatrixView.hpp"
-#include "VectorSubsetView.hpp"
+#include "SparseMatrixView.h"
+#include "VectorSubsetView.h"
 
 
 class ColumnView {
@@ -79,4 +79,4 @@ public:
 
 
 
-#endif /* ColumnView_hpp */
+#endif /* ColumnView_h */

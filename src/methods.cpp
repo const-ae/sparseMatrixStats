@@ -1,11 +1,11 @@
 #include <Rcpp.h>
-#include "SparseMatrixView.hpp"
-#include "ColumnView.hpp"
-#include "VectorSubsetView.hpp"
-#include "SkipNAVectorSubsetView.hpp"
-#include "quantile.hpp"
-#include "sample_rank.hpp"
-#include "my_utils.hpp"
+#include "SparseMatrixView.h"
+#include "ColumnView.h"
+#include "VectorSubsetView.h"
+#include "SkipNAVectorSubsetView.h"
+#include "quantile.h"
+#include "sample_rank.h"
+#include "my_utils.h"
 
 using namespace Rcpp;
 

@@ -1,5 +1,5 @@
-#ifndef my_utils_hpp
-#define my_utils_hpp
+#ifndef my_utils_h
+#define my_utils_h
 
 // This function was copied from https://stackoverflow.com/a/17299623/604854
 template <typename T>
@@ -16,4 +16,4 @@ std::vector<T> flatten(const std::vector<std::vector<T>>& v) {
 }
 
 
-#endif /* my_utils_hpp */
+#endif /* my_utils_h */

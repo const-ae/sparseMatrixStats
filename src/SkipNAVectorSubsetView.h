@@ -1,10 +1,10 @@
 
 
-#ifndef SkipNAVectorSubsetView_hpp
-#define SkipNAVectorSubsetView_hpp
+#ifndef SkipNAVectorSubsetView_h
+#define SkipNAVectorSubsetView_h
 
 #include <Rcpp.h>
-#include "VectorSubsetView.hpp"
+#include "VectorSubsetView.h"
 using namespace Rcpp;
 
 
@@ -108,4 +108,4 @@ public:
 
 
 
-#endif /* SkipNAVectorSubsetView_hpp */
+#endif /* SkipNAVectorSubsetView_h */

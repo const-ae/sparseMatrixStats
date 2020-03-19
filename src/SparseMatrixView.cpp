@@ -1,6 +1,6 @@
 #include <Rcpp.h>
-#include "SparseMatrixView.hpp"
-#include "VectorSubsetView.hpp"
+#include "SparseMatrixView.h"
+#include "VectorSubsetView.h"
 using namespace Rcpp;
 
 // [[Rcpp::plugins("cpp11")]]

@@ -1,5 +1,5 @@
-#ifndef sample_rank_hpp
-#define sample_rank_hpp
+#ifndef sample_rank_h
+#define sample_rank_h
 
 
 #include <Rcpp.h>
@@ -92,4 +92,4 @@ std::vector<R> calculate_sparse_rank(VT vec, IT positions, int number_of_zeros,
 }
 
 
-#endif /* sample_rank_hpp */
+#endif /* sample_rank_h */
