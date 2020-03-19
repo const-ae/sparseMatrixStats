@@ -707,7 +707,7 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
 
 
 #' @inherit MatrixGenerics::colMadDiffs
-#'
+#' @param constant A scale factor. See \code{\link{mad}} for details.
 #' @export
 setMethod("colMadDiffs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){

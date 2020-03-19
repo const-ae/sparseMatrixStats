@@ -8,7 +8,8 @@ NULL
 #' @useDynLib sparseMatrixStats
 NULL
 
-
+#' @import methods
+NULL
 
 #' @importFrom Matrix t
 NULL

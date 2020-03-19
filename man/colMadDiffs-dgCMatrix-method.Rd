@@ -44,6 +44,8 @@ are excluded first, otherwise not.}
 \item{trim}{A double in [0,1/2] specifying the fraction of observations to be trimmed from
 each end of (sorted) x before estimation.}
 
+\item{constant}{A scale factor. See \code{\link{mad}} for details.}
+
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
