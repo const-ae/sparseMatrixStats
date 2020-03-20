@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 # sparseMatrixStats
 
 <!-- badges: start -->
+[![codecov](https://codecov.io/gh/const-ae/sparseMatrixStats/branch/master/graph/badge.svg)](https://codecov.io/gh/const-ae/sparseMatrixStats)
+
 <!-- badges: end -->
 
 The goal of `sparseMatrixStats` is to make the API of the [matrixStats](https://github.com/HenrikBengtsson/matrixStats) available
