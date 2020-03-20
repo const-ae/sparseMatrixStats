@@ -28,7 +28,7 @@ public:
     vsv_iterator vsv_iter_start;
     vsv_iterator vsv_iter_end;
   public:
-    using iterator_category = std::input_iterator_tag;
+    using iterator_category = std::forward_iterator_tag;
     using value_type = stored_type;
     using reference = stored_type;
     using pointer = stored_type const * ;
