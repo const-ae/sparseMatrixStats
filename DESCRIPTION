@@ -25,3 +25,4 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     bench
+SystemRequirements: C++14
