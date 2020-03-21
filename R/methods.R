@@ -756,4 +756,58 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
 
 
 
+#' Calculates for each row (column) a summary statistic for equally sized subsets of columns (rows)
+#'
+#' Calculates for each row (column) a summary statistic for equally sized subsets of columns (rows)
+#'
+#' @inherit MatrixGenerics::colAvgsPerRowSet
+#'
+#'
+#' @details
+#'   **Note**: the handling of missing parameters differs from
+#'   [matrixStats::colAvgsPerRowSet()]. The `matrixStats` version
+#'   always removes `NA`'s if there are any in the data. This method
+#'   however does whatever is passed in the `...` parameter.
+#'
+#' @aliases colAvgsPerRowSet
+#' @export
+setMethod("colAvgsPerRowSet", signature(X = "dgCMatrix"),
+function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., tFUN = FALSE){
+  if(! is.null(W)) stop("the W parameter is not supported.")
+  nbrOfSets <- ncol(S)
+  setNames <- colnames(S)
+  if (!is.function(FUN)) {
+    stop("Argument 'FUN' is not a function: ", mode(S))
+  }
+  if (!is.null(cols)) {
+    X <- X[, cols, drop = FALSE]
+  }
+  dimX <- dim(X)
+  tFUN <- as.logical(tFUN)
+  colnamesX <- colnames(X)
+  dimnames(X) <- list(NULL, NULL)
+
+  Z <- apply(S, MARGIN = 2L, FUN = function(jj) {
+    jj <- jj[is.finite(jj)]
+    Zjj <- X[jj, , drop = FALSE]
+    jj <- NULL
+    if (tFUN) {
+      Zjj <- t(Zjj)
+    }
+    Zjj <- FUN(Zjj, ...)
+    if (length(Zjj) != dimX[2L])
+      stop("Internal error: length(Zjj) != dimX[1L]")
+    Zjj
+  })
+  if (!is.matrix(Z)) {
+    if (dimX[2] > 1L)
+      stop("Internal error: dimX[1] > 1L")
+    dim(Z) <- c(dimX[2L], nbrOfSets)
+  }
+  if (any(dim(Z) != c(dimX[2L], nbrOfSets)))
+    stop("Internal error: dim(Z) != c(dimX[1L], nbrOfSets)")
+  rownames(Z) <- colnamesX
+  colnames(Z) <- setNames
+  t(Z)
+})
 
