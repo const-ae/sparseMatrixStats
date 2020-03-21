@@ -85,9 +85,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  30.09µs  33.29µs   28983.     7.76KB     14.5
-#> 2 matrixStats         2.11ms   2.17ms     450.   162.31KB      0  
-#> 3 apply              16.32ms  17.92ms      56.2   17.23MB    128.
+#> 1 sparseMatrixStats     29µs  31.94µs   30492.     7.76KB     18.3
+#> 2 matrixStats          2.1ms   2.21ms     445.   162.31KB      0  
+#> 3 apply               15.1ms  16.77ms      59.1   17.23MB    144.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
@@ -109,7 +109,7 @@ implemented.
 | colAnyMissings()     | ✔           | ❌                 | Not implemented because it is deprecated in favor of `colAnyNAs()`                       |
 | colAnyNAs()          | ✔           | ✔                 |                                                                                          |
 | colAnys()            | ✔           | ✔                 |                                                                                          |
-| colAvgsPerRowSet()   | ✔           | ❌                 |                                                                                          |
+| colAvgsPerRowSet()   | ✔           | ✔                 |                                                                                          |
 | colCollapse()        | ✔           | ✔                 |                                                                                          |
 | colCounts()          | ✔           | ✔                 |                                                                                          |
 | colCummaxs()         | ✔           | ✔                 |                                                                                          |
@@ -147,7 +147,7 @@ implemented.
 | rowAnyMissings()     | ✔           | ❌                 | Not implemented because it is deprecated in favor of `rowAnyNAs()`                       |
 | rowAnyNAs()          | ✔           | ✔                 |                                                                                          |
 | rowAnys()            | ✔           | ✔                 |                                                                                          |
-| rowAvgsPerColSet()   | ✔           | ❌                 |                                                                                          |
+| rowAvgsPerColSet()   | ✔           | ✔                 |                                                                                          |
 | rowCollapse()        | ✔           | ✔                 |                                                                                          |
 | rowCounts()          | ✔           | ✔                 |                                                                                          |
 | rowCummaxs()         | ✔           | ✔                 |                                                                                          |
