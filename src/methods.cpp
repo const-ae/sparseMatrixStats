@@ -525,10 +525,7 @@ IntegerVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
 // [[Rcpp::export]]
 LogicalVector dgCMatrix_colAnyNAs(S4 matrix){
   return reduce_matrix_lgl(matrix, false, [](auto values, auto row_indices, int number_of_zeros) -> int{
-    bool contains_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool{
-      return NumericVector::is_na(d);
-    });
-    return contains_na;
+    return is_any_na(values);
   });
 }
 
@@ -587,9 +584,7 @@ LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
         if(number_of_zeros == nrows){
           return true;
         }else{
-          bool all_na = std::all_of(values.begin(), values.end(), [](const double d) -> bool {
-            return NumericVector::is_na(d);
-          });
+          bool all_na = are_all_na(values);
           if(all_na){
             return NA_LOGICAL;
           }else{
