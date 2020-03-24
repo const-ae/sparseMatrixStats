@@ -1,6 +1,9 @@
 #ifndef my_utils_h
 #define my_utils_h
 
+#include <Rcpp.h>
+
+
 // This function was copied from https://stackoverflow.com/a/17299623/604854
 template <typename T>
 std::vector<T> flatten(const std::vector<std::vector<T>>& v) {
@@ -13,6 +16,14 @@ std::vector<T> flatten(const std::vector<std::vector<T>>& v) {
     for (const auto& sub : v)
         result.insert(result.end(), sub.begin(), sub.end());
     return result;
+}
+
+
+template<typename Iterator>
+inline bool is_any_na(Iterator iter){
+    return std::any_of(iter.begin(), iter.end(), [](const double d) -> bool {
+        return Rcpp::NumericVector::is_na(d);
+    });
 }
 
 

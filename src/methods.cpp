@@ -206,9 +206,7 @@ NumericVector dgCMatrix_colMeans2(S4 matrix, bool na_rm){
 NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
     if(! na_rm){
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       if(any_na){
         return NA_REAL;
       }
@@ -253,9 +251,7 @@ NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
 NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
   return reduce_matrix_double(matrix, na_rm, [na_rm, scale_factor](auto values, auto row_indices, int number_of_zeros) -> double{
     if(! na_rm){
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       if(any_na){
         return NA_REAL;
       }
@@ -316,9 +312,7 @@ NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
 NumericVector dgCMatrix_colOrderStats(S4 matrix, int which, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [na_rm, which](auto values, auto row_indices, int number_of_zeros) -> double{
     if(! na_rm){
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       if(any_na){
         return NA_REAL;
       }
@@ -413,9 +407,7 @@ NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
         return std::accumulate(values.begin(), values.end(), 1.0, [](double a, double b) -> double { return a * b;});
       }
     }else{
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       if(any_na){
         return NA_REAL;
       }else{
@@ -564,9 +556,7 @@ LogicalVector dgCMatrix_colAnys(S4 matrix, double value, bool na_rm){
         return d == value;
       });
     }else{
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       bool found_value = std::any_of(values.begin(), values.end(),  [value](const double d) -> bool{
         return d == value;
       });
@@ -619,9 +609,7 @@ LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
         bool all_equal_or_na = std::all_of(values.begin(), values.end(), [value](const double d) -> bool {
           return d == value || NumericVector::is_na(d);
         });
-        bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-          return NumericVector::is_na(d);
-        });
+        bool any_na = is_any_na(values);
         if(! all_equal_or_na){
           return false;
         }else if(all_equal_or_na && any_na){
@@ -643,9 +631,7 @@ LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
 NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm){
   return reduce_matrix_num_matrix(matrix, na_rm, probs.size(), true, [na_rm, probs](auto values, auto row_indices, int number_of_zeros) -> std::vector<double> {
     if(! na_rm){
-      bool any_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool {
-        return NumericVector::is_na(d);
-      });
+      bool any_na = is_any_na(values);
       if(any_na){
         std::vector<double> result(probs.size(), NA_REAL);
         return result;
