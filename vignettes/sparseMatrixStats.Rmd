@@ -98,6 +98,62 @@ head(rowTabulates(purchase_matrix, values = c(0, 1, 2, 4)))
 ```
 
 
+## Alternative Matrix Creation
+
+In the previous section, I demonstrated how to create a sparse matrix from scratch using the `sparseMatrix()` function. 
+However, often you already have an existing matrix and want to convert it to a sparse representation.
+
+```{r}
+mat <- matrix(0, nrow=10, ncol=6)
+mat[sample(seq_len(60), 4)] <- 1:4
+# Convert dense matrix to sparse matrix
+sparse_mat <- as(mat, "dgCMatrix")
+sparse_mat
+```
+
+The *sparseMatrixStats* package is a derivative of the `r  BiocStyle::CRANpkg("matrixStats")` package and implements it's API for 
+sparse matrices. For example, to calculate the variance for each column of `mat` you can do
+
+```{r}
+apply(mat, 2, var)
+```
+
+However, this is quite inefficient and *matrixStats* provides the direct function
+
+```{r}
+matrixStats::colVars(mat)
+```
+
+Now for sparse matrices, you can also just call 
+
+```{r}
+sparseMatrixStats::colVars(sparse_mat)
+```
+
+# Benchmark
+
+If you have a large matrix with many exact zeros, working on the sparse representation can considerably speed up the computations.
+
+I generate a dataset with 10,000 rows and 50 columns that is 99% empty
+
+```{r}
+big_mat <- matrix(0, nrow=1e4, ncol=50)
+big_mat[sample(seq_len(1e4 * 50), 5000)] <- rnorm(5000)
+# Convert dense matrix to sparse matrix
+big_sparse_mat <- as(big_mat, "dgCMatrix")
+```
+
+I use the bench package to benchmark the performance difference:
+
+```{r}
+bench::mark(
+  sparseMatrixStats=sparseMatrixStats::colMedians(big_sparse_mat),
+  matrixStats=matrixStats::colMedians(big_mat),
+  apply=apply(big_mat, 2, median)
+)
+```
+
+As you can see *sparseMatrixStats* is more than 60 times fast than matrixStats, which in turn is 7 times faster than the `apply()` version.
 
 
 # Session Info
