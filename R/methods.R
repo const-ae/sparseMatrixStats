@@ -490,7 +490,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
   mat <- dgCMatrix_colTabulate(x, unique_values)
   # Add dim names
   colnames(mat) <- unique_values
-  rownames(mat) <- rownames(x)
+  rownames(mat) <- colnames(x)
   if(! zero_explicit_in_values && all(mat[, "0"] == 0)){
     # Remove zero column is there is not a single zero in x
     mat <- mat[, -which(colnames(mat) == "0"), drop=FALSE]
