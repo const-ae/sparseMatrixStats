@@ -1,0 +1,108 @@
+---
+title: "sparseMatrixStats"
+author: Constantin Ahlmann-Eltze
+date: "`r Sys.Date()`"
+output: BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{sparseMatrixStats}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+set.seed(1)
+```
+
+# Installation
+
+You can install the release version of `r BiocStyle::Biocpkg("sparseMatrixStats")` from BioConductor:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sparseMatrixStats")
+```
+
+# Introduction
+
+The sparseMatrixStats package implements a number of summary functions for sparse matrices from the `r  BiocStyle::CRANpkg("Matrix")` package.
+
+Let us load the package and create a synthetic sparse matrix.
+
+```{r}
+library(sparseMatrixStats)
+# Matrix defines the sparse Matrix class
+# dgCMatrix that we will use
+library(Matrix)
+```
+
+Create a synthetic table with customers, items, and how often they bought that item.
+
+```{r}
+customer_ids <- seq_len(100)
+item_ids <-  seq_len(30)
+n_transactions <- 1000
+customer <- sample(customer_ids, size = n_transactions, replace = TRUE,
+                    prob = runif(100))
+item <- sample(item_ids, size = n_transactions, replace = TRUE,
+               prob = runif(30))
+
+tmp <- table(paste0(customer, "-", item))
+tmp2 <- strsplit(names(tmp), "-")
+purchase_table <- data.frame(
+  customer = as.numeric(sapply(tmp2, function(x) x[1])),
+  item = as.numeric(sapply(tmp2, function(x) x[2])),
+  n = as.numeric(tmp)
+)
+
+head(purchase_table, n = 10)
+```
+
+Let us turn the table into a matrix to simplify the analysis:
+
+```{r}
+purchase_matrix <- sparseMatrix(purchase_table$customer, purchase_table$item, 
+                x = purchase_table$n,
+                dims = c(100, 30),
+                dimnames = list(customer = paste0("Customer_", customer_ids),
+                                item = paste0("Item_", item_ids)))
+purchase_matrix[1:10, 1:15]
+```
+
+We can see that some customers did not buy anything, where as
+some bought a lot.
+
+`sparseMatrixStats` can help us to identify interesting patterns in this data:
+
+
+```{r}
+# How often was each item bough in total?
+colSums2(purchase_matrix)
+
+# What is the range of number of items each 
+# customer bought?
+head(rowRanges(purchase_matrix))
+
+# What is the variance in the number of items
+# each customer bought?
+head(rowVars(purchase_matrix))
+
+# How many items did a customer not buy at all, one time, 2 times,
+# or exactly 4 times?
+head(rowTabulates(purchase_matrix, values = c(0, 1, 2, 4)))
+```
+
+
+
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
+

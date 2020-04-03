@@ -24,5 +24,7 @@ Imports:
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
-    bench
+    bench,
+    rmarkdown
 SystemRequirements: C++14
+VignetteBuilder: knitr
