@@ -5,9 +5,9 @@
 \alias{rowAnyNAs,dgCMatrix-method}
 \title{Check if any elements in a row (column) of a matrix-like object is missing}
 \usage{
-\S4method{colAnyNAs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{colAnyNAs}{dgCMatrix}(x, rows = NULL, cols = NULL, ...)
 
-\S4method{rowAnyNAs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{rowAnyNAs}{dgCMatrix}(x, rows = NULL, cols = NULL, ...)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
