@@ -25,6 +25,7 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     bench,
-    rmarkdown
+    rmarkdown,
+    BiocStyle
 SystemRequirements: C++14
 VignetteBuilder: knitr
