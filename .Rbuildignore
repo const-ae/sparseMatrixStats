@@ -1,5 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^\.github/workflows/R-CMD-check\.yaml$
+.github
 ^LICENSE\.md$
