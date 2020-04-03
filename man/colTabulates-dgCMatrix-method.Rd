@@ -5,9 +5,9 @@
 \alias{rowTabulates,dgCMatrix-method}
 \title{Tabulates the values in a matrix-like object by row (column)}
 \usage{
-\S4method{colTabulates}{dgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, ...)
+\S4method{colTabulates}{dgCMatrix}(x, rows = NULL, cols = NULL, values = NULL)
 
-\S4method{rowTabulates}{dgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, ...)
+\S4method{rowTabulates}{dgCMatrix}(x, rows = NULL, cols = NULL, values = NULL)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -21,8 +21,6 @@ subsetting is done.}
 subsetting is done.}
 
 \item{values}{the values to search for.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ})

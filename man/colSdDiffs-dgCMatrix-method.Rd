@@ -6,25 +6,9 @@
 \title{Calculates the standard deviation of the difference between each element of
 a row (column) of a matrix-like object}
 \usage{
-\S4method{colSdDiffs}{dgCMatrix}(
-  x,
-  rows = NULL,
-  cols = NULL,
-  na.rm = FALSE,
-  diff = 1L,
-  trim = 0,
-  ...
-)
+\S4method{colSdDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0)
 
-\S4method{rowSdDiffs}{dgCMatrix}(
-  x,
-  rows = NULL,
-  cols = NULL,
-  na.rm = FALSE,
-  diff = 1L,
-  trim = 0,
-  ...
-)
+\S4method{rowSdDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -44,8 +28,6 @@ are excluded first, otherwise not.}
 
 \item{trim}{A double in [0,1/2] specifying the fraction of observations to
 be trimmed from each end of (sorted) x before estimation.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

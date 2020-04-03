@@ -13,8 +13,7 @@ element of a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  constant = 1.4826,
-  ...
+  constant = 1.4826
 )
 
 \S4method{rowMadDiffs}{dgCMatrix}(
@@ -24,8 +23,7 @@ element of a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  constant = 1.4826,
-  ...
+  constant = 1.4826
 )
 }
 \arguments{
@@ -48,8 +46,6 @@ are excluded first, otherwise not.}
 be trimmed from each end of (sorted) x before estimation.}
 
 \item{constant}{A scale factor. See \code{\link{mad}} for details.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

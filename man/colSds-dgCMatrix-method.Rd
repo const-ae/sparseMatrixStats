@@ -6,9 +6,9 @@
 \title{Calculates the standard deviation for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colSds}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL, ...)
+\S4method{colSds}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
 
-\S4method{rowSds}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL, ...)
+\S4method{rowSds}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -23,10 +23,6 @@ subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
-
-\item{center}{(optional) the center, defaults to the row means}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

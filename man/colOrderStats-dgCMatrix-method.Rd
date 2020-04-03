@@ -5,9 +5,9 @@
 \alias{rowOrderStats,dgCMatrix-method}
 \title{Calculates an order statistic for each row (column) of a matrix-like object}
 \usage{
-\S4method{colOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE, ...)
+\S4method{colOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE)
 
-\S4method{rowOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE, ...)
+\S4method{rowOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -24,8 +24,6 @@ subsetting is done.}
 statistic to be returned}
 
 \item{na.rm}{If TRUE, NAs are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

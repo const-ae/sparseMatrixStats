@@ -6,9 +6,9 @@
 \title{Calculates the difference between each element of a row (column) of a
 matrix-like object}
 \usage{
-\S4method{colDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...)
+\S4method{colDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L)
 
-\S4method{rowDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...)
+\S4method{rowDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -24,8 +24,6 @@ subsetting is done.}
 \item{lag}{An integer specifying the lag.}
 
 \item{differences}{An integer specifying the order of difference.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}}

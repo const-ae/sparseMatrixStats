@@ -6,9 +6,9 @@
 \title{Check if all elements in a row (column) of a matrix-like object are equal to
 a value}
 \usage{
-\S4method{colAlls}{dgCMatrix}(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE, ...)
+\S4method{colAlls}{dgCMatrix}(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE)
 
-\S4method{rowAlls}{dgCMatrix}(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE, ...)
+\S4method{rowAlls}{dgCMatrix}(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -25,8 +25,6 @@ subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{logical}} \code{\link[base]{vector}} of

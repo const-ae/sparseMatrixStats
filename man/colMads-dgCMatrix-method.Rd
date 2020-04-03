@@ -6,25 +6,9 @@
 \title{Calculates the median absolute deviation for each row (column) of a
 matrix-like object}
 \usage{
-\S4method{colMads}{dgCMatrix}(
-  x,
-  rows = NULL,
-  cols = NULL,
-  center = NULL,
-  constant = 1.4826,
-  na.rm = FALSE,
-  ...
-)
+\S4method{colMads}{dgCMatrix}(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm = FALSE)
 
-\S4method{rowMads}{dgCMatrix}(
-  x,
-  rows = NULL,
-  cols = NULL,
-  center = NULL,
-  constant = 1.4826,
-  na.rm = FALSE,
-  ...
-)
+\S4method{rowMads}{dgCMatrix}(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -37,15 +21,11 @@ subsetting is done.}
 (and/or columns) to operate over. If \code{\link[base]{NULL}}, no
 subsetting is done.}
 
-\item{center}{(optional) the center, defaults to the row means}
-
 \item{constant}{A scale factor. See \code{stats::\link[stats]{mad}()} for
 details.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

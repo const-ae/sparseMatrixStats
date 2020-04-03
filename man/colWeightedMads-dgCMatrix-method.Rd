@@ -13,8 +13,7 @@ matrix-like object}
   cols = NULL,
   na.rm = FALSE,
   constant = 1.4826,
-  center = NULL,
-  ...
+  center = NULL
 )
 
 \S4method{rowWeightedMads}{dgCMatrix}(
@@ -23,9 +22,7 @@ matrix-like object}
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  constant = 1.4826,
-  center = NULL,
-  ...
+  constant = 1.4826
 )
 }
 \arguments{
@@ -49,8 +46,6 @@ are excluded first, otherwise not.}
 details.}
 
 \item{center}{Not supported at the moment.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

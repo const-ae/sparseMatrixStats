@@ -6,9 +6,9 @@
 \title{Accurately calculates the logarithm of the sum of exponentials for each row
 (column) of a matrix-like object}
 \usage{
-\S4method{colLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{colLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE)
 
-\S4method{rowLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{rowLogSumExps}{dgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{lx}{An NxK matrix-like object. Typically \code{lx} are \code{log(x)} values.}
@@ -23,8 +23,6 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

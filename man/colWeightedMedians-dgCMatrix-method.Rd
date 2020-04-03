@@ -5,9 +5,9 @@
 \alias{rowWeightedMedians,dgCMatrix-method}
 \title{Calculates the weighted median for each row (column) of a matrix-like object}
 \usage{
-\S4method{colWeightedMedians}{dgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{colWeightedMedians}{dgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE)
 
-\S4method{rowWeightedMedians}{dgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{rowWeightedMedians}{dgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -25,8 +25,6 @@ subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

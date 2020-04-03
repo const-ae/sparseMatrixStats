@@ -5,9 +5,9 @@
 \alias{rowCollapse,dgCMatrix-method}
 \title{Extract one cell from each row (column) of a matrix-like object}
 \usage{
-\S4method{colCollapse}{dgCMatrix}(x, idxs = idxs, cols = NULL, ...)
+\S4method{colCollapse}{dgCMatrix}(x, idxs, cols = NULL)
 
-\S4method{rowCollapse}{dgCMatrix}(x, idxs, rows = NULL, ...)
+\S4method{rowCollapse}{dgCMatrix}(x, idxs, rows = NULL)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -18,8 +18,6 @@ It is recycled to match the number of rows (column)}
 \item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link[base]{NULL}}, no
 subsetting is done.}
-
-\item{...}{Additional arguments passed to specific methods.}
 
 \item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link[base]{NULL}}, no
