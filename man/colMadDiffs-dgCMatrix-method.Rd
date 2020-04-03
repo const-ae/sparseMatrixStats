@@ -3,7 +3,8 @@
 \name{colMadDiffs,dgCMatrix-method}
 \alias{colMadDiffs,dgCMatrix-method}
 \alias{rowMadDiffs,dgCMatrix-method}
-\title{Calculates the mean absolute deviation of the difference between each element of a row (column) of a matrix-like object}
+\title{Calculates the mean absolute deviation of the difference between each
+element of a row (column) of a matrix-like object}
 \usage{
 \S4method{colMadDiffs}{dgCMatrix}(
   x,
@@ -30,19 +31,21 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
 
 \item{diff}{An integer specifying the order of difference.}
 
-\item{trim}{A double in [0,1/2] specifying the fraction of observations to be trimmed from
-each end of (sorted) x before estimation.}
+\item{trim}{A double in [0,1/2] specifying the fraction of observations to
+be trimmed from each end of (sorted) x before estimation.}
 
 \item{constant}{A scale factor. See \code{\link{mad}} for details.}
 
@@ -53,11 +56,13 @@ Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
 length N (K).
 }
 \description{
-Calculates the mean absolute deviation of the difference between each element of a row (column) of a matrix-like object
+Calculates the mean absolute deviation of the difference between each
+element of a row (column) of a matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowMadDiffs}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowMadDiffs}}
 / \code{matrixStats::\link[matrixStats]{colMadDiffs}}.
 }
 \examples{

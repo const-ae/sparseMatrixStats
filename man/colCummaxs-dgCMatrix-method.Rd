@@ -3,7 +3,8 @@
 \name{colCummaxs,dgCMatrix-method}
 \alias{colCummaxs,dgCMatrix-method}
 \alias{rowCummaxs,dgCMatrix-method}
-\title{Calculates the cumulative maxima for each row (column) of a matrix-like object}
+\title{Calculates the cumulative maxima for each row (column) of a matrix-like
+object}
 \usage{
 \S4method{colCummaxs}{dgCMatrix}(x, rows = NULL, cols = NULL, ...)
 
@@ -12,24 +13,28 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}} with the
-same dimensions as \code{x}.
+Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}}
+with the same dimensions as \code{x}.
 }
 \description{
-Calculates the cumulative maxima for each row (column) of a matrix-like object
+Calculates the cumulative maxima for each row (column) of a matrix-like
+object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowCummaxs}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCummaxs}}
 / \code{matrixStats::\link[matrixStats]{colCummaxs}}.
 }
 \examples{
@@ -49,6 +54,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \code{matrixStats::\link[matrixStats]{colCummaxs}()} which are used when
 the input is a \code{matrix} or \code{numeric} vector.
 \item For single maximum estimates, see \code{\link[MatrixGenerics]{rowMaxs}()}.
-\item \link{cummax}
+\item \code{base::\link[base]{cummax}()}.
 }
 }

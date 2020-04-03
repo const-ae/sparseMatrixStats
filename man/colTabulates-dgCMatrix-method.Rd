@@ -12,26 +12,30 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{values}{the values to search for.}
 
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ}) \code{\link{matrix}}, where
-N (K) is the number of rows (columns) for which the J values are calculated.
+a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ})
+\code{\link{matrix}}, where N (K) is the number of rows (columns) for
+which the J values are calculated.
 }
 \description{
-Tabulates the values in a matrix-like object by row (column)
+Tabulates the values in a matrix-like object by row (column).
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowTabulates}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowTabulates}}
 / \code{matrixStats::\link[matrixStats]{colTabulates}}.
 }
 \examples{

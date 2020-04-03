@@ -3,7 +3,8 @@
 \name{colRanks,dgCMatrix-method}
 \alias{colRanks,dgCMatrix-method}
 \alias{rowRanks,dgCMatrix-method}
-\title{Calculates the rank of the elements for each row (column) of a matrix-like object}
+\title{Calculates the rank of the elements for each row (column) of a matrix-like
+object}
 \usage{
 \S4method{colRanks}{dgCMatrix}(
   x,
@@ -28,14 +29,17 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{ties.method}{A character string specifying how ties are treated. Note that the default specifies
-fewer options than the original matrixStats package.}
+\item{ties.method}{A character string specifying how ties are treated. Note
+that the default specifies fewer options than the original matrixStats
+package.}
 
 \item{preserve.shape}{a boolean that specifies if the returned matrix has the same
 dimensions as the input matrix. By default this is true for `rowRanks()`, but false for
@@ -47,12 +51,14 @@ dimensions as the input matrix. By default this is true for `rowRanks()`, but fa
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-a matrix of type \code{\link[base]{integer}} is returned unless \code{ties.method = "average"}. It
-has dimensions` \code{NxJ} (\code{KxJ}) \code{\link{matrix}}, where
-N (K) is the number of rows (columns) of the input x.
+a matrix of type \code{\link[base]{integer}} is returned unless
+\code{ties.method = "average"}. Ithas dimensions` \code{NxJ} (\code{KxJ})
+\code{\link{matrix}}, where N (K) is the number of rows (columns) of the
+input x.
 }
 \description{
-Calculates the rank of the elements for each row (column) of a matrix-like object
+Calculates the rank of the elements for each row (column) of a matrix-like
+object.
 }
 \details{
 There are three different methods available for handling ties:

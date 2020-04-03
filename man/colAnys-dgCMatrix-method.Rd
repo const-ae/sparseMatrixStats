@@ -3,7 +3,8 @@
 \name{colAnys,dgCMatrix-method}
 \alias{colAnys,dgCMatrix-method}
 \alias{rowAnys,dgCMatrix-method}
-\title{Check if any elements in a row (column) of a matrix-like object is equal to a value}
+\title{Check if any elements in a row (column) of a matrix-like object is equal to
+a value}
 \usage{
 \S4method{colAnys}{dgCMatrix}(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE, ...)
 
@@ -12,13 +13,15 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{value}{the value to search for.}
+\item{value}{The value to search for.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
@@ -30,11 +33,13 @@ Returns a \code{\link[base]{logical}} \code{\link[base]{vector}} of
 length N (K).
 }
 \description{
-Check if any elements in a row (column) of a matrix-like object is equal to a value
+Check if any elements in a row (column) of a matrix-like object is equal to
+a value.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowAnys}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowAnys}}
 / \code{matrixStats::\link[matrixStats]{colAnys}}.
 }
 \examples{
@@ -53,7 +58,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \item \code{matrixStats::\link[matrixStats]{rowAnys}()} and
 \code{matrixStats::\link[matrixStats]{colAnys}()} which are used when
 the input is a \code{matrix} or \code{numeric} vector.
-\item For checks if any element is equal to a value, see \code{\link[MatrixGenerics]{rowAnys}()}.
-\item \link{any}
+\item \code{base::\link[base]{any}()}.
 }
 }

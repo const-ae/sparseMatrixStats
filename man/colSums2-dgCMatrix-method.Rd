@@ -12,11 +12,13 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
@@ -31,8 +33,9 @@ length N (K).
 Calculates the sum for each row (column) of a matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowSums2}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowSums2}}
 / \code{matrixStats::\link[matrixStats]{colSums2}}.
 }
 \examples{
@@ -53,7 +56,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 the input is a \code{matrix} or \code{numeric} vector.
 \item For mean estimates, see \code{\link[MatrixGenerics]{rowMeans2}()} and
 \code{\link[base:colSums]{rowMeans}()}.
-
-\item \link{sum}
+\item \code{base::\link[base]{sum}()}.
 }
 }

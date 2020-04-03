@@ -12,11 +12,13 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
@@ -53,7 +55,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \item \code{matrixStats::\link[matrixStats]{rowProds}()} and
 \code{matrixStats::\link[matrixStats]{colProds}()} which are used when
 the input is a \code{matrix} or \code{numeric} vector.
-\item For sums across rows (columns), see \code{\link[MatrixGenerics]{rowSums2}()} (\code{\link[MatrixGenerics:colSums2]{colSums2()}})
-\item \code{\link[=prod]{prod()}}
+\item For sums across rows (columns), see
+\code{\link[MatrixGenerics]{rowSums2}()} (\code{\link[MatrixGenerics:colSums2]{colSums2()}})
+\item \code{base::\link[base]{prod}()}.
 }
 }

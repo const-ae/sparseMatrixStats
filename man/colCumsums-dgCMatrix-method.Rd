@@ -12,24 +12,27 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}} with the
-same dimensions as \code{x}.
+Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}}
+with the same dimensions as \code{x}.
 }
 \description{
-Calculates the cumulative sum for each row (column) of a matrix-like object
+Calculates the cumulative sum for each row (column) of a matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowCumsums}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCumsums}}
 / \code{matrixStats::\link[matrixStats]{colCumsums}}.
 }
 \examples{
@@ -48,6 +51,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \item \code{matrixStats::\link[matrixStats]{rowCumsums}()} and
 \code{matrixStats::\link[matrixStats]{colCumsums}()} which are used when
 the input is a \code{matrix} or \code{numeric} vector.
-\item \link{cumsum}
+\item \code{base::\link[base]{cumsum}()}.
 }
 }

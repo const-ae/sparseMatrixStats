@@ -3,7 +3,8 @@
 \name{colDiffs,dgCMatrix-method}
 \alias{colDiffs,dgCMatrix-method}
 \alias{rowDiffs,dgCMatrix-method}
-\title{Calculates the difference between each element of a row (column) of a matrix-like object}
+\title{Calculates the difference between each element of a row (column) of a
+matrix-like object}
 \usage{
 \S4method{colDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...)
 
@@ -12,11 +13,13 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{lag}{An integer specifying the lag.}
 
@@ -25,15 +28,17 @@ columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}} with one
-column (row) less than x: \eqn{Nx(K-1)} or \eqn{(N-1)xK}.
+Returns a \code{\link[base]{numeric}} \code{\link[base]{matrix}}
+with one column (row) less than x: \eqn{Nx(K-1)} or \eqn{(N-1)xK}.
 }
 \description{
-Calculates the difference between each element of a row (column) of a matrix-like object
+Calculates the difference between each element of a row (column) of a
+matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowDiffs}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowDiffs}}
 / \code{matrixStats::\link[matrixStats]{colDiffs}}.
 }
 \examples{
@@ -52,6 +57,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \item \code{matrixStats::\link[matrixStats]{rowDiffs}()} and
 \code{matrixStats::\link[matrixStats]{colDiffs}()} which are used when
 the input is a \code{matrix} or \code{numeric} vector.
-\item \link{diff}
+\item \code{base::\link[base]{diff}()}.
 }
 }

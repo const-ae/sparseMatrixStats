@@ -26,11 +26,13 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{probs}{A numeric vector of J probabilities in [0, 1].}
 
@@ -38,19 +40,21 @@ columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
 are excluded first, otherwise not.}
 
 \item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.
-Note, that this is not a generic argument and not all implementation of this function
-have to provide it.}
+Note, that this is not a generic argument and not all implementation of
+this function have to provide it.}
 }
 \value{
-a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ}) \code{\link{matrix}}, where
-N (K) is the number of rows (columns) for which the J values are calculated.
+a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ})
+\code{\link{matrix}}, where N (K) is the number of rows (columns) for
+which the J values are calculated.
 }
 \description{
 Calculates quantiles for each row (column) of a matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowQuantiles}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowQuantiles}}
 / \code{matrixStats::\link[matrixStats]{colQuantiles}}.
 }
 \examples{

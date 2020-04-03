@@ -3,7 +3,8 @@
 \name{colMads,dgCMatrix-method}
 \alias{colMads,dgCMatrix-method}
 \alias{rowMads,dgCMatrix-method}
-\title{Calculates the median absolute deviation for each row (column) of a matrix-like object}
+\title{Calculates the median absolute deviation for each row (column) of a
+matrix-like object}
 \usage{
 \S4method{colMads}{dgCMatrix}(
   x,
@@ -28,15 +29,18 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{center}{(optional) the center, defaults to the row means}
 
-\item{constant}{A scale factor. See \link[stats:mad]{stats::mad} for details.}
+\item{constant}{A scale factor. See \code{stats::\link[stats]{mad}()} for
+details.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
@@ -48,11 +52,13 @@ Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
 length N (K).
 }
 \description{
-Calculates the median absolute deviation for each row (column) of a matrix-like object.
+Calculates the median absolute deviation for each row (column) of a
+matrix-like object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowMads}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowMads}}
 / \code{matrixStats::\link[matrixStats]{colMads}}.
 }
 \examples{
@@ -73,6 +79,7 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 the input is a \code{matrix} or \code{numeric} vector.
 \item For mean estimates, see \code{\link[MatrixGenerics]{rowMeans2}()} and
 \code{\link[base:colSums]{rowMeans}()}.
-\item For non-robust standard deviation estimates, see \code{\link[MatrixGenerics]{rowSds}()}.
+\item For non-robust standard deviation estimates, see
+\code{\link[MatrixGenerics]{rowSds}()}.
 }
 }

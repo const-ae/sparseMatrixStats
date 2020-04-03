@@ -32,11 +32,12 @@
 \item{W}{An optional numeric \code{NxM} matrix of weights.}
 
 \item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is
+done.}
 
-\item{S}{An \link{integer} \code{KxJ} matrix that specifying the \code{J} subsets. Each column
-hold \code{K} column (row) indices for the corresponding subset. The range of values
-is [1, M] ([1,N]).}
+\item{S}{An \link{integer} \code{KxJ} matrix that specifying the \code{J} subsets. Each
+column hold \code{K} column (row) indices for the corresponding subset. The
+range of values is [1, M] ([1,N]).}
 
 \item{FUN}{A row-by-row (column-by-column) summary statistic function. It is
 applied to to each column (row) subset of \code{X} that is specified by \code{S}.}
@@ -46,7 +47,8 @@ applied to to each column (row) subset of \code{X} that is specified by \code{S}
 \item{tFUN}{If \code{TRUE}, \code{X} is transposed before it is passed to \code{FUN}.}
 
 \item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is
+done.}
 }
 \value{
 Returns a numeric \code{JxN} (\code{MxJ}) matrix.
@@ -77,7 +79,7 @@ mat <- matrix(rnorm(20), nrow = 5, ncol = 4)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowAvgsPerColSet}()} and
-\code{matrixStats::\link[matrixStats]{colAvgsPerRowSet}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats]{colAvgsPerRowSet}()} which are used
+when the input is a \code{matrix} or \code{numeric} vector.
 }
 }

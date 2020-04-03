@@ -3,7 +3,8 @@
 \name{colRanges,dgCMatrix-method}
 \alias{colRanges,dgCMatrix-method}
 \alias{rowRanges,dgCMatrix-method}
-\title{Calculates the minimum and maximum for each row (column) of a matrix-like object}
+\title{Calculates the minimum and maximum for each row (column) of a matrix-like
+object}
 \usage{
 \S4method{colRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
 
@@ -12,11 +13,13 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
+\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
+subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
 are excluded first, otherwise not.}
@@ -24,15 +27,18 @@ are excluded first, otherwise not.}
 \item{...}{Additional arguments passed to specific methods.}
 }
 \value{
-a \code{\link[base]{numeric}} \code{Nx2} (\code{Kx2}) \code{\link{matrix}}, where
-N (K) is the number of rows (columns) for which the ranges are calculated.
+a \code{\link[base]{numeric}} \code{Nx2} (\code{Kx2})
+\code{\link{matrix}}, where N (K) is the number of rows (columns) for
+which the ranges are calculated.
 }
 \description{
-Calculates the minimum and maximum for each row (column) of a matrix-like object.
+Calculates the minimum and maximum for each row (column) of a matrix-like
+object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}} or
-\code{\link[base]{numeric}} call \code{matrixStats::\link[matrixStats]{rowRanges}}
+The S4 methods for \code{x} of type \code{\link[base]{matrix}},
+\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowRanges}}
 / \code{matrixStats::\link[matrixStats]{colRanges}}.
 }
 \examples{
@@ -53,6 +59,6 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 the input is a \code{matrix} or \code{numeric} vector.
 \item For max estimates, see \code{\link[MatrixGenerics]{rowMaxs}()}.
 \item For min estimates, see \code{\link[MatrixGenerics]{rowMins}()}.
-\item \link{range}
+\item \code{base::\link[base]{range}()}.
 }
 }
