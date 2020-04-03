@@ -5,7 +5,7 @@
 #' @inherit MatrixGenerics::colSums2
 #' @export
 setMethod("colSums2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -21,7 +21,7 @@ setMethod("colSums2", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colMeans2
 #' @export
 setMethod("colMeans2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -37,7 +37,7 @@ setMethod("colMeans2", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colMedians
 #' @export
 setMethod("colMedians", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -53,7 +53,7 @@ setMethod("colMedians", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colVars
 #' @export
 setMethod("colVars", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -69,7 +69,7 @@ setMethod("colVars", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colSds
 #' @export
 setMethod("colSds", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -85,7 +85,7 @@ setMethod("colSds", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colMads
 #' @export
 setMethod("colMads", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -101,7 +101,7 @@ setMethod("colMads", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colLogSumExps
 #' @export
 setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
-          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(lx, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     lx <- lx[rows, , drop = FALSE]
   }
@@ -129,7 +129,7 @@ setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
 #'
 #' @export
 setMethod("colProds", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -146,7 +146,7 @@ setMethod("colProds", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colMins
 #' @export
 setMethod("colMins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -162,7 +162,7 @@ setMethod("colMins", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colMaxs
 #' @export
 setMethod("colMaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -180,7 +180,7 @@ setMethod("colMaxs", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colOrderStats", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE){
   if(which < 1 || which > nrow(x)){
     stop("Argument 'which' is out of range.")
   }
@@ -201,7 +201,7 @@ setMethod("colOrderStats", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colWeightedMeans
 #' @export
 setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
     w <- w[rows]
@@ -223,7 +223,7 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colWeightedMedians
 #' @export
 setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
     w <- w[rows]
@@ -243,7 +243,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
-        matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ...)
+        matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE)
       }
     })
   }
@@ -255,7 +255,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colWeightedVars
 #' @export
 setMethod("colWeightedVars", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
     w <- w[rows]
@@ -277,7 +277,7 @@ setMethod("colWeightedVars", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colWeightedSds
 #' @export
 setMethod("colWeightedSds", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
     w <- w[rows]
@@ -314,7 +314,7 @@ setMethod("colWeightedSds", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, constant = 1.4826, center = NULL, ...){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, constant = 1.4826, center = NULL){
   if(! is.null(center)) stop("colWeightedMads does not support the 'center' argument.")
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -333,9 +333,9 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
-        center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE, ...)
+        center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE)
         x <- abs(new_vec - center)
-        sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE, ...)
+        sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE)
         # Rescale for normal distributions
         sigma <- constant * sigma
         sigma
@@ -351,7 +351,7 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCounts
 #' @export
 setMethod("colCounts", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -374,7 +374,7 @@ setMethod("colCounts", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colAnyNAs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...){
+          function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -390,7 +390,7 @@ setMethod("colAnyNAs", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colAnys
 #' @export
 setMethod("colAnys", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -407,7 +407,7 @@ setMethod("colAnys", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colAlls
 #' @export
 setMethod("colAlls", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -424,7 +424,7 @@ setMethod("colAlls", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCollapse
 #' @export
 setMethod("colCollapse", signature(x = "dgCMatrix"),
-          function(x, idxs, cols = NULL, ...){
+          function(x, idxs, cols = NULL){
   idxs <- rep(idxs, length.out = ncol(x))
   if (!is.null(cols)) {
     x <- x[, cols, drop = FALSE]
@@ -471,7 +471,7 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colTabulates
 #' @export
 setMethod("colTabulates", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, values = NULL, ...){
+          function(x, rows = NULL, cols = NULL, values = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -505,7 +505,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colIQRs
 #' @export
 setMethod("colIQRs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
   col_q[,2] - col_q[,1]
 })
@@ -517,7 +517,7 @@ setMethod("colIQRs", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colRanges
 #' @export
 setMethod("colRanges", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   col_max <- colMaxs(x, rows, cols, na.rm = na.rm)
   col_min <- colMins(x, rows, cols, na.rm = na.rm)
   unname(cbind(col_min, col_max))
@@ -530,7 +530,7 @@ setMethod("colRanges", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCumsums
 #' @export
 setMethod("colCumsums", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...){
+          function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -547,7 +547,7 @@ setMethod("colCumsums", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCumprods
 #' @export
 setMethod("colCumprods", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...){
+          function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -564,7 +564,7 @@ setMethod("colCumprods", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCummins
 #' @export
 setMethod("colCummins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...){
+          function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -581,7 +581,7 @@ setMethod("colCummins", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colCummaxs
 #' @export
 setMethod("colCummaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, ...){
+          function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -613,7 +613,7 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
 #'    }
 #' @export
 setMethod("colRanks", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = FALSE, na.handling = c("keep", "last"), ...){
+          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = FALSE, na.handling = c("keep", "last")){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -635,7 +635,7 @@ setMethod("colRanks", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, ...){
+          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -648,7 +648,7 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
     reduce_sparse_matrix_to_matrix(x, n_result_rows = max(nrow(x) - differences * lag, 0), function(values, row_indices, number_of_zeros){
       tmp <- rep(0,  nrow(x))
       tmp[row_indices+1] <- values
-      matrixStats::diff2(tmp, lag = lag, differences = differences, ...)
+      matrixStats::diff2(tmp, lag = lag, differences = differences)
     })
   }
 })
@@ -659,7 +659,7 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colVarDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -673,7 +673,7 @@ setMethod("colVarDiffs", signature(x = "dgCMatrix"),
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
-      matrixStats::varDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+      matrixStats::varDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
     })
   }
 })
@@ -685,7 +685,7 @@ setMethod("colVarDiffs", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colSdDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -699,7 +699,7 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
-      matrixStats::sdDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+      matrixStats::sdDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
     })
   }
 })
@@ -710,7 +710,7 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
 #' @param constant A scale factor. See \code{\link{mad}} for details.
 #' @export
 setMethod("colMadDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ...){
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -724,7 +724,7 @@ setMethod("colMadDiffs", signature(x = "dgCMatrix"),
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
-      matrixStats::madDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, constant = constant, ...)
+      matrixStats::madDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, constant = constant)
     })
   }
 })
@@ -735,7 +735,7 @@ setMethod("colMadDiffs", signature(x = "dgCMatrix"),
 #'
 #' @export
 setMethod("colIQRDiffs", signature(x = "dgCMatrix"),
-function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
+function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -743,13 +743,13 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, ...){
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    unname(colIQRs(x, na_rm = na.rm, ...))
+    unname(colIQRs(x, na.rm = na.rm))
   }else{
     n <- nrow(x)
     reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
-      matrixStats::iqrDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, ...)
+      matrixStats::iqrDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
     })
   }
 })
