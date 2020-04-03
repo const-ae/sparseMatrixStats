@@ -1,14 +1,13 @@
 Package: sparseMatrixStats
 Type: Package
-Title: Functions that Apply to Rows and Columns of Sparse Matrices
+Title: Summary Statistics for Rows and Columns of Sparse Matrices
 Version: 0.99.0
 Authors@R: person("Constantin", "Ahlmann-Eltze", email = "artjom31415@googlemail.com", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3762-068X"))
 Description: High performance functions for row and column operations on sparse matrices.
     For example: col / rowMeans2, col / rowMedians, col / rowVars etc. Currently,
-    the optimizations are limited to data in the column sparse format. In addition,
-    row and column subsetting is not supported. This package is inspired by the 
-    matrixStats package by Henrik Bengtsson.
+    the optimizations are limited to data in the column sparse format. 
+    This package is inspired by the matrixStats package by Henrik Bengtsson.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
