@@ -19,17 +19,17 @@ std::vector<T> flatten(const std::vector<std::vector<T>>& v) {
 }
 
 
-template<typename Iterator>
-inline bool is_any_na(Iterator iter){
-    return std::any_of(iter.begin(), iter.end(), [](const double d) -> bool {
+template<typename View>
+inline bool is_any_na(View values){
+    return std::any_of(values.begin(), values.end(), [](const double d) -> bool {
         return Rcpp::NumericVector::is_na(d);
     });
 }
 
 
-template<typename Iterator>
-inline bool are_all_na(Iterator iter){
-    return  std::all_of(iter.begin(), iter.end(), [](const double d) -> bool {
+template<typename View>
+inline bool are_all_na(View values){
+    return  std::all_of(values.begin(), values.end(), [](const double d) -> bool {
         return Rcpp::NumericVector::is_na(d);
     });
 }
