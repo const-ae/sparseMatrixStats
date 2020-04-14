@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-set.seed(1)
 ```
 
 # Installation
@@ -39,6 +38,8 @@ library(sparseMatrixStats)
 # Matrix defines the sparse Matrix class
 # dgCMatrix that we will use
 library(Matrix)
+# For reproducibility
+set.seed(1)
 ```
 
 Create a synthetic table with customers, items, and how often they bought that item.
