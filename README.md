@@ -15,7 +15,18 @@ for sparse matrices.
 
 ## Installation
 
-You can install the development version of the package from
+You can install the release version of
+*[sparseMatrixStats](https://bioconductor.org/packages/3.10/sparseMatrixStats)*
+from BioConductor:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sparseMatrixStats")
+```
+
+Alternatively, you can get the development version of the package from
 [GitHub](https://github.com/const-ae/sparseMatrixStats) with:
 
 ``` r
@@ -85,9 +96,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats     29µs  31.94µs   30492.     7.76KB     18.3
-#> 2 matrixStats          2.1ms   2.21ms     445.   162.31KB      0  
-#> 3 apply               15.1ms  16.77ms      59.1   17.23MB    144.
+#> 1 sparseMatrixStats  29.73µs  33.56µs   28949.     7.76KB     26.1
+#> 2 matrixStats         2.19ms   2.33ms     426.   162.31KB      0  
+#> 3 apply              18.28ms  18.55ms      53.8   17.23MB    202.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
@@ -181,17 +192,3 @@ implemented.
 | rowWeightedMedians() | ✔           | ✔                 | Only equivalent if `interpolate=FALSE`                                                   |
 | rowWeightedSds()     | ✔           | ✔                 |                                                                                          |
 | rowWeightedVars()    | ✔           | ✔                 |                                                                                          |
-
-## Build package from source on Windows
-
-The package uses modern C++ and thus requires a compiler that supports
-the C++14 standard. On Windows, it might be necessary to add the
-following lines to the `%HOMEPATH%/Documents/.R/Makevars.win` file:
-
-``` make
-CXX14=$(BINPREF)g++
-CXX14STD=-std=c++1y
-```
-
-See also the section of the *Writing R Extensions* manual on
-[C++14](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-C_002b_002b14-code).

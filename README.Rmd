@@ -24,7 +24,16 @@ for sparse matrices.
 
 ## Installation
 
-You can install the development version of the package from [GitHub](https://github.com/const-ae/sparseMatrixStats) with:
+You can install the release version of `r BiocStyle::Biocpkg("sparseMatrixStats")` from BioConductor:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sparseMatrixStats")
+```
+
+Alternatively, you can get the development version of the package from [GitHub](https://github.com/const-ae/sparseMatrixStats) with:
 
 ``` r
 # install.packages("devtools")
@@ -126,14 +135,3 @@ knitr::kable(api_df, row.names = FALSE)
 ```
 
 
-## Build package from source on Windows
-
-The package uses modern C++ and thus requires a compiler that supports the C++14 standard. On Windows, it might
-be necessary to add the following lines to the `%HOMEPATH%/Documents/.R/Makevars.win` file:
-
-```make
-CXX14=$(BINPREF)g++
-CXX14STD=-std=c++1y
-```
-
-See also the section of the _Writing R Extensions_ manual on [C++14](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Using-C_002b_002b14-code).
