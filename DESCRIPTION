@@ -26,5 +26,6 @@ Suggests:
     bench,
     rmarkdown,
     BiocStyle
+SystemRequirements: C++14
 VignetteBuilder: knitr
 biocViews: Infrastructure, Software, DataRepresentation
