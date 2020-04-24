@@ -12,20 +12,19 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{rows}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{cols}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
+\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
 }
 \value{
-Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
-length N (K).
+Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).
 }
 \description{
 Calculates the product for each row (column) in a matrix
@@ -51,10 +50,10 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowProds}()} and
-\code{matrixStats::\link[matrixStats]{colProds}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats:rowProds]{colProds}()} which are used
+when the input is a \code{matrix} or \code{numeric} vector.
 \item For sums across rows (columns), see
 \code{\link[MatrixGenerics]{rowSums2}()} (\code{\link[MatrixGenerics:colSums2]{colSums2()}})
-\item \code{base::\link[base]{prod}()}.
+\item \code{base::\link{prod}()}.
 }
 }

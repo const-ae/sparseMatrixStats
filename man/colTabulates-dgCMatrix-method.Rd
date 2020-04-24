@@ -12,18 +12,18 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{rows}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{cols}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
 \item{values}{the values to search for.}
 }
 \value{
-a \code{\link[base]{numeric}} \code{NxJ} (\code{KxJ})
+a \code{\link{numeric}} \code{NxJ} (\code{KxJ})
 \code{\link{matrix}}, where N (K) is the number of rows (columns) for
 which the J values are calculated.
 }
@@ -31,10 +31,10 @@ which the J values are calculated.
 Tabulates the values in a matrix-like object by row (column).
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}},
-\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+The S4 methods for \code{x} of type \code{\link{matrix}},
+\code{\link{array}}, or \code{\link{numeric}} call
 \code{matrixStats::\link[matrixStats]{rowTabulates}}
-/ \code{matrixStats::\link[matrixStats]{colTabulates}}.
+/ \code{matrixStats::\link[matrixStats:rowTabulates]{colTabulates}}.
 }
 \examples{
 mat <- matrix(rpois(15, lambda = 3), nrow = 5, ncol = 3)
@@ -53,8 +53,8 @@ mat <- matrix(rpois(15, lambda = 3), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowTabulates}()} and
-\code{matrixStats::\link[matrixStats]{colTabulates}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
-\item \code{base::\link[base]{table}()}
+\code{matrixStats::\link[matrixStats:rowTabulates]{colTabulates}()} which
+are used when the input is a \code{matrix} or \code{numeric} vector.
+\item \code{base::\link{table}()}
 }
 }

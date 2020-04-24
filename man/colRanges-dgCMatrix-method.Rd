@@ -13,19 +13,19 @@ object}
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{rows}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{cols}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
+\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
 }
 \value{
-a \code{\link[base]{numeric}} \code{Nx2} (\code{Kx2})
+a \code{\link{numeric}} \code{Nx2} (\code{Kx2})
 \code{\link{matrix}}, where N (K) is the number of rows (columns) for
 which the ranges are calculated.
 }
@@ -34,10 +34,10 @@ Calculates the minimum and maximum for each row (column) of a matrix-like
 object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}},
-\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+The S4 methods for \code{x} of type \code{\link{matrix}},
+\code{\link{array}}, or \code{\link{numeric}} call
 \code{matrixStats::\link[matrixStats]{rowRanges}}
-/ \code{matrixStats::\link[matrixStats]{colRanges}}.
+/ \code{matrixStats::\link[matrixStats:rowRanges]{colRanges}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -53,10 +53,10 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowRanges}()} and
-\code{matrixStats::\link[matrixStats]{colRanges}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats:rowRanges]{colRanges}()} which are
+used when the input is a \code{matrix} or \code{numeric} vector.
 \item For max estimates, see \code{\link[MatrixGenerics]{rowMaxs}()}.
 \item For min estimates, see \code{\link[MatrixGenerics]{rowMins}()}.
-\item \code{base::\link[base]{range}()}.
+\item \code{base::\link{range}()}.
 }
 }

@@ -13,30 +13,29 @@ object}
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{rows}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{cols}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}}s
+\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
 }
 \value{
-Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
-length N (K).
+Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).
 }
 \description{
 Calculates the interquartile range for each row (column) of a matrix-like
 object.
 }
 \details{
-The S4 methods for \code{x} of type \code{\link[base]{matrix}},
-\code{\link[base]{array}}, or \code{\link[base]{numeric}} call
+The S4 methods for \code{x} of type \code{\link{matrix}},
+\code{\link{array}}, or \code{\link{numeric}} call
 \code{matrixStats::\link[matrixStats]{rowIQRs}}
-/ \code{matrixStats::\link[matrixStats]{colIQRs}}.
+/ \code{matrixStats::\link[matrixStats:rowIQRs]{colIQRs}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -52,8 +51,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowIQRs}()} and
-\code{matrixStats::\link[matrixStats]{colIQRs}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats:rowIQRs]{colIQRs}()} which are used
+when the input is a \code{matrix} or \code{numeric} vector.
 \item For a non-robust analog, see \code{\link[MatrixGenerics]{rowSds}()}. For a more
 robust version see \code{\link[MatrixGenerics:rowMads]{rowMads()}}
 \item \code{stats::\link[stats]{IQR}()}.

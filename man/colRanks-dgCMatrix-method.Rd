@@ -27,13 +27,13 @@ object}
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{rows}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
-\item{cols}{A \code{\link[base]{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link[base]{NULL}}, no
-subsetting is done.}
+\item{cols}{A \code{\link{vector}} indicating the subset of rows
+(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
+done.}
 
 \item{ties.method}{A character string specifying how ties are treated. Note
 that the default specifies fewer options than the original matrixStats
@@ -47,7 +47,7 @@ dimensions as the input matrix. By default this is true for `rowRanks()`, but fa
 ('keep') or sorted in at the end ('last'). Default is 'keep' derived from the behavior of the equivalent}
 }
 \value{
-a matrix of type \code{\link[base]{integer}} is returned unless
+a matrix of type \code{\link{integer}} is returned unless
 \code{ties.method = "average"}. Ithas dimensions` \code{NxJ} (\code{KxJ})
 \code{\link{matrix}}, where N (K) is the number of rows (columns) of the
 input x.
@@ -79,8 +79,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats]{rowRanks}()} and
-\code{matrixStats::\link[matrixStats]{colRanks}()} which are used when
-the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats:rowRanks]{colRanks}()} which are used
+when the input is a \code{matrix} or \code{numeric} vector.
 \item \link[base:rank]{base::rank}
 }
 }
