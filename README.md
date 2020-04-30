@@ -16,7 +16,7 @@ for sparse matrices.
 ## Installation
 
 You can install the release version of
-*[sparseMatrixStats](https://bioconductor.org/packages/3.10/sparseMatrixStats)*
+*[sparseMatrixStats](https://bioconductor.org/packages/sparseMatrixStats)*
 from BioConductor:
 
 ``` r
@@ -96,9 +96,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  29.73µs  33.56µs   28949.     7.76KB     26.1
-#> 2 matrixStats         2.19ms   2.33ms     426.   162.31KB      0  
-#> 3 apply              18.28ms  18.55ms      53.8   17.23MB    202.
+#> 1 sparseMatrixStats  30.14µs  36.34µs   26377.     7.76KB    23.8 
+#> 2 matrixStats         2.21ms   2.35ms     422.   162.31KB     2.04
+#> 3 apply              17.77ms  18.47ms      53.3   17.23MB   122.
 ```
 
 As you can see `sparseMatrixStats` is ca. 60 times fast than
@@ -107,12 +107,12 @@ version.
 
 # API
 
-The package is still work in progress. For example, it is still
-completely lacking any documentation. Most functions have already been
-optimized for `dgCMatrix` input. The following list gives an overview
-which already have. In particular the `colXXXDiff()` functions have not
-yet been
-implemented.
+The package now supports all relevant functions from the `matrixStats`
+API. And thanks to the
+[`MatrixGenerics`](https://bioconductor.org/packages/MatrixGenerics/) it
+can be easily integrated along-side
+[`matrixStats`](https://cran.r-project.org/package=matrixStats) and
+[`DelayedMatrixStats`](https://bioconductor.org/packages/DelayedMatrixStats/).
 
 | Method               | matrixStats | sparseMatrixStats | Notes                                                                                    |
 | :------------------- | :---------- | :---------------- | :--------------------------------------------------------------------------------------- |
