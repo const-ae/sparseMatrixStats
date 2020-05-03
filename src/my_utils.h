@@ -2,6 +2,19 @@
 #define my_utils_h
 
 #include <Rcpp.h>
+#include "types.h"
+
+template<typename Iterator>
+inline double sum_stable(Iterator iter){
+    LDOUBLE sum = 0.0;
+    int counter = 0;
+    for(double e : iter){
+        R_CHECK_USER_INTERRUPT(++counter);
+        sum += e;
+    }
+    return sum;
+}
+
 
 
 // This function was copied from https://stackoverflow.com/a/17299623/604854

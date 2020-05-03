@@ -176,7 +176,7 @@ IntegerMatrix reduce_matrix_int_matrix_with_na(S4 matrix, R_len_t n_res_columns,
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
-    return std::accumulate(values.begin(), values.end(), 0.0);
+    return sum_stable(values);
   });
 }
 
