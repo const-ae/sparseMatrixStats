@@ -181,23 +181,27 @@ NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm){
 }
 
 
+template<typename Iterator>
+inline double sp_mean(Iterator values, int number_of_zeros){
+  LDOUBLE sum = 0.0;
+  int size = number_of_zeros;
+  for(double d : values){
+    R_CHECK_USER_INTERRUPT(++size);
+    sum += d;
+  }
+  if(NumericVector::is_na(sum)){
+    return sum;
+  }else if(size == 0){
+    return R_NaN;
+  }else{
+    return sum / size;
+  }
+}
+
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMeans2(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
-    double accum = 0.0;
-    R_len_t size = number_of_zeros;
-    std::for_each(values.begin(), values.end(),
-      [&](auto d){
-        ++size;
-        accum += d;
-      });
-    if(NumericVector::is_na(accum)){
-      return accum;
-    }else if(size == 0){
-      return R_NaN;
-    }else{
-      return accum / size;
-    }
+    return sp_mean(values, number_of_zeros);
   });
 }
 
