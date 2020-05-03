@@ -231,21 +231,22 @@ NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
   return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
-    double accum = 0.0;
-    double accum2 = 0.0;
-    R_len_t size = number_of_zeros;
-    std::for_each(values.begin(), values.end(),
-                  [&](auto d){
-                    ++size;
-                    accum += d;
-                    accum2 += pow(d, 2);
-                  });
-    if(NumericVector::is_na(accum)){
-      return accum;
-    }else if(size <= 1){
+    double mean = sp_mean(values, number_of_zeros);
+    if(ISNA(mean)){
+      return NA_REAL;
+    }
+    double sigma2 = number_of_zeros * mean * mean;
+    double diff = 0.0;
+    int size = number_of_zeros;
+    for(double d : values){
+      R_CHECK_USER_INTERRUPT(++size);
+      diff = d - mean;
+      sigma2 += diff * diff;
+    }
+    if(size <= 1){
       return NA_REAL;    // Yes, var(3) actually returns NA instead of NaN
     }else{
-      return ((accum2) - pow(accum , 2)/ size)  / (size-1);
+      return sigma2  / (size-1);
     }
   });
 }
