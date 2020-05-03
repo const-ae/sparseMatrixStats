@@ -436,7 +436,7 @@ NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
 NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool na_rm){
   double total_weights = sum(weights);
   return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
-    double accum = 0.0;
+    LDOUBLE accum = 0.0;
     double remaining_weights = total_weights;
     auto val_it = values.begin();
     auto ind_it = row_indices.begin();
@@ -455,7 +455,7 @@ NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool 
     }
     if(NumericVector::is_na(accum)){
       return accum;
-    }else if(remaining_weights < pow(10, -9)){
+    }else if(remaining_weights < 1e-9){
       return R_NaN;
     }else{
       return accum / remaining_weights;
@@ -468,8 +468,8 @@ NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool 
 NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool na_rm){
   double total_weights = sum(weights);
   return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
-    double accum = 0.0;
-    double accum2 = 0.0;
+    LDOUBLE accum = 0.0;
+    LDOUBLE accum2 = 0.0;
     double remaining_weights = total_weights;
     auto val_it = values.begin();
     auto ind_it = row_indices.begin();
@@ -732,7 +732,7 @@ NumericMatrix dgCMatrix_colCumprods(S4 matrix){
   R_len_t nrows = dim[0];
   return reduce_matrix_num_matrix_with_na(matrix, nrows, false, [nrows](auto values, auto row_indices, int number_of_zeros) -> std::vector<double>{
     std::vector<double> result(nrows);
-    double acc = 1;
+    LDOUBLE acc = 1;
     auto row_it = row_indices.begin();
     auto val_it = values.begin();
     auto res_it = result.begin();
