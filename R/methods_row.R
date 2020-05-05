@@ -104,7 +104,7 @@ setMethod("rowLogSumExps", signature(lx = "dgCMatrix"),
   if(! is.null(cols)){
     lx <- lx[, cols, drop = FALSE]
   }
-  dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm)
+  setNames(dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm), rownames(lx))
 })
 
 
@@ -222,9 +222,9 @@ setMethod("rowWeightedSds", signature(x = "dgCMatrix"),
     w <- w[cols]
   }
   if(is.null(w)){
-    sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
+    setNames(sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm)), rownames(x))
   }else{
-    sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm))
+    setNames(sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm)), rownames(x))
   }
 })
 
@@ -377,7 +377,7 @@ setMethod("rowIQRs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
-  col_q[,2] - col_q[,1]
+  unname(col_q[,2] - col_q[,1])
 })
 
 

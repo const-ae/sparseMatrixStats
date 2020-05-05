@@ -108,7 +108,7 @@ setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
   if(! is.null(cols)){
     lx <- lx[, cols, drop = FALSE]
   }
-  dgCMatrix_colLogSumExps(lx, na_rm = na.rm)
+  setNames(dgCMatrix_colLogSumExps(lx, na_rm = na.rm), colnames(lx))
 })
 
 
@@ -210,9 +210,9 @@ setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    dgCMatrix_colMeans2(x, na_rm = na.rm)
+    setNames(dgCMatrix_colMeans2(x, na_rm = na.rm), colnames(x))
   }else{
-    dgCMatrix_colWeightedMeans(x, weights = w, na_rm = na.rm)
+    setNames(dgCMatrix_colWeightedMeans(x, weights = w, na_rm = na.rm), colnames(x))
   }
 })
 
@@ -232,9 +232,9 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    dgCMatrix_colMedians(x, na_rm = na.rm)
+    setNames(dgCMatrix_colMedians(x, na_rm = na.rm), colnames(x))
   }else{
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0 && number_of_zeros > 0){
         return(0.0)
       }else if(length(values) == 0 && number_of_zeros > 0){
@@ -245,7 +245,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
         new_weights <- c(zero_weight, w[row_indices + 1])
         matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE)
       }
-    })
+    }), colnames(x))
   }
 })
 
@@ -264,9 +264,9 @@ setMethod("colWeightedVars", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    dgCMatrix_colVars(x, na_rm = na.rm)
+    setNames(dgCMatrix_colVars(x, na_rm = na.rm), colnames(x))
   }else{
-    dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm)
+    setNames(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm), colnames(x))
   }
 })
 
@@ -286,9 +286,9 @@ setMethod("colWeightedSds", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    sqrt(dgCMatrix_colVars(x, na_rm = na.rm))
+    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm)), colnames(x))
   }else{
-    sqrt(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm))
+    setNames(sqrt(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm)), colnames(x))
   }
 })
 
@@ -456,7 +456,7 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
   # Add dim names
   digits <- max(2L, getOption("digits"))
   colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
-  rownames(mat) <- rownames(x)
+  rownames(mat) <- colnames(x)
   if(drop && nrow(mat) == 1){
     mat[1,]
   }else{
@@ -507,7 +507,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
 setMethod("colIQRs", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
-  col_q[,2] - col_q[,1]
+  unname(col_q[,2] - col_q[,1])
 })
 
 
@@ -667,14 +667,14 @@ setMethod("colVarDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    dgCMatrix_colVars(x, na_rm = na.rm)
+    setNames(dgCMatrix_colVars(x, na_rm = na.rm), colnames(x))
   }else{
     n <- nrow(x)
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
       matrixStats::varDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
-    })
+    }), colnames(x))
   }
 })
 
@@ -693,14 +693,14 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    sqrt(dgCMatrix_colVars(x, na_rm = na.rm))
+    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm)), colnames(x))
   }else{
     n <- nrow(x)
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
       matrixStats::sdDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
-    })
+    }), colnames(x))
   }
 })
 
@@ -718,14 +718,14 @@ setMethod("colMadDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant)
+    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant), colnames(x))
   }else{
     n <- nrow(x)
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
       matrixStats::madDiff(tmp, na.rm=na.rm, diff = diff, trim = trim, constant = constant)
-    })
+    }), colnames(x))
   }
 })
 
@@ -743,14 +743,14 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    unname(colIQRs(x, na.rm = na.rm))
+    setNames(colIQRs(x, na.rm = na.rm), colnames(x))
   }else{
     n <- nrow(x)
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       tmp <- rep(0, n)
       tmp[row_indices+1] <- values
       matrixStats::iqrDiff(tmp, na.rm=na.rm, diff = diff, trim = trim)
-    })
+    }), colnames(x))
   }
 })
 

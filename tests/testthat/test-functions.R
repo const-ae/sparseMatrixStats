@@ -1,23 +1,29 @@
 set.seed(1)
 # source("~/prog/r_packages/sparseMatrixStats/tests/testthat/setup.R")
 diverse_mat <- make_matrix_with_all_features(nrow = 15, ncol=10)
+named_mat <- make_matrix_with_all_features(nrow = 15, ncol=10)
+colnames(named_mat) <- paste0("column_", 1:10)
+rownames(named_mat) <- paste0("row_", 1:15)
 zero_row_mat <- matrix(numeric(0), nrow = 0, ncol = 5)
 zero_col_mat <- matrix(numeric(0), nrow = 5, ncol = 0)
 empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
 matrix_with_zeros_only <- matrix(0, nrow = 15, ncol=10)
 matrix_list <- list(diverse_mat,
+                    named_mat,
                     zero_row_mat,
                     zero_col_mat,
                     empty_mat,
                     matrix_with_zeros_only)
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
+                       as(named_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
                        as(zero_col_mat, "dgCMatrix"),
                        as(empty_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"))
-row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1))
-col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3)
+row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1))
+col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3)
 descriptions <- list("diverse",
+                     "named",
                      "zero row",
                      "zero col",
                      "empty",
@@ -289,7 +295,7 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colCollapse(sp_mat, idxs = c(1,3)), matrixStats::colCollapse(mat, idxs = c(1,3)))
     expect_equal(colCollapse(sp_mat, idxs = 1:5, cols = min(ncol(mat), 3)), matrixStats::colCollapse(mat, idxs = 1:5, cols = min(ncol(mat), 3)))
     if(nrow(sp_mat) > 0 && ! is.null(col_subset)){
-      expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), sp_mat[1, col_subset])
+      expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), unname(sp_mat[1, col_subset]))
     }
     skip("matrixStats has a bug if colCollapse is combined with subsetting")
     expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), matrixStats::colCollapse(mat, idxs = 1, cols = col_subset))

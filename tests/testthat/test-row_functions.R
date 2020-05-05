@@ -2,6 +2,8 @@ set.seed(1)
 # source("tests/testthat/setup.R")
 
 mat <- t(make_matrix_with_all_features(nrow=15, ncol=10))
+colnames(mat) <- paste0("column_", 1:15)
+rownames(mat) <- paste0("row_", 1:10)
 sp_mat <- as(mat, "dgCMatrix")
 row_subset <- 1:5
 col_subset <- c(7, 9, 2)
@@ -191,10 +193,14 @@ test_that("rowRanks works", {
 
 
 test_that("rowWeightedMeans works", {
+  # matrixStats has a bug (#175) that rowWeightedMeans returns a vector
+  # without names if w != NULL
+  # As a work around, I set the names of my result to NULL as well
   weights <- rnorm(ncol(sp_mat), mean=4, sd=0.1)
-  expect_equal(rowWeightedMeans(sp_mat, w=weights), matrixStats::rowWeightedMeans(mat, w=weights))
+  expect_equal(rowWeightedMeans(sp_mat, w=NULL), matrixStats::rowWeightedMeans(mat, w=NULL))
+  expect_equal(unname(rowWeightedMeans(sp_mat, w=weights)), matrixStats::rowWeightedMeans(mat, w=weights))
   expect_equal(rowWeightedMeans(sp_mat, na.rm=TRUE, w=weights), matrixStats::rowWeightedMeans(mat, na.rm=TRUE, w=weights))
-  expect_equal(rowWeightedMeans(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::rowWeightedMeans(mat, w=weights, rows = row_subset, cols = col_subset))
+  expect_equal(unname(rowWeightedMeans(sp_mat, w=weights, rows = row_subset, cols = col_subset)), matrixStats::rowWeightedMeans(mat, w=weights, rows = row_subset, cols = col_subset))
 })
 
 
@@ -270,7 +276,7 @@ test_that("rowCollapse works", {
   expect_equal(rowCollapse(sp_mat, idxs = 1), matrixStats::rowCollapse(mat, idxs = 1))
   expect_equal(rowCollapse(sp_mat, idxs = c(1,3)), matrixStats::rowCollapse(mat, idxs = c(1,3)))
   expect_equal(rowCollapse(sp_mat, idxs = 1:5, rows = 3), matrixStats::rowCollapse(mat, idxs = 1:5, rows = 3))
-  expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), mat[row_subset, 1])
+  expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), unname(mat[row_subset, 1]))
   skip("matrixStats has a bug if rowCollapse is combined with subsetting")
   expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), matrixStats::rowCollapse(mat, idxs = 1, rows = row_subset))
 
