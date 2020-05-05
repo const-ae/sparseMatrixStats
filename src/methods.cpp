@@ -382,6 +382,9 @@ NumericVector dgCMatrix_colLogSumExps(S4 matrix, bool na_rm){
       if(max == R_PosInf){
         return R_PosInf;
       }
+      if(max == R_NegInf){
+        return log(number_of_zeros);
+      }
       double sum = std::accumulate(values.begin(), values.end(), 0.0, [max](double a, double b) -> double {
         return a + exp(b-max);
       });
