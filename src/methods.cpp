@@ -484,34 +484,38 @@ NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool 
 NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool na_rm){
   double total_weights = sum(weights);
   return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
-    LDOUBLE accum = 0.0;
-    LDOUBLE accum2 = 0.0;
-    double remaining_weights = total_weights;
+    double mean = sp_weighted_mean(values, number_of_zeros, weights, row_indices, total_weights, na_rm);
+    if(ISNA(mean)){
+      return NA_REAL;
+    }
+
+    LDOUBLE sigma2 = 0.0;
+    LDOUBLE remaining_weights = total_weights;
+    LDOUBLE zero_weights = total_weights;
     auto val_it = values.begin();
     auto ind_it = row_indices.begin();
     while(val_it != values.end() && ind_it != row_indices.end()){
       double v = *val_it;
       double w = weights[*ind_it];
+      zero_weights -= w;
       if(NumericVector::is_na(v)){
-        if(! na_rm){
-          return NA_REAL;
-        }
         remaining_weights -= w;
       }else{
-        if(w > 0){
-          accum += v * w;
-          accum2 += pow(v, 2) * w;
-        }
+        double diff = mean - v;
+        sigma2 += diff * diff * w;
       }
       ++val_it;
       ++ind_it;
     }
-    if(NumericVector::is_na(accum)){
-      return accum;
-    }else if(total_weights <= 1){
+    if(number_of_zeros > 0){
+      sigma2 += abs(zero_weights) * mean * mean;
+    }
+    if(NumericVector::is_na(sigma2)){
+      return NA_REAL;
+    }else if(remaining_weights <= 1){
       return NA_REAL;    // Yes, var(3) actually returns NA instead of NaN
     }else{
-      return ((accum2) - pow(accum , 2)/ total_weights)  / (total_weights-1);
+      return sigma2  / (remaining_weights - 1);
     }
   });
 }

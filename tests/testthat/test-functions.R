@@ -8,26 +8,36 @@ zero_row_mat <- matrix(numeric(0), nrow = 0, ncol = 5)
 zero_col_mat <- matrix(numeric(0), nrow = 5, ncol = 0)
 empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
 matrix_with_zeros_only <- matrix(0, nrow = 15, ncol=10)
+matrix_with_large_numbers <- make_matrix_with_all_features(nrow = 15, ncol=10)
+matrix_with_large_numbers[5,] <- 1e10
+matrix_with_large_numbers[6,] <- 1e10 + 3
+matrix_with_large_numbers[7,] <- 1e10 - 2
+matrix_with_large_numbers[8,] <- 1e10 - 10
+matrix_with_large_numbers[,7] <- 1:15 + 1e10
+
 matrix_list <- list(diverse_mat,
                     named_mat,
                     zero_row_mat,
                     zero_col_mat,
                     empty_mat,
-                    matrix_with_zeros_only)
+                    matrix_with_zeros_only,
+                    matrix_with_large_numbers)
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(named_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
                        as(zero_col_mat, "dgCMatrix"),
                        as(empty_mat, "dgCMatrix"),
-                       as(matrix_with_zeros_only, "dgCMatrix"))
-row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1))
-col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3)
+                       as(matrix_with_zeros_only, "dgCMatrix"),
+                       as(matrix_with_large_numbers, "dgCMatrix"))
+row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15)
+col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10)
 descriptions <- list("diverse",
                      "named",
                      "zero row",
                      "zero col",
                      "empty",
-                     "only zeros inside")
+                     "only zeros inside",
+                     "numerical precision challenge")
 
 
 for(idx in seq_along(matrix_list)){
