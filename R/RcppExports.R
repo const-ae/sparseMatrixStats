@@ -105,3 +105,11 @@ dgCMatrix_rowSums2 <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_rowSums2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
+dgCMatrix_rowMeans2 <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_rowMeans2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+
+dgCMatrix_rowVars <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_rowVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+

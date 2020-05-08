@@ -30,7 +30,8 @@ setMethod("rowMeans2", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colMeans2(t(x), na_rm = na.rm)
+  # dgCMatrix_colMeans2(t(x), na_rm = na.rm)
+  dgCMatrix_rowMeans2(x, na_rm = na.rm)
 })
 
 
@@ -62,7 +63,8 @@ setMethod("rowVars", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colVars(t(x), na_rm = na.rm)
+  # dgCMatrix_colVars(t(x), na_rm = na.rm)
+  dgCMatrix_rowVars(x, na_rm = na.rm)
 })
 
 

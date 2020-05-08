@@ -54,11 +54,26 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colSums2(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset))
   })
 
+  test_that("rowSums works", {
+    sp_mat2 <- t(sp_mat)
+    expect_equal(rowSums2(sp_mat2), matrixStats::colSums2(mat))
+    expect_equal(rowSums2(sp_mat2, na.rm=TRUE), matrixStats::colSums2(mat, na.rm=TRUE))
+    expect_equal(rowSums2(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset))
+  })
+
+
 
   test_that("colMeans works", {
     expect_equal(colMeans2(sp_mat), matrixStats::colMeans2(mat))
     expect_equal(colMeans2(sp_mat, na.rm=TRUE), matrixStats::colMeans2(mat, na.rm=TRUE))
     expect_equal(colMeans2(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset))
+  })
+
+  test_that("rowMeans works", {
+    sp_mat2 <- t(sp_mat)
+    expect_equal(rowMeans2(sp_mat2), matrixStats::colMeans2(mat))
+    expect_equal(rowMeans2(sp_mat2, na.rm=TRUE), matrixStats::colMeans2(mat, na.rm=TRUE))
+    expect_equal(rowMeans2(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset))
   })
 
 
@@ -74,6 +89,13 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colVars(sp_mat), matrixStats::colVars(mat))
     expect_equal(colVars(sp_mat, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
     expect_equal(colVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
+  })
+
+  test_that("rowVars works", {
+    sp_mat2 <- t(sp_mat)
+    expect_equal(rowVars(sp_mat2), matrixStats::colVars(mat))
+    expect_equal(rowVars(sp_mat2, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
+    expect_equal(rowVars(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
   })
 
   test_that("colSds works", {
