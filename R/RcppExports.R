@@ -101,3 +101,7 @@ quantile_sparse <- function(values, number_of_zeros, prob) {
     .Call('_sparseMatrixStats_quantile_sparse', PACKAGE = 'sparseMatrixStats', values, number_of_zeros, prob)
 }
 
+dgCMatrix_rowSums2 <- function(matrix, na_rm) {
+    .Call('_sparseMatrixStats_dgCMatrix_rowSums2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+}
+

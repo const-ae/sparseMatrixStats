@@ -313,6 +313,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dgCMatrix_rowSums2
+NumericVector dgCMatrix_rowSums2(S4 matrix, bool na_rm);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_rowSums2(SEXP matrixSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_rowSums2(matrix, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
@@ -340,6 +352,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colRanks_num", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_num, 4},
     {"_sparseMatrixStats_dgCMatrix_colRanks_int", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colRanks_int, 4},
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
+    {"_sparseMatrixStats_dgCMatrix_rowSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_rowSums2, 2},
     {NULL, NULL, 0}
 };
 

@@ -12,7 +12,8 @@ setMethod("rowSums2", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colSums2(t(x), na_rm = na.rm)
+  # dgCMatrix_colSums2(t(x), na_rm = na.rm)
+  dgCMatrix_rowSums2(x, na_rm = na.rm)
 })
 
 
