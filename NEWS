@@ -1,2 +1,7 @@
+Changes in version 1.0.1 (2020-05-08)
++ Fix bugs in colMaxs, colMins, colAnys
++ Fix bug in colLogSumExps
+
+
 Changes in version 0.0.99 (2020-04-03)
 + Submitted to Bioconductor
