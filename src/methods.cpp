@@ -435,34 +435,47 @@ NumericVector dgCMatrix_colProds(S4 matrix, bool na_rm){
 
 /*---------------Weighted Aggregation Functions---------------*/
 
+
+template<typename Iterator, typename RIIterator>
+inline double sp_weighted_mean(Iterator values, int number_of_zeros, NumericVector weights, RIIterator row_indices, double total_weights, bool na_rm){
+  LDOUBLE accum = 0.0;
+  double remaining_weights = total_weights;
+  auto val_it = values.begin();
+  auto ind_it = row_indices.begin();
+  while(val_it != values.end() && ind_it != row_indices.end()){
+    double v = *val_it;
+    double w = weights[*ind_it];
+    if(NumericVector::is_na(v)){
+      if(! na_rm){
+        return NA_REAL;
+      }
+      remaining_weights -=  w;
+    }else{
+      accum += v * w;
+    }
+    ++val_it;
+    ++ind_it;
+  }
+  if(NumericVector::is_na(accum)){
+    return accum;
+  }else if(remaining_weights < 1e-9){
+    return R_NaN;
+  }else{
+    return accum / remaining_weights;
+  }
+}
+
+template<typename Iterator, typename RIIterator>
+inline double sp_weighted_mean(Iterator values, int number_of_zeros, NumericVector weights, RIIterator row_indices, bool na_rm){
+  return sp_weighted_mean(values, number_of_zeros, weights, sum(weights), na_rm);
+}
+
+
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colWeightedMeans(S4 matrix, NumericVector weights, bool na_rm){
   double total_weights = sum(weights);
   return reduce_matrix_double(matrix, false, [weights, total_weights, na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
-    LDOUBLE accum = 0.0;
-    double remaining_weights = total_weights;
-    auto val_it = values.begin();
-    auto ind_it = row_indices.begin();
-    while(val_it != values.end() && ind_it != row_indices.end()){
-      double v = *val_it;
-      if(NumericVector::is_na(v)){
-        if(! na_rm){
-          return NA_REAL;
-        }
-        remaining_weights -=  weights[*ind_it];
-      }else{
-        accum += v * weights[*ind_it];
-      }
-      ++val_it;
-      ++ind_it;
-    }
-    if(NumericVector::is_na(accum)){
-      return accum;
-    }else if(remaining_weights < 1e-9){
-      return R_NaN;
-    }else{
-      return accum / remaining_weights;
-    }
+    return sp_weighted_mean(values, number_of_zeros, weights, row_indices, total_weights, na_rm);
   });
 }
 
