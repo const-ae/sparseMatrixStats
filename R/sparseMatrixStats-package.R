@@ -22,3 +22,6 @@ NULL
 
 #' @import MatrixGenerics
 NULL
+
+#' @importFrom stats setNames
+NULL
