@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sparseMatrixStats
+# sparseMatrixStats <a href='https://github.com/const-ae/sparseMatrixStats'><img src='man/figures/logo.png' align="right" height="209" /></a>
 
 <!-- badges: start -->
 
