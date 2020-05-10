@@ -18,7 +18,7 @@ make_matrix_with_all_features <- function(nrow, ncol){
   # All zero
   mat[,2] <- 0
   # Some missing
-  mat[1, 3] <- NA
+  mat[7, 3] <- NA
   # All missing
   mat[,4] <- NA
   # Some infinite
