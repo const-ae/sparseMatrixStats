@@ -9,7 +9,7 @@
 
 <!-- badges: end -->
 
-The goal of `sparseMatrixStats` is to make the API of the
+The goal of `sparseMatrixStats` is to make the API of
 [matrixStats](https://github.com/HenrikBengtsson/matrixStats) available
 for sparse matrices.
 
@@ -89,30 +89,34 @@ I use the `bench` package to benchmark the performance difference:
 
 ``` r
 bench::mark(
-  sparseMatrixStats=sparseMatrixStats::colMedians(big_sparse_mat),
-  matrixStats=matrixStats::colMedians(big_mat),
-  apply=apply(big_mat, 2, median)
+  sparseMatrixStats=sparseMatrixStats::colVars(big_sparse_mat),
+  matrixStats=matrixStats::colVars(big_mat),
+  apply=apply(big_mat, 2, var)
 )
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  30.14µs  36.34µs   26377.     7.76KB    23.8 
-#> 2 matrixStats         2.21ms   2.35ms     422.   162.31KB     2.04
-#> 3 apply              17.77ms  18.47ms      53.3   17.23MB   122.
+#> 1 sparseMatrixStats  25.99µs     30µs   32022.     2.93KB    16.0 
+#> 2 matrixStats         1.39ms   1.56ms     631.    156.8KB     2.03
+#> 3 apply               9.26ms   11.1ms      90.7    9.54MB    52.9
 ```
 
-As you can see `sparseMatrixStats` is ca. 60 times fast than
+As you can see `sparseMatrixStats` is ca. 50 times fast than
 `matrixStats`, which in turn is 7 times faster than the `apply()`
 version.
 
 # API
 
-The package now supports all relevant functions from the `matrixStats`
-API. And thanks to the
+The package now supports all functions from the `matrixStats` API for
+column sparse matrices (`dgCMatrix`). And thanks to the
 [`MatrixGenerics`](https://bioconductor.org/packages/MatrixGenerics/) it
 can be easily integrated along-side
 [`matrixStats`](https://cran.r-project.org/package=matrixStats) and
 [`DelayedMatrixStats`](https://bioconductor.org/packages/DelayedMatrixStats/).
+Note that the `rowXXX()` functions are called by transposing the input
+and calling the corresponding `colXXX()` function. Special optimized
+implementations are available for `rowSums2()`, `rowMeans2()`, and
+`rowVars()`.
 
 | Method               | matrixStats | sparseMatrixStats | Notes                                                                                    |
 | :------------------- | :---------- | :---------------- | :--------------------------------------------------------------------------------------- |

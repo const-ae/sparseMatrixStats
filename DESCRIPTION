@@ -11,7 +11,7 @@ Description: High performance functions for row and column operations on sparse 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 LinkingTo: 
     Rcpp
 Imports: 

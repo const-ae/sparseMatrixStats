@@ -148,13 +148,13 @@ I use the bench package to benchmark the performance difference:
 
 ```{r}
 bench::mark(
-  sparseMatrixStats=sparseMatrixStats::colMedians(big_sparse_mat),
-  matrixStats=matrixStats::colMedians(big_mat),
-  apply=apply(big_mat, 2, median)
+  sparseMatrixStats=sparseMatrixStats::colVars(big_sparse_mat),
+  matrixStats=matrixStats::colVars(big_mat),
+  apply=apply(big_mat, 2, var)
 )
 ```
 
-As you can see *sparseMatrixStats* is more than 60 times fast than matrixStats, which in turn is 7 times faster than the `apply()` version.
+As you can see `sparseMatrixStats` is ca. 50 times fast than `matrixStats`, which in turn is 7 times faster than the `apply()` version.
 
 
 # Session Info
