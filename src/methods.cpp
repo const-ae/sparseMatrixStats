@@ -281,7 +281,10 @@ NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
-  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(! na_rm && is_any_na(values)){
+      return NA_REAL;
+    }
     auto min_iter = std::min_element(values.begin(), values.end(), [](double a, double b) -> bool {
       return a < b;
     });
@@ -295,7 +298,10 @@ NumericVector dgCMatrix_colMins(S4 matrix, bool na_rm){
 
 // [[Rcpp::export]]
 NumericVector dgCMatrix_colMaxs(S4 matrix, bool na_rm){
-  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
+  return reduce_matrix_double(matrix, na_rm, [na_rm](auto values, auto row_indices, int number_of_zeros) -> double{
+    if(! na_rm && is_any_na(values)){
+      return NA_REAL;
+    }
     auto max_iter = std::max_element(values.begin(), values.end(), [](double a, double b) -> bool {
       return a < b;
     });
