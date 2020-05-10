@@ -4,6 +4,9 @@ Devel version (1.1)
 + Implement dedicated function for rowSums2, rowMeans2, rowVars
  which avoid transposing the input matrix to call the colXXX version
 
+Changes in version 1.0.2 (2020-05-10)
++ Fix bug in colMaxs, colMins related to missing values
+
 Changes in version 1.0.1 (2020-05-08)
 + Fix bugs in colMaxs, colMins, colAnys
 + Fix bug in colLogSumExps
