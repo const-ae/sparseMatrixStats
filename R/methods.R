@@ -391,13 +391,18 @@ setMethod("colAnyNAs", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colAnys", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+  stopifnot(length(value) == 1)
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colAnys(x, value, na_rm=na.rm)
+  if(isTRUE(value)){
+    ! dgCMatrix_colAlls(x, value = 0, na_rm=na.rm)
+  }else{
+    dgCMatrix_colAnys(x, value, na_rm=na.rm)
+  }
 })
 
 
@@ -408,13 +413,18 @@ setMethod("colAnys", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colAlls", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+  stopifnot(length(value) == 1)
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colAlls(x, value, na_rm=na.rm)
+  if(isTRUE(value)){
+    ! dgCMatrix_colAnys(x, value = 0, na_rm = na.rm)
+  }else{
+    dgCMatrix_colAlls(x, value, na_rm=na.rm)
+  }
 })
 
 
