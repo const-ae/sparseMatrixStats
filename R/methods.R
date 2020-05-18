@@ -481,6 +481,7 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
 #' @export
 setMethod("colTabulates", signature(x = "dgCMatrix"),
           function(x, rows = NULL, cols = NULL, values = NULL){
+    default_value <- 0
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -488,11 +489,11 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(values)){
-    zero_explicit_in_values <- FALSE
-    values <- c(x@x, 0)
+    recheck_that_zeros_in_matrix <- TRUE
+    values <- c(x@x, default_value)
     unique_values <- sort(unique(values), na.last = TRUE)
   }else{
-    zero_explicit_in_values <- any(values == 0, na.rm=TRUE)
+    recheck_that_zeros_in_matrix <- FALSE
     unique_values <- unique(values)
   }
 
@@ -500,9 +501,9 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
   # Add dim names
   colnames(mat) <- unique_values
   rownames(mat) <- colnames(x)
-  if(! zero_explicit_in_values && all(mat[, "0"] == 0)){
+  if(recheck_that_zeros_in_matrix && all(mat[, as.character(default_value)] == 0)){
     # Remove zero column is there is not a single zero in x
-    mat <- mat[, -which(colnames(mat) == "0"), drop=FALSE]
+    mat <- mat[, -which(colnames(mat) == as.character(default_value)), drop=FALSE]
   }
   mat
 })
