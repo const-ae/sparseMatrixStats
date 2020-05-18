@@ -4,8 +4,7 @@
 
 #' @inherit MatrixGenerics::colSums2
 #' @export
-setMethod("colSums2", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+setMethod("colSums2", signature(x = "xgCMatrix"), function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -20,7 +19,7 @@ setMethod("colSums2", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colMeans2
 #' @export
-setMethod("colMeans2", signature(x = "dgCMatrix"),
+setMethod("colMeans2", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]

@@ -2,9 +2,9 @@
 
 # Sum
 
-#' @rdname colSums2-dgCMatrix-method
+#' @rdname colSums2-xgCMatrix-method
 #' @export
-setMethod("rowSums2", signature(x = "dgCMatrix"),
+setMethod("rowSums2", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -20,9 +20,9 @@ setMethod("rowSums2", signature(x = "dgCMatrix"),
 
 # Mean
 
-#' @rdname colMeans2-dgCMatrix-method
+#' @rdname colMeans2-xgCMatrix-method
 #' @export
-setMethod("rowMeans2", signature(x = "dgCMatrix"),
+setMethod("rowMeans2", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
