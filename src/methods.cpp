@@ -670,23 +670,31 @@ IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_value
   // });
   std::map<double,int> lookup_map;
   bool count_nas = false;
+  bool count_zeros = false;
+  int zero_indx = -1;
   int na_indx = -1;
   for(int i = 0; i < sorted_unique_values.size(); ++i){
     double value = sorted_unique_values[i];
     if(Rcpp::NumericVector::is_na(value)){
       count_nas = true;
       na_indx = i;
+    }else if(value == 0){
+      count_zeros = true;
+      zero_indx = i;
     }else{
       lookup_map[value] = i;
     }
   }
-  return reduce_matrix_int_matrix_with_na(matrix, lookup_map.size() + count_nas, true,
-      [&lookup_map, count_nas, na_indx](auto values, auto row_indices, int number_of_zeros) -> std::vector<int> {
-    std::vector<int> result(lookup_map.size() + count_nas, 0);
+  return reduce_matrix_int_matrix_with_na(matrix, lookup_map.size() + count_nas + count_zeros, true,
+      [&lookup_map, count_zeros, zero_indx, count_nas, na_indx](auto values, auto row_indices, int number_of_zeros) -> std::vector<int> {
+    std::vector<int> result(lookup_map.size() + count_nas + count_zeros, 0);
     int na_count = 0;
+    int zero_count = 0;
     for(double v: values){
       if(Rcpp::NumericVector::is_na(v)){
         ++na_count;
+      }else if(v == 0){
+        ++zero_count;
       }else{
         auto search = lookup_map.find(v);
         if(search != lookup_map.end()){
@@ -694,7 +702,9 @@ IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_value
         }
       }
     }
-    result[lookup_map.at(0)] = number_of_zeros;
+    if(count_zeros){
+      result[zero_indx] = zero_count + number_of_zeros;
+    }
     if(count_nas){
       result[na_indx] = na_count;
     }
