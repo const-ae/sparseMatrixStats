@@ -16,7 +16,7 @@ matrix_with_large_numbers[8,] <- 1e10 - 10
 matrix_with_large_numbers[,7] <- 1:15 + 1e10
 dense_mat <- make_matrix_with_all_features(nrow = 15, ncol = 10) + 1
 dense_mat <- rbind(dense_mat, 4)
-lgl_mat <- make_matrix_with_all_features(nrow = 15, ncol=10) < 0
+
 
 matrix_list <- list(diverse_mat,
                     named_mat,
@@ -25,8 +25,7 @@ matrix_list <- list(diverse_mat,
                     empty_mat,
                     matrix_with_zeros_only,
                     matrix_with_large_numbers,
-                    dense_mat,
-                    lgl_mat)
+                    dense_mat)
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(named_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
@@ -34,10 +33,9 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(empty_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"),
                        as(matrix_with_large_numbers, "dgCMatrix"),
-                       as(dense_mat, "dgCMatrix"),
-                       as(lgl_mat, "lgCMatrix"))
-row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, NULL)
-col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10, NULL, NULL)
+                       as(dense_mat, "dgCMatrix"))
+row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16)
+col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10, NULL)
 descriptions <- list("diverse",
                      "named",
                      "zero row",
@@ -45,8 +43,7 @@ descriptions <- list("diverse",
                      "empty",
                      "only zeros inside",
                      "numerical precision challenge",
-                     "dense matrix",
-                     "logical matrix")
+                     "dense matrix")
 
 
 for(idx in seq_along(matrix_list)){
@@ -84,10 +81,6 @@ for(idx in seq_along(matrix_list)){
     expect_equal(rowMeans2(sp_mat2, na.rm=TRUE), matrixStats::colMeans2(mat, na.rm=TRUE))
     expect_equal(rowMeans2(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset))
   })
-
-  if(descriptions[[idx]] == "logical matrix"){
-    skip("Not yet implemented all functions for logical matrices")
-  }
 
   test_that("colMedians works", {
     expect_equal(colMedians(sp_mat), matrixStats::colMedians(mat))

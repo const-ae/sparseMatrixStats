@@ -51,7 +51,7 @@ setMethod("colMedians", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colVars
 #' @export
-setMethod("colVars", signature(x = "dgCMatrix"),
+setMethod("colVars", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -67,7 +67,7 @@ setMethod("colVars", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colSds
 #' @export
-setMethod("colSds", signature(x = "dgCMatrix"),
+setMethod("colSds", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -99,7 +99,7 @@ setMethod("colMads", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colLogSumExps
 #' @export
-setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
+setMethod("colLogSumExps", signature(lx = "xgCMatrix"),
           function(lx, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     lx <- lx[rows, , drop = FALSE]
@@ -127,7 +127,7 @@ setMethod("colLogSumExps", signature(lx = "dgCMatrix"),
 #' @inherit MatrixGenerics::colProds
 #'
 #' @export
-setMethod("colProds", signature(x = "dgCMatrix"),
+setMethod("colProds", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -199,7 +199,7 @@ setMethod("colOrderStats", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colWeightedMeans
 #' @export
-setMethod("colWeightedMeans", signature(x = "dgCMatrix"),
+setMethod("colWeightedMeans", signature(x = "xgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -253,7 +253,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colWeightedVars
 #' @export
-setMethod("colWeightedVars", signature(x = "dgCMatrix"),
+setMethod("colWeightedVars", signature(x = "xgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -275,7 +275,7 @@ setMethod("colWeightedVars", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colWeightedSds
 #' @export
-setMethod("colWeightedSds", signature(x = "dgCMatrix"),
+setMethod("colWeightedSds", signature(x = "xgCMatrix"),
           function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -349,8 +349,12 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colCounts
 #' @export
-setMethod("colCounts", signature(x = "dgCMatrix"),
+setMethod("colCounts", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+  stopifnot(length(value) == 1)
+  if(is(x, "lgCMatrix")){
+    value <- as.logical(value)
+  }
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -372,7 +376,7 @@ setMethod("colCounts", signature(x = "dgCMatrix"),
 #'   colAnyNAs(sp_mat)
 #'
 #' @export
-setMethod("colAnyNAs", signature(x = "dgCMatrix"),
+setMethod("colAnyNAs", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -388,9 +392,12 @@ setMethod("colAnyNAs", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colAnys
 #' @export
-setMethod("colAnys", signature(x = "dgCMatrix"),
+setMethod("colAnys", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
   stopifnot(length(value) == 1)
+  if(is(x, "lgCMatrix")){
+    value <- as.logical(value)
+  }
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -410,9 +417,12 @@ setMethod("colAnys", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colAlls
 #' @export
-setMethod("colAlls", signature(x = "dgCMatrix"),
+setMethod("colAlls", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
   stopifnot(length(value) == 1)
+  if(is(x, "lgCMatrix")){
+    value <- as.logical(value)
+  }
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -432,7 +442,7 @@ setMethod("colAlls", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colCollapse
 #' @export
-setMethod("colCollapse", signature(x = "dgCMatrix"),
+setMethod("colCollapse", signature(x = "xgCMatrix"),
           function(x, idxs, cols = NULL){
   idxs <- rep(idxs, length.out = ncol(x))
   if (!is.null(cols)) {
@@ -453,7 +463,7 @@ setMethod("colCollapse", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colQuantiles
 #' @export
-setMethod("colQuantiles", signature(x = "dgCMatrix"),
+setMethod("colQuantiles", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, drop = TRUE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -479,9 +489,16 @@ setMethod("colQuantiles", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colTabulates
 #' @export
-setMethod("colTabulates", signature(x = "dgCMatrix"),
+setMethod("colTabulates", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, values = NULL){
+  if(is(x, "lgCMatrix")){
+    if(! is.null(values)){
+      values <- as.logical(values)
+    }
+    default_value <- FALSE
+  }else{
     default_value <- 0
+  }
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -519,7 +536,7 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colIQRs
 #' @export
-setMethod("colIQRs", signature(x = "dgCMatrix"),
+setMethod("colIQRs", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   col_q <- colQuantiles(x, rows, cols, probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
   unname(col_q[,2] - col_q[,1])
@@ -544,7 +561,7 @@ setMethod("colRanges", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colCumsums
 #' @export
-setMethod("colCumsums", signature(x = "dgCMatrix"),
+setMethod("colCumsums", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -561,7 +578,7 @@ setMethod("colCumsums", signature(x = "dgCMatrix"),
 
 #' @inherit MatrixGenerics::colCumprods
 #' @export
-setMethod("colCumprods", signature(x = "dgCMatrix"),
+setMethod("colCumprods", signature(x = "xgCMatrix"),
           function(x, rows = NULL, cols = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
@@ -786,7 +803,7 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
 #'
 #' @aliases colAvgsPerRowSet
 #' @export
-setMethod("colAvgsPerRowSet", signature(X = "dgCMatrix"),
+setMethod("colAvgsPerRowSet", signature(X = "xgCMatrix"),
 function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., tFUN = FALSE){
   if(! is.null(W)) stop("the W parameter is not supported.")
   nbrOfSets <- ncol(S)
