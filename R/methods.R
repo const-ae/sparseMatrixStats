@@ -481,21 +481,26 @@ setMethod("colTabulates", signature(x = "dgCMatrix"),
   }
   if(is.null(values)){
     recheck_that_zeros_in_matrix <- TRUE
+    repeat_duplicate_values <- FALSE
     values <- c(x@x, default_value)
     unique_values <- sort(unique(values), na.last = TRUE)
   }else{
     recheck_that_zeros_in_matrix <- FALSE
+    repeat_duplicate_values <- TRUE
     unique_values <- unique(values)
   }
-
   mat <- dgCMatrix_colTabulate(x, unique_values)
   # Add dim names
-  colnames(mat) <- unique_values
+  colnames(mat) <- ifelse(is.na(unique_values), "NA", unique_values)
   rownames(mat) <- colnames(x)
   if(recheck_that_zeros_in_matrix && all(mat[, as.character(default_value)] == 0)){
     # Remove zero column is there is not a single zero in x
     mat <- mat[, -which(colnames(mat) == as.character(default_value)), drop=FALSE]
   }
+  if(repeat_duplicate_values){
+    mat <- mat[,  ifelse(is.na(values), "NA", as.character(values)), drop=FALSE]
+  }
+  colnames(mat) <- ifelse(colnames(mat) == "NA", NA, colnames(mat))
   mat
 })
 
