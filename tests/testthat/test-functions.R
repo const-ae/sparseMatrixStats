@@ -213,8 +213,10 @@ for(idx in seq_along(matrix_list)){
     values <- c(0, -2, NA, 3, 17)
     expect_equal(colTabulates(int_sp_mat, values = values), matrixStats::colTabulates(int_mat, values = values))
     expect_equal(colTabulates(int_sp_mat, values = c(1, values)), matrixStats::colTabulates(int_mat, values = c(1, values)))
+    expect_equal(colTabulates(int_sp_mat, values = c(1, 1, values)), matrixStats::colTabulates(int_mat, values = c(1, 1, values)))
     expect_equal(colTabulates(int_sp_mat, values = values[-1]), matrixStats::colTabulates(int_mat, values = values[-1]))
-    expect_equal(colTabulates(int_sp_mat, values = values, rows = row_subset, cols = col_subset), matrixStats::colTabulates(int_mat, values = values, rows = row_subset, cols = col_subset))
+    expect_equal(colTabulates(int_sp_mat, values = values, rows = row_subset, cols = col_subset),
+                 matrixStats::colTabulates(int_mat, values = values, rows = row_subset, cols = col_subset))
   })
 
 
