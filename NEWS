@@ -6,7 +6,10 @@ Devel version (1.1)
 + Support logical input (lgCMatrix) for all methods that matrixStats
  supports. Introduce new class xgCMatrix as union class of dgCMatrix
  and lgCMatrix.
+
+Changes in version 1.0.4 (2020-05-17)
 + Fix bugs in colTabulates
++ Update documentation to avoid warnings in build on Windows
 
 Changes in version 1.0.3 (2020-05-17)
 + Fix bug in colAnys and colAlls if value = TRUE
