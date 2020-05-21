@@ -1,5 +1,5 @@
 set.seed(1)
-source("~/prog/r_packages/sparseMatrixStats/tests/testthat/setup.R")
+# source("~/prog/r_packages/sparseMatrixStats/tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow = 15, ncol=10) < 0
 sp_mat <- as(mat, "lgCMatrix")
 
