@@ -514,7 +514,7 @@ NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool n
       ++ind_it;
     }
     if(number_of_zeros > 0){
-      sigma2 += abs(zero_weights) * mean * mean;
+      sigma2 += std::abs(zero_weights) * mean * mean;
     }
     if(NumericVector::is_na(sigma2)){
       return NA_REAL;
