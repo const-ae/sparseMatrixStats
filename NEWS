@@ -1,3 +1,7 @@
+Changes in version 1.0.4 (2020-05-17)
++ Fix bugs in colTabulates
++ Update documentation to avoid warnings in build on Windows
+
 Changes in version 1.0.3 (2020-05-17)
 + Fix bug in colAnys and colAlls if value = TRUE
 
