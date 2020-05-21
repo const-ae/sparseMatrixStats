@@ -32,8 +32,8 @@ Calculates the sum for each row (column) of a matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowSums2}}
-/ \code{matrixStats::\link[matrixStats:rowSums2]{colSums2}}.
+\code{matrixStats::rowSums2}
+/ \code{matrixStats::colSums2}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

@@ -39,8 +39,8 @@ Calculates the variance of the difference between each element of a row
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowVarDiffs}}
-/ \code{matrixStats::\link[matrixStats:rowVarDiffs]{colVarDiffs}}.
+\code{matrixStats::rowVarDiffs}
+/ \code{matrixStats::colVarDiffs}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

@@ -32,8 +32,8 @@ Calculates the variance for each row (column) of a matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowVars}}
-/ \code{matrixStats::\link[matrixStats:rowVars]{colVars}}.
+\code{matrixStats::rowVars}
+/ \code{matrixStats::colVars}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -54,6 +54,6 @@ when the input is a \code{matrix} or \code{numeric} vector.
 \item For mean estimates, see \code{\link[MatrixGenerics]{rowMeans2}()} and
 \code{\link[base:colSums]{rowMeans}()}.
 \item For standard deviation estimates, see \code{\link[MatrixGenerics]{rowSds}()}.
-\item \code{stats::\link[stats]{var}()}.
+\item \code{stats::\link[stats:cor]{var}()}.
 }
 }

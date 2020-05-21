@@ -32,8 +32,8 @@ Extract one cell from each row (column) of a matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowCollapse}}
-/ \code{matrixStats::\link[matrixStats:rowCollapse]{colCollapse}}.
+\code{matrixStats::rowCollapse}
+/ \code{matrixStats::colCollapse}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

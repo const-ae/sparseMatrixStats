@@ -32,8 +32,8 @@ Calculates the maximum for each row (column) of a matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowMaxs}}
-/ \code{matrixStats::\link[matrixStats:rowMaxs]{colMaxs}}.
+\code{matrixStats::rowMaxs}
+/ \code{matrixStats::colMaxs}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -48,8 +48,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowMaxs}()} and
-\code{matrixStats::\link[matrixStats:rowMaxs]{colMaxs}()} which are used
+\item \code{matrixStats::\link[matrixStats:rowRanges]{rowMaxs}()} and
+\code{matrixStats::\link[matrixStats:rowRanges]{colMaxs}()} which are used
 when the input is a \code{matrix} or \code{numeric} vector.
 \item For min estimates, see \code{\link[MatrixGenerics]{rowMins}()}.
 }

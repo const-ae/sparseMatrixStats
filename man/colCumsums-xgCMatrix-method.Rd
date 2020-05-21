@@ -30,8 +30,8 @@ Calculates the cumulative sum for each row (column) of a matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowCumsums}}
-/ \code{matrixStats::\link[matrixStats:rowCumsums]{colCumsums}}.
+\code{matrixStats::rowCumsums}
+/ \code{matrixStats::colCumsums}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

@@ -37,8 +37,8 @@ matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowMads}}
-/ \code{matrixStats::\link[matrixStats:rowMads]{colMads}}.
+\code{matrixStats::rowMads}
+/ \code{matrixStats::colMads}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -53,8 +53,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowMads}()} and
-\code{matrixStats::\link[matrixStats:rowMads]{colMads}()} which are used
+\item \code{matrixStats::\link[matrixStats:rowSds]{rowMads}()} and
+\code{matrixStats::\link[matrixStats:rowSds]{colMads}()} which are used
 when  the input is a \code{matrix} or \code{numeric} vector.
 \item For mean estimates, see \code{\link[MatrixGenerics]{rowMeans2}()} and
 \code{\link[base:colSums]{rowMeans}()}.
