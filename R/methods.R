@@ -333,7 +333,7 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
         center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE)
-        x <- std::abs(new_vec - center)
+        x <- abs(new_vec - center)
         sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE)
         # Rescale for normal distributions
         sigma <- constant * sigma
