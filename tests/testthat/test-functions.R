@@ -290,9 +290,6 @@ for(idx in seq_along(matrix_list)){
 
 
   test_that("colWeightedVars works", {
-    if(is_linux()){
-      skip("Numerical differences. Avoid error")
-    }
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedVars(sp_mat, w=weights), matrixStats::colWeightedVars(mat, w=weights))
     expect_equal(colWeightedVars(sp_mat, na.rm=TRUE), matrixStats::colWeightedVars(mat, na.rm=TRUE))
@@ -301,9 +298,6 @@ for(idx in seq_along(matrix_list)){
 
 
   test_that("colWeightedSds works", {
-    if(is_linux()){
-      skip("Numerical differences. Avoid error")
-    }
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedSds(sp_mat, w=weights), matrixStats::colWeightedSds(mat, w=weights))
     expect_equal(colWeightedSds(sp_mat, na.rm=TRUE), matrixStats::colWeightedSds(mat, na.rm=TRUE))
