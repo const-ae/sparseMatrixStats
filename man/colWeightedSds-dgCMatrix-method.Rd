@@ -37,8 +37,8 @@ matrix-like object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowWeightedSds}}
-/ \code{matrixStats::\link[matrixStats:rowWeightedSds]{colWeightedSds}}.
+\code{matrixStats::rowWeightedSds}
+/ \code{matrixStats::colWeightedSds}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -53,8 +53,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowWeightedSds}()} and
-\code{matrixStats::\link[matrixStats:rowWeightedSds]{colWeightedSds}()}
+\item \code{matrixStats::\link[matrixStats:weightedVar]{rowWeightedSds}()} and
+\code{matrixStats::\link[matrixStats:weightedVar]{colWeightedSds}()}
 which are used when the input is a \code{matrix} or \code{numeric} vector.
 \item See also \link[MatrixGenerics]{rowSds} for the corresponding unweighted function.
 }

@@ -32,8 +32,8 @@ object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowCummaxs}}
-/ \code{matrixStats::\link[matrixStats:rowCummaxs]{colCummaxs}}.
+\code{matrixStats::rowCummaxs}
+/ \code{matrixStats::colCummaxs}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
@@ -48,8 +48,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowCummaxs}()} and
-\code{matrixStats::\link[matrixStats:rowCummaxs]{colCummaxs}()} which are
+\item \code{matrixStats::\link[matrixStats:rowCumsums]{rowCummaxs}()} and
+\code{matrixStats::\link[matrixStats:rowCumsums]{colCummaxs}()} which are
 used when the input is a \code{matrix} or \code{numeric} vector.
 \item For single maximum estimates, see \code{\link[MatrixGenerics]{rowMaxs}()}.
 \item \code{base::\link{cummax}()}.

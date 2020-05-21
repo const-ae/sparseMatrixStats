@@ -32,8 +32,8 @@ Accurately calculates the logarithm of the sum of exponentials for each row
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowLogSumExps}}
-/ \code{matrixStats::\link[matrixStats:rowLogSumExps]{colLogSumExps}}.
+\code{matrixStats::rowLogSumExps}
+/ \code{matrixStats::colLogSumExps}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

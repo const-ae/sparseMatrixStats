@@ -36,8 +36,8 @@ object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowRanges}}
-/ \code{matrixStats::\link[matrixStats:rowRanges]{colRanges}}.
+\code{matrixStats::rowRanges}
+/ \code{matrixStats::colRanges}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

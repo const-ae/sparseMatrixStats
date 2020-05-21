@@ -33,8 +33,8 @@ Tabulates the values in a matrix-like object by row (column).
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowTabulates}}
-/ \code{matrixStats::\link[matrixStats:rowTabulates]{colTabulates}}.
+\code{matrixStats::rowTabulates}
+/ \code{matrixStats::colTabulates}.
 }
 \examples{
 mat <- matrix(rpois(15, lambda = 3), nrow = 5, ncol = 3)

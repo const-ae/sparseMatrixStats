@@ -34,8 +34,8 @@ object.
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
 \code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::\link[matrixStats]{rowIQRs}}
-/ \code{matrixStats::\link[matrixStats:rowIQRs]{colIQRs}}.
+\code{matrixStats::rowIQRs}
+/ \code{matrixStats::colIQRs}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
