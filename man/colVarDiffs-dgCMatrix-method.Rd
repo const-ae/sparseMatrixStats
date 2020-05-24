@@ -55,8 +55,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowVarDiffs}()} and
-\code{matrixStats::\link[matrixStats:rowVarDiffs]{colVarDiffs}()} which
+\item \code{matrixStats::\link[matrixStats:varDiff]{rowVarDiffs}()} and
+\code{matrixStats::\link[matrixStats:varDiff]{colVarDiffs}()} which
 are used when the input is a \code{matrix} or \code{numeric} vector.
 \item for the direct variance see \code{\link[MatrixGenerics:rowVars]{rowVars()}}.
 }
