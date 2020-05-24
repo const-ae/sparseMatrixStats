@@ -49,11 +49,11 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowProds}()} and
-\code{matrixStats::\link[matrixStats:rowProds]{colProds}()} which are used
-when the input is a \code{matrix} or \code{numeric} vector.
-\item For sums across rows (columns), see
-\code{\link[MatrixGenerics]{rowSums2}()} (\code{\link[MatrixGenerics:colSums2]{colSums2()}})
-\item \code{base::\link{prod}()}.
+  \item \code{matrixStats::\link[matrixStats]{rowProds}()} and
+    \code{matrixStats::\link[matrixStats:rowProds]{colProds}()} which are used
+    when the input is a \code{matrix} or \code{numeric} vector.
+  \item For sums across rows (columns), see
+    \code{rowSums2()} (\code{colSums2()})
+  \item \code{base::\link{prod}()}.
 }
 }

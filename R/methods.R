@@ -124,6 +124,16 @@ setMethod("colLogSumExps", signature(lx = "xgCMatrix"),
 #' function if there are `+-Inf`, because `Inf * 0 = NaN`. This function returns
 #' `NA` whenever there is `NA` in the input. This is different from `matrixStats::colProds()`.
 #'
+#' @seealso
+#' \itemize{
+#'   \item \code{matrixStats::\link[matrixStats]{rowProds}()} and
+#'     \code{matrixStats::\link[matrixStats:rowProds]{colProds}()} which are used
+#'     when the input is a \code{matrix} or \code{numeric} vector.
+#'   \item For sums across rows (columns), see
+#'     \code{rowSums2()} (\code{colSums2()})
+#'   \item \code{base::\link{prod}()}.
+#' }
+#'
 #' @inherit MatrixGenerics::colProds
 #'
 #' @export
