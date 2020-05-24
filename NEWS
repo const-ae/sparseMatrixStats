@@ -1,3 +1,6 @@
+Changes in version 1.0.5 (2020-05-24)
++ Fix links in documentation to get rid of WARNINGS
+
 Changes in version 1.0.4 (2020-05-17)
 + Fix bugs in colTabulates
 + Update documentation to avoid warnings in build on Windows
