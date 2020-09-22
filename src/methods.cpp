@@ -272,8 +272,10 @@ NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
     double med = quantile_sparse(values, number_of_zeros, 0.5);
     NumericVector complete_vector(size + number_of_zeros, std::abs(med));
     auto val_it = values.begin();
+    auto val_end = values.end();
     auto ind_it = row_indices.begin();
-    while(val_it != values.end() && ind_it != row_indices.end()){
+    auto ind_end = row_indices.end();
+    while(val_it != val_end && ind_it != ind_end){
       complete_vector[*ind_it] = std::abs(*val_it - med);
       ++val_it;
       ++ind_it;
@@ -447,8 +449,10 @@ inline double sp_weighted_mean(Iterator values, int number_of_zeros, NumericVect
   LDOUBLE accum = 0.0;
   double remaining_weights = total_weights;
   auto val_it = values.begin();
+  auto val_end = values.end();
   auto ind_it = row_indices.begin();
-  while(val_it != values.end() && ind_it != row_indices.end()){
+  auto ind_end = row_indices.end();
+  while(val_it != val_end && ind_it != ind_end){
     double v = *val_it;
     double w = weights[*ind_it];
     if(NumericVector::is_na(v)){
@@ -499,8 +503,10 @@ NumericVector dgCMatrix_colWeightedVars(S4 matrix, NumericVector weights, bool n
     LDOUBLE remaining_weights = total_weights;
     LDOUBLE zero_weights = total_weights;
     auto val_it = values.begin();
+    auto val_end = values.end();
     auto ind_it = row_indices.begin();
-    while(val_it != values.end() && ind_it != row_indices.end()){
+    auto ind_end = row_indices.end();
+    while(val_it != val_end && ind_it != ind_end){
       double v = *val_it;
       double w = weights[*ind_it];
       zero_weights -= w;
@@ -712,6 +718,7 @@ IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_value
     std::vector<int> result(lookup_map.size() + count_nas + count_zeros, 0);
     int na_count = 0;
     int zero_count = 0;
+    auto lookup_map_end = lookup_map.end();
     for(double v: values){
       if(Rcpp::NumericVector::is_na(v)){
         ++na_count;
@@ -719,7 +726,7 @@ IntegerMatrix dgCMatrix_colTabulate(S4 matrix, NumericVector sorted_unique_value
         ++zero_count;
       }else{
         auto search = lookup_map.find(v);
-        if(search != lookup_map.end()){
+        if(search != lookup_map_end){
           result[search->second] += 1;
         }
       }
@@ -747,10 +754,11 @@ NumericMatrix dgCMatrix_colCumsums(S4 matrix){
     std::vector<double> result(nrows);
     double acc = 0;
     auto row_it = row_indices.begin();
+    auto row_end = row_indices.end();
     auto val_it = values.begin();
     auto res_it = result.begin();
     for(int i = 0; i < nrows; ++i, ++res_it){
-      if(row_it != row_indices.end() && i == *row_it){
+      if(row_it != row_end && i == *row_it){
         acc += *val_it;
         ++row_it;
         ++val_it;
@@ -771,10 +779,11 @@ NumericMatrix dgCMatrix_colCumprods(S4 matrix){
     std::vector<double> result(nrows);
     LDOUBLE acc = 1;
     auto row_it = row_indices.begin();
+    auto row_end = row_indices.end();
     auto val_it = values.begin();
     auto res_it = result.begin();
     for(int i = 0; i < nrows; ++i, ++res_it){
-      if(row_it != row_indices.end() && i == *row_it){
+      if(row_it != row_end && i == *row_it){
         acc *= *val_it;
         ++row_it;
         ++val_it;
@@ -799,11 +808,12 @@ NumericMatrix dgCMatrix_colCummins(S4 matrix){
       return result;
     }
     auto row_it = row_indices.begin();
+    auto row_end = row_indices.end();
     auto val_it = values.begin();
     auto res_it = result.begin();
     int i = 0;
     double acc = 0.0;
-    if(row_it != row_indices.end() && i == *row_it){
+    if(row_it != row_end && i == *row_it){
       acc = *val_it;
       ++row_it;
       ++val_it;
@@ -815,7 +825,7 @@ NumericMatrix dgCMatrix_colCummins(S4 matrix){
     for(i = 1; i < nrows; ++i, ++res_it){
       if(NumericVector::is_na(acc)){
         // Do nothing it will always stay NA
-      }else if(row_it != row_indices.end() && i == *row_it){
+      }else if(row_it != row_end && i == *row_it){
         acc = std::min(*val_it, acc);
         ++row_it;
         ++val_it;
@@ -840,11 +850,12 @@ NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
       return result;
     }
     auto row_it = row_indices.begin();
+    auto row_end = row_indices.end();
     auto val_it = values.begin();
     auto res_it = result.begin();
     int i = 0;
     double acc = 0.0;
-    if(row_it != row_indices.end() && i == *row_it){
+    if(row_it != row_end && i == *row_it){
       acc = *val_it;
       ++row_it;
       ++val_it;
@@ -856,7 +867,7 @@ NumericMatrix dgCMatrix_colCummaxs(S4 matrix){
     for(i = 1; i < nrows; ++i, ++res_it){
       if(NumericVector::is_na(acc)){
         // Do nothing it will always stay NA
-      }else if(row_it != row_indices.end() && i == *row_it){
+      }else if(row_it != row_end && i == *row_it){
         acc = std::max(*val_it, acc);
         ++row_it;
         ++val_it;
