@@ -96,12 +96,12 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  25.99µs     30µs   32022.     2.93KB    16.0 
-#> 2 matrixStats         1.39ms   1.56ms     631.    156.8KB     2.03
-#> 3 apply               9.26ms   11.1ms      90.7    9.54MB    52.9
+#> 1 sparseMatrixStats  36.15µs  40.09µs   24419.     2.93KB    14.7 
+#> 2 matrixStats         1.42ms   1.45ms     677.    156.8KB     2.03
+#> 3 apply               8.89ms  10.56ms      94.6    9.54MB    53.0
 ```
 
-As you can see `sparseMatrixStats` is ca. 50 times fast than
+As you can see `sparseMatrixStats` is ca. 35 times fast than
 `matrixStats`, which in turn is 7 times faster than the `apply()`
 version.
 

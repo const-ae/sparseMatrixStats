@@ -94,7 +94,7 @@ bench::mark(
 ```
 
 
-As you can see `sparseMatrixStats` is ca. 50 times fast than `matrixStats`, which in turn is 7 times faster than the `apply()` version.
+As you can see `sparseMatrixStats` is ca. 35 times fast than `matrixStats`, which in turn is 7 times faster than the `apply()` version.
 
 
 
