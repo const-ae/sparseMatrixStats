@@ -68,7 +68,9 @@ double quantile_sparse(T values, int number_of_zeros, double prob){
       }
     }
   }
-  if(left_of_pivot == R_NegInf){
+  if(left_of_pivot == R_NegInf && right_of_pivot == R_PosInf){
+    return R_NaN;
+  }else  if(left_of_pivot == R_NegInf){
     return R_NegInf;
   }else if(right_of_pivot == R_PosInf){
     return R_PosInf;

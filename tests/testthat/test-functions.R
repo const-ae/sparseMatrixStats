@@ -16,6 +16,9 @@ matrix_with_large_numbers[8,] <- 1e10 - 10
 matrix_with_large_numbers[,7] <- 1:15 + 1e10
 dense_mat <- make_matrix_with_all_features(nrow = 15, ncol = 10) + 1
 dense_mat <- rbind(dense_mat, 4)
+all_inf_mat <-  matrix(c(Inf, -Inf,  Inf, -Inf, -Inf,  Inf,
+                         -Inf,  Inf, Inf, -Inf,  Inf, -Inf ),
+                       ncol=4)
 
 
 matrix_list <- list(diverse_mat,
@@ -25,7 +28,8 @@ matrix_list <- list(diverse_mat,
                     empty_mat,
                     matrix_with_zeros_only,
                     matrix_with_large_numbers,
-                    dense_mat)
+                    dense_mat,
+                    all_inf_mat)
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(named_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
@@ -33,9 +37,10 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(empty_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"),
                        as(matrix_with_large_numbers, "dgCMatrix"),
-                       as(dense_mat, "dgCMatrix"))
-row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16)
-col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10, NULL)
+                       as(dense_mat, "dgCMatrix"),
+                       as(all_inf_mat, "dgCMatrix"))
+row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3))
+col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10, NULL, NULL)
 descriptions <- list("diverse",
                      "named",
                      "zero row",
@@ -43,7 +48,8 @@ descriptions <- list("diverse",
                      "empty",
                      "only zeros inside",
                      "numerical precision challenge",
-                     "dense matrix")
+                     "dense matrix",
+                     "plus/minus Inf")
 
 
 for(idx in seq_along(matrix_list)){
@@ -360,9 +366,12 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colMadDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colMadDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
 
     expect_equal(colIQRDiffs(sp_mat, diff = 0), matrixStats::colIQRDiffs(mat, diff = 0))
-    expect_equal(colIQRDiffs(sp_mat, diff = 1), matrixStats::colIQRDiffs(mat, diff = 1))
+    if(descriptions[[idx]] != "plus/minus Inf"){
+      # This might be a bug in matrixStats. It should probably return NA's
+      expect_equal(colIQRDiffs(sp_mat, diff = 1), matrixStats::colIQRDiffs(mat, diff = 1))
+      expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
+    }
     expect_equal(colIQRDiffs(sp_mat, diff = 3), matrixStats::colIQRDiffs(mat, diff = 3))
-    expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
     expect_equal(colIQRDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colIQRDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
 
   })

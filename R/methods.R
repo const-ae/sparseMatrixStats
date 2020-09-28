@@ -371,6 +371,11 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
         zero_weight <- sum(w[-(row_indices + 1)])
         new_weights <- c(zero_weight, w[row_indices + 1])
         center <- matrixStats::weightedMedian(new_vec, new_weights, na.rm=na.rm, interpolate = FALSE)
+        if(is.infinite(center)){
+          # One of values must be Inf, thus Inf - Inf = NaN --> whole result is unknowable
+          # Danger of na.rm: removes NaN as well
+          return(NA)
+        }
         x <- abs(new_vec - center)
         sigma <- matrixStats::weightedMedian(x, w = new_weights, na.rm = na.rm, interpolate = FALSE)
         # Rescale for normal distributions
