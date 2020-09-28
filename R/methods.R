@@ -672,7 +672,7 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
 # colRanks
 
 #' @inherit MatrixGenerics::colRanks
-#' @param preserve.shape a boolean that specifies if the returned matrix has the same
+#' @param preserveShape a boolean that specifies if the returned matrix has the same
 #'   dimensions as the input matrix. By default this is true for `rowRanks()`, but false for
 #'   `colRanks()`.
 #' @param na.handling string specifying how `NA`s are handled. They can either be preserved with an `NA` rank
@@ -688,7 +688,7 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
 #'    }
 #' @export
 setMethod("colRanks", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = FALSE, na.handling = c("keep", "last")){
+          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserveShape = FALSE, na.handling = c("keep", "last")){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -698,9 +698,9 @@ setMethod("colRanks", signature(x = "dgCMatrix"),
   ties.method <- match.arg(ties.method,  c("max", "average", "min"))
   na.handling <- match.arg(na.handling, c("keep", "last"))
   if(ties.method == "average"){
-    dgCMatrix_colRanks_num(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserve.shape)
+    dgCMatrix_colRanks_num(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserveShape)
   }else{
-    dgCMatrix_colRanks_int(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserve.shape)
+    dgCMatrix_colRanks_int(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserveShape)
   }
 })
 

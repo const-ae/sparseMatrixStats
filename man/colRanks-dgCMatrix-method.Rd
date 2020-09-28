@@ -11,7 +11,7 @@ object}
   rows = NULL,
   cols = NULL,
   ties.method = c("max", "average", "min"),
-  preserve.shape = FALSE,
+  preserveShape = FALSE,
   na.handling = c("keep", "last")
 )
 
@@ -39,7 +39,7 @@ done.}
 that the default specifies fewer options than the original matrixStats
 package.}
 
-\item{preserve.shape}{a boolean that specifies if the returned matrix has the same
+\item{preserveShape}{a boolean that specifies if the returned matrix has the same
 dimensions as the input matrix. By default this is true for `rowRanks()`, but false for
 `colRanks()`.}
 

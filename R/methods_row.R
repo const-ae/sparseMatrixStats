@@ -492,14 +492,14 @@ setMethod("rowCummaxs", signature(x = "dgCMatrix"),
 #' @rdname colRanks-dgCMatrix-method
 #' @export
 setMethod("rowRanks", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserve.shape = TRUE, na.handling = c("keep", "last")){
+          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserveShape = TRUE, na.handling = c("keep", "last")){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  colRanks(t(x), ties.method = ties.method, preserve.shape = !preserve.shape, na.handling = na.handling)
+  colRanks(t(x), ties.method = ties.method, preserveShape = ! preserveShape, na.handling = na.handling)
 })
 
 
