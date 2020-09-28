@@ -11,6 +11,7 @@
   cols = NULL,
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
+  type = 7L,
   drop = TRUE
 )
 
@@ -38,6 +39,11 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
+
+\item{type}{An integer specifying the type of estimator. See
+\code{stats::\link[stats]{quantile}()}. for more details. Note, that this
+is not a generic argument and not all implementation of this function have
+to provide it.}
 
 \item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.
 Note, that this is not a generic argument and not all implementation of

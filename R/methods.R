@@ -507,14 +507,27 @@ setMethod("colCollapse", signature(x = "xgCMatrix"),
 #' @inherit MatrixGenerics::colQuantiles
 #' @export
 setMethod("colQuantiles", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, drop = TRUE){
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, type = 7L, drop = TRUE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  mat <- dgCMatrix_colQuantiles(x, probs, na_rm = na.rm)
+  if(type == 7L){
+    mat <- dgCMatrix_colQuantiles(x, probs, na_rm = na.rm)
+  }else{
+    mat <- t(expand_and_reduce_sparse_matrix_to_matrix(x, n_result_rows = length(probs), function(values){
+      if(na.rm){
+        values <- values[!is.na(values)]
+        stats::quantile(values, probs = probs, na.rm = na.rm, names = FALSE, type = type)
+      }else if(any(is.na(values))){
+        rep(NA_real_, length(probs))
+      }else{
+        stats::quantile(values, probs = probs, na.rm = na.rm, names = FALSE, type = type)
+      }
+    }))
+  }
   # Add dim names
   digits <- max(2L, getOption("digits"))
   colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)

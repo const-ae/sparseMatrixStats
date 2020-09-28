@@ -199,6 +199,17 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colQuantiles(sp_mat), matrixStats::colQuantiles(mat))
     expect_equal(colQuantiles(sp_mat, na.rm=TRUE), matrixStats::colQuantiles(mat, na.rm=TRUE))
     expect_equal(colQuantiles(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colQuantiles(mat, rows = row_subset, cols = col_subset))
+
+    expect_equal(colQuantiles(sp_mat, type = 1L), matrixStats::colQuantiles(mat, type = 1L))
+    expect_equal(colQuantiles(sp_mat, type = 2L), matrixStats::colQuantiles(mat, type = 2L))
+    expect_equal(colQuantiles(sp_mat, type = 3L), matrixStats::colQuantiles(mat, type = 3L))
+
+    expect_equal(colQuantiles(sp_mat, type = 4L), matrixStats::colQuantiles(mat, type = 4L))
+    expect_equal(colQuantiles(sp_mat, type = 5L), matrixStats::colQuantiles(mat, type = 5L))
+    expect_equal(colQuantiles(sp_mat, type = 6L), matrixStats::colQuantiles(mat, type = 6L))
+    expect_equal(colQuantiles(sp_mat, type = 7L), matrixStats::colQuantiles(mat, type = 7L))
+    expect_equal(colQuantiles(sp_mat, type = 8L), matrixStats::colQuantiles(mat, type = 8L))
+    expect_equal(colQuantiles(sp_mat, type = 9L), matrixStats::colQuantiles(mat, type = 9L))
   })
 
 
