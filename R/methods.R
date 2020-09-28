@@ -138,7 +138,7 @@ setMethod("colLogSumExps", signature(lx = "xgCMatrix"),
 #'
 #' @export
 setMethod("colProds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
