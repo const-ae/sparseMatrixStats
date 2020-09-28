@@ -270,18 +270,31 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colWeightedMeans(sp_mat, w=weights), matrixStats::colWeightedMeans(mat, w=weights))
     expect_equal(colWeightedMeans(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMeans(mat, na.rm=TRUE, w=weights))
     expect_equal(colWeightedMeans(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedMeans(mat, w=weights, rows = row_subset, cols = col_subset))
+
+    # Test check for length of w
+    expect_error(colWeightedMeans(sp_mat, w=1:42))
+    expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
   })
 
 
   test_that("colWeightedMedians works", {
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
+    expect_equal(colWeightedMedians(sp_mat), matrixStats::colWeightedMedians(mat, interpolate = FALSE))
     expect_equal(colWeightedMedians(sp_mat, w=weights), matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE))
     expect_equal(colWeightedMedians(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMedians(mat, w=weights, na.rm=TRUE, interpolate = FALSE))
     expect_equal(colWeightedMedians(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE, rows = row_subset, cols = col_subset))
+
+    # Test check for length of w
+    expect_error(colWeightedMeans(sp_mat, w=1:42))
+    expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
   })
 
 
   test_that("colWeightedMads works", {
+    # Test check for length of w
+    expect_error(colWeightedMeans(sp_mat, w=1:42))
+    expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
+
     skip("different result than matrixStats version, because sparseMatrixStats uses `interpolate=FALSE`.")
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedMads(sp_mat, w=weights), matrixStats::colWeightedMads(mat, w=weights))
@@ -294,6 +307,10 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colWeightedVars(sp_mat, w=weights), matrixStats::colWeightedVars(mat, w=weights))
     expect_equal(colWeightedVars(sp_mat, na.rm=TRUE), matrixStats::colWeightedVars(mat, na.rm=TRUE))
     expect_equal(colWeightedVars(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedVars(mat, w=weights, rows = row_subset, cols = col_subset))
+
+    # Test check for length of w
+    expect_error(colWeightedMeans(sp_mat, w=1:42))
+    expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
   })
 
 
@@ -302,6 +319,10 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colWeightedSds(sp_mat, w=weights), matrixStats::colWeightedSds(mat, w=weights))
     expect_equal(colWeightedSds(sp_mat, na.rm=TRUE), matrixStats::colWeightedSds(mat, na.rm=TRUE))
     expect_equal(colWeightedSds(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedSds(mat, w=weights, rows = row_subset, cols = col_subset))
+
+    # Test check for length of w
+    expect_error(colWeightedMeans(sp_mat, w=1:42))
+    expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
   })
 
 

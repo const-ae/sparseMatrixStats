@@ -218,9 +218,14 @@ setMethod("colWeightedMeans", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
+
   if(is.null(w)){
     setNames(dgCMatrix_colMeans2(x, na_rm = na.rm), colnames(x))
   }else{
+    if(length(w) != nrow(x)){
+      stop("The number of elements in arguments 'w'and 'x' does not match: ",
+           length(w), " != ", nrow(x))
+    }
     setNames(dgCMatrix_colWeightedMeans(x, weights = w, na_rm = na.rm), colnames(x))
   }
 })
@@ -240,9 +245,14 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
+
   if(is.null(w)){
     dgCMatrix_colMedians(x, na_rm = na.rm)
   }else{
+    if(length(w) != nrow(x)){
+      stop("The number of elements in arguments 'w'and 'x' does not match: ",
+           length(w), " != ", nrow(x))
+    }
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0 && number_of_zeros > 0){
         return(0.0)
@@ -272,9 +282,14 @@ setMethod("colWeightedVars", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
+
   if(is.null(w)){
     setNames(dgCMatrix_colVars(x, na_rm = na.rm), colnames(x))
   }else{
+    if(length(w) != nrow(x)){
+      stop("The number of elements in arguments 'w'and 'x' does not match: ",
+           length(w), " != ", nrow(x))
+    }
     setNames(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm), colnames(x))
   }
 })
@@ -294,9 +309,14 @@ setMethod("colWeightedSds", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
+
   if(is.null(w)){
     setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm)), colnames(x))
   }else{
+    if(length(w) != nrow(x)){
+      stop("The number of elements in arguments 'w'and 'x' does not match: ",
+           length(w), " != ", nrow(x))
+    }
     setNames(sqrt(dgCMatrix_colWeightedVars(x, weights = w, na_rm = na.rm)), colnames(x))
   }
 })
@@ -335,6 +355,10 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
   if(is.null(w)){
     setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant), colnames(x))
   }else{
+    if(length(w) != nrow(x)){
+      stop("The number of elements in arguments 'w'and 'x' does not match: ",
+           length(w), " != ", nrow(x))
+    }
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0){
         0.0
