@@ -9,6 +9,13 @@ Devel version (1.1)
 + Fix bug in colWeightedVars() that returned slightly off results on
  Linux, because there abs() internally returns integers instead of
  doubles
++ Change argument name in colRanks from `preserve.shape` to
+ `preserveShape` to match matrixStats (thanks @LTLA for reporting)
++ Fix bug in low-level `quantile_sparse()` related to +- Inf
+  (thanks @LTLA for reporting)
++ Move MatrixGenerics from Imports to Depends so that loading
+ matrixStats does not break calls to sparseMatrixStats
+ (thanks @hpages for reporting)
 
 Changes in version 1.0.5 (2020-05-17)
 + Fix links in documentation to get rid of WARNINGS
