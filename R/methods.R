@@ -241,7 +241,7 @@ setMethod("colWeightedMedians", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    setNames(dgCMatrix_colMedians(x, na_rm = na.rm), colnames(x))
+    dgCMatrix_colMedians(x, na_rm = na.rm)
   }else{
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0 && number_of_zeros > 0){
@@ -333,9 +333,9 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant)
+    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant), colnames(x))
   }else{
-    reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
+    setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0){
         0.0
       }else{
@@ -349,7 +349,7 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
         sigma <- constant * sigma
         sigma
       }
-    })
+    }), colnames(x))
   }
 })
 
