@@ -361,7 +361,11 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
     }
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
       if(length(values) == 0){
-        0.0
+        if(number_of_zeros > 0){
+          0
+        }else{
+          NA_real_
+        }
       }else{
         new_vec <- c(0, values)
         zero_weight <- sum(w[-(row_indices + 1)])

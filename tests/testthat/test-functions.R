@@ -291,6 +291,13 @@ for(idx in seq_along(matrix_list)){
 
 
   test_that("colWeightedMads works", {
+    expect_equal(colWeightedMads(sp_mat), matrixStats::colWeightedMads(mat))
+    expect_equal(colWeightedMads(sp_mat, na.rm=TRUE), matrixStats::colWeightedMads(mat, na.rm=TRUE))
+
+    weights <- rep(1, nrow(sp_mat))
+    expect_equal(colWeightedMads(sp_mat, w=weights), matrixStats::colWeightedMads(mat, w=weights))
+    expect_equal(colWeightedMads(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMads(mat, w=weights, na.rm=TRUE))
+
     # Test check for length of w
     expect_error(colWeightedMeans(sp_mat, w=1:42))
     expect_error(matrixStats::colWeightedMeans(mat, w=1:42))
