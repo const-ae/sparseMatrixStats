@@ -20,7 +20,7 @@ object}
   rows = NULL,
   cols = NULL,
   ties.method = c("max", "average", "min"),
-  preserve.shape = TRUE,
+  preserveShape = TRUE,
   na.handling = c("keep", "last")
 )
 }
