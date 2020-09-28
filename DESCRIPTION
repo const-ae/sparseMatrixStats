@@ -17,9 +17,10 @@ LinkingTo:
 Imports: 
     Rcpp,
     Matrix,
-    MatrixGenerics,
     matrixStats,
     methods
+Depends:
+    MatrixGenerics
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
