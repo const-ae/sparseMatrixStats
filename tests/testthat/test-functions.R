@@ -198,6 +198,7 @@ for(idx in seq_along(matrix_list)){
   test_that("colQuantiles works", {
     expect_equal(colQuantiles(sp_mat), matrixStats::colQuantiles(mat))
     expect_equal(colQuantiles(sp_mat, na.rm=TRUE), matrixStats::colQuantiles(mat, na.rm=TRUE))
+    expect_equal(colQuantiles(sp_mat, prob = 0.3, na.rm=TRUE), matrixStats::colQuantiles(mat, prob = 0.3, na.rm=TRUE))
     expect_equal(colQuantiles(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colQuantiles(mat, rows = row_subset, cols = col_subset))
 
     expect_equal(colQuantiles(sp_mat, type = 1L), matrixStats::colQuantiles(mat, type = 1L))

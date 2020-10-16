@@ -534,6 +534,8 @@ setMethod("colQuantiles", signature(x = "xgCMatrix"),
   rownames(mat) <- colnames(x)
   if(drop && nrow(mat) == 1){
     mat[1,]
+  }else  if(drop && ncol(mat) == 1){
+    mat[,1]
   }else{
     mat
   }
