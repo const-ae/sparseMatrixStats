@@ -47,9 +47,10 @@ expand_and_reduce_sparse_matrix_to_matrix <- function(sp_mat, n_result_rows, red
       values <- sp_mat@x[start_pos + seq_len(end_pos - start_pos)]
       row_indices <- sp_mat@i[start_pos + seq_len(end_pos - start_pos)]
       dense_values <- rep(0, nrow(sp_mat))
+      storage.mode(dense_values) <- typeof(values)
       dense_values[row_indices + 1] <- values
       reduce_function(dense_values)
-    }, FUN.VALUE = rep(0.0, n_result_rows))
+    }, FUN.VALUE = vector(mode = typeof(sp_mat@x), n_result_rows))
     if(n_result_rows == 1){
       matrix(res, nrow=1, ncol=length(res))
     }else{

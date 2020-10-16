@@ -522,7 +522,9 @@ setMethod("colQuantiles", signature(x = "xgCMatrix"),
         values <- values[!is.na(values)]
         stats::quantile(values, probs = probs, na.rm = na.rm, names = FALSE, type = type)
       }else if(any(is.na(values))){
-        rep(NA_real_, length(probs))
+        r <- rep(NA_real_, length(probs))
+        storage.mode(r) <- typeof(values)
+        r
       }else{
         stats::quantile(values, probs = probs, na.rm = na.rm, names = FALSE, type = type)
       }
