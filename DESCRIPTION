@@ -29,4 +29,6 @@ Suggests:
     BiocStyle
 SystemRequirements: C++14
 VignetteBuilder: knitr
+URL: https://github.com/const-ae/sparseMatrixStats
+BugReports: https://github.com/const-ae/sparseMatrixStats/issues
 biocViews: Infrastructure, Software, DataRepresentation
