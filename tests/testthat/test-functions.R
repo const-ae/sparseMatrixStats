@@ -1,9 +1,6 @@
 set.seed(1)
 # source("~/prog/r_packages/sparseMatrixStats/tests/testthat/setup.R")
 diverse_mat <- make_matrix_with_all_features(nrow = 15, ncol=10)
-named_mat <- make_matrix_with_all_features(nrow = 15, ncol=10)
-colnames(named_mat) <- paste0("column_", 1:10)
-rownames(named_mat) <- paste0("row_", 1:15)
 zero_row_mat <- matrix(numeric(0), nrow = 0, ncol = 5)
 zero_col_mat <- matrix(numeric(0), nrow = 5, ncol = 0)
 empty_mat <- matrix(numeric(0), nrow=0, ncol=5)
@@ -22,7 +19,6 @@ all_inf_mat <-  matrix(c(Inf, -Inf,  Inf, -Inf, -Inf,  Inf,
 
 
 matrix_list <- list(diverse_mat,
-                    named_mat,
                     zero_row_mat,
                     zero_col_mat,
                     empty_mat,
@@ -31,7 +27,6 @@ matrix_list <- list(diverse_mat,
                     dense_mat,
                     all_inf_mat)
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
-                       as(named_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
                        as(zero_col_mat, "dgCMatrix"),
                        as(empty_mat, "dgCMatrix"),
@@ -39,10 +34,9 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(matrix_with_large_numbers, "dgCMatrix"),
                        as(dense_mat, "dgCMatrix"),
                        as(all_inf_mat, "dgCMatrix"))
-row_subset_list <- list(1:5, 1:14, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3))
-col_subset_list <- list(c(7, 9, 2), 1:9, 1:4, NULL, NULL, 3, 1:10, NULL, NULL)
+row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3))
+col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3, 1:10, NULL, NULL)
 descriptions <- list("diverse",
-                     "named",
                      "zero row",
                      "zero col",
                      "empty",
