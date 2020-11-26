@@ -10,7 +10,7 @@ using namespace Rcpp;
 
 // ATTENTION: This method assumes that NA's have already been handled!
 template<typename T>
-double quantile_sparse(T values, int number_of_zeros, double prob){
+double quantile_sparse_impl(T values, int number_of_zeros, double prob){
   if(prob < 0 || prob > 1){
     throw std::range_error("prob must be between 0 and 1");
   }
@@ -82,7 +82,7 @@ double quantile_sparse(T values, int number_of_zeros, double prob){
 // [[Rcpp::export]]
 double quantile_sparse(NumericVector values, int number_of_zeros, double prob){
   VectorSubsetView<REALSXP> vsv(values, 0, values.size());
-  return quantile_sparse<VectorSubsetView<REALSXP> >(vsv, number_of_zeros, prob);
+  return quantile_sparse_impl<VectorSubsetView<REALSXP> >(vsv, number_of_zeros, prob);
 }
 
 #endif /* quantile_h */

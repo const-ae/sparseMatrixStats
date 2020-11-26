@@ -223,7 +223,7 @@ NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
     if(size + number_of_zeros == 0){
       return NA_REAL;
     }
-    return quantile_sparse(values, number_of_zeros, 0.5);
+    return quantile_sparse_impl(values, number_of_zeros, 0.5);
   });
 }
 
@@ -269,7 +269,7 @@ NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
     if(size + number_of_zeros == 0){
       return NA_REAL;
     }
-    double med = quantile_sparse(values, number_of_zeros, 0.5);
+    double med = quantile_sparse_impl(values, number_of_zeros, 0.5);
     NumericVector complete_vector(size + number_of_zeros, std::abs(med));
     auto val_it = values.begin();
     auto val_end = values.end();
@@ -677,7 +677,7 @@ NumericMatrix dgCMatrix_colQuantiles(S4 matrix, NumericVector probs, bool na_rm)
     std::vector<double> result;
     result.reserve(probs.size());
     std::transform(probs.begin(), probs.end(), back_inserter(result), [values, number_of_zeros](double prob) -> double{
-      return quantile_sparse(values, number_of_zeros, prob);
+      return quantile_sparse_impl(values, number_of_zeros, prob);
     });
     return result;
   });
