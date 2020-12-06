@@ -281,7 +281,6 @@ test_that("rowCollapse works", {
   expect_equal(rowCollapse(sp_mat, idxs = c(1,3)), matrixStats::rowCollapse(mat, idxs = c(1,3)))
   expect_equal(rowCollapse(sp_mat, idxs = 1:5, rows = 3), matrixStats::rowCollapse(mat, idxs = 1:5, rows = 3))
   expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), unname(mat[row_subset, 1]))
-  skip("matrixStats has a bug if rowCollapse is combined with subsetting")
   expect_equal(rowCollapse(sp_mat, idxs = 1, rows = row_subset), matrixStats::rowCollapse(mat, idxs = 1, rows = row_subset))
 
 })

@@ -397,7 +397,6 @@ for(idx in seq_along(matrix_list)){
     if(nrow(sp_mat) > 0 && ! is.null(col_subset)){
       expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), unname(sp_mat[1, col_subset]))
     }
-    skip("matrixStats has a bug if colCollapse is combined with subsetting")
     expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), matrixStats::colCollapse(mat, idxs = 1, cols = col_subset))
   })
 
