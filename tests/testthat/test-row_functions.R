@@ -48,6 +48,9 @@ test_that("rowMads works", {
   expect_equal(rowMads(sp_mat), matrixStats::rowMads(mat))
   expect_equal(rowMads(sp_mat, na.rm=TRUE), matrixStats::rowMads(mat, na.rm=TRUE))
   expect_equal(rowMads(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowMads(mat, rows = row_subset, cols = col_subset))
+
+  center <- rowMeans2(sp_mat)
+  expect_equal(rowMads(sp_mat, center = center), matrixStats::rowMads(mat, center = center))
 })
 
 test_that("rowMins works", {

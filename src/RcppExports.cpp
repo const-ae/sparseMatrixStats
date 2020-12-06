@@ -55,15 +55,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // dgCMatrix_colMads
-NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor);
-RcppExport SEXP _sparseMatrixStats_dgCMatrix_colMads(SEXP matrixSEXP, SEXP na_rmSEXP, SEXP scale_factorSEXP) {
+NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor, Nullable<NumericVector> center);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colMads(SEXP matrixSEXP, SEXP na_rmSEXP, SEXP scale_factorSEXP, SEXP centerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
     Rcpp::traits::input_parameter< double >::type scale_factor(scale_factorSEXP);
-    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colMads(matrix, na_rm, scale_factor));
+    Rcpp::traits::input_parameter< Nullable<NumericVector> >::type center(centerSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colMads(matrix, na_rm, scale_factor, center));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -357,7 +358,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMeans2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMedians", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMedians, 2},
     {"_sparseMatrixStats_dgCMatrix_colVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colVars, 3},
-    {"_sparseMatrixStats_dgCMatrix_colMads", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMads, 3},
+    {"_sparseMatrixStats_dgCMatrix_colMads", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMads, 4},
     {"_sparseMatrixStats_dgCMatrix_colMins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMins, 2},
     {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
     {"_sparseMatrixStats_dgCMatrix_colOrderStats", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colOrderStats, 3},

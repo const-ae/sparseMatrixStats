@@ -17,8 +17,8 @@ dgCMatrix_colVars <- function(matrix, na_rm, center) {
     .Call('_sparseMatrixStats_dgCMatrix_colVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm, center)
 }
 
-dgCMatrix_colMads <- function(matrix, na_rm, scale_factor) {
-    .Call('_sparseMatrixStats_dgCMatrix_colMads', PACKAGE = 'sparseMatrixStats', matrix, na_rm, scale_factor)
+dgCMatrix_colMads <- function(matrix, na_rm, scale_factor, center) {
+    .Call('_sparseMatrixStats_dgCMatrix_colMads', PACKAGE = 'sparseMatrixStats', matrix, na_rm, scale_factor, center)
 }
 
 dgCMatrix_colMins <- function(matrix, na_rm) {

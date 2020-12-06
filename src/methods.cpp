@@ -289,8 +289,13 @@ NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm, Nullable<NumericVector> c
 
 
 // [[Rcpp::export]]
-NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
-  return reduce_matrix_double(matrix, na_rm, [na_rm, scale_factor](auto values, auto row_indices, int number_of_zeros) -> double{
+NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor, Nullable<NumericVector> center){
+  bool center_provided = center.isNotNull();
+  NumericVector center_vec(0);
+  if(center_provided){
+    center_vec = Rcpp::as<NumericVector>(center.get());
+  }
+  return reduce_matrix_double_with_index(matrix, na_rm, [na_rm, scale_factor, center_vec, center_provided](auto values, auto row_indices, int number_of_zeros, int col_idx) -> double{
     if(! na_rm){
       bool any_na = is_any_na(values);
       if(any_na){
@@ -298,14 +303,19 @@ NumericVector dgCMatrix_colMads(S4 matrix, bool na_rm, double scale_factor){
       }
     }
     R_len_t size = values.size();
-    if(number_of_zeros > size){
+    if(! center_provided && number_of_zeros > size){
       // Easy escape hatch
       return 0.0;
     }
     if(size + number_of_zeros == 0){
       return NA_REAL;
     }
-    double med = quantile_sparse_impl(values, number_of_zeros, 0.5);
+    double med = 0;
+    if(center_provided){
+      med = center_vec[col_idx];
+    }else{
+      med = quantile_sparse_impl(values, number_of_zeros, 0.5);
+    }
     NumericVector complete_vector(size + number_of_zeros, std::abs(med));
     auto val_it = values.begin();
     auto val_end = values.end();

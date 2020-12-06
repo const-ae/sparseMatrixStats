@@ -90,8 +90,8 @@ setMethod("rowSds", signature(x = "xgCMatrix"),
 #' @rdname colMads-dgCMatrix-method
 #' @export
 setMethod("rowMads", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE){
-  colMads(t(x), rows = cols, cols = rows, constant = constant, na.rm = na.rm)
+          function(x, rows = NULL, cols = NULL, center = NULL, constant = 1.4826, na.rm=FALSE){
+  colMads(t(x), rows = cols, cols = rows, center = center, constant = constant, na.rm = na.rm)
 })
 
 
@@ -237,8 +237,8 @@ setMethod("rowWeightedSds", signature(x = "xgCMatrix"),
 #' @rdname colWeightedMads-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826){
-  colWeightedMads(t(x), w=w, rows = cols, cols = rows, na.rm=na.rm, constant = constant)
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826, center = NULL){
+  colWeightedMads(t(x), w=w, rows = cols, cols = rows, na.rm=na.rm, constant = constant, center = center)
 })
 
 

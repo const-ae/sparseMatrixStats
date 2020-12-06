@@ -84,14 +84,14 @@ setMethod("colSds", signature(x = "xgCMatrix"),
 #' @inherit MatrixGenerics::colMads
 #' @export
 setMethod("colMads", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, constant = 1.4826, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, center = NULL, constant = 1.4826, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant)
+  dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant, center = center)
 })
 
 
@@ -353,7 +353,7 @@ setMethod("colWeightedMads", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(is.null(w)){
-    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant), colnames(x))
+    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant, center = center), colnames(x))
   }else{
     if(length(w) != nrow(x)){
       stop("The number of elements in arguments 'w'and 'x' does not match: ",
@@ -810,7 +810,7 @@ setMethod("colMadDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant), colnames(x))
+    setNames(dgCMatrix_colMads(x, na_rm = na.rm, scale_factor = constant, center = NULL), colnames(x))
   }else{
     n <- nrow(x)
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){

@@ -116,6 +116,9 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colMads(sp_mat), matrixStats::colMads(mat))
     expect_equal(colMads(sp_mat, na.rm=TRUE), matrixStats::colMads(mat, na.rm=TRUE))
     expect_equal(colMads(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMads(mat, rows = row_subset, cols = col_subset))
+
+    center <- colMeans2(sp_mat)
+    expect_equal(colMads(sp_mat, center = center), matrixStats::colMads(mat, center = center))
   })
 
   test_that("colMins works", {
