@@ -13,8 +13,8 @@ dgCMatrix_colMedians <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_colMedians', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
-dgCMatrix_colVars <- function(matrix, na_rm) {
-    .Call('_sparseMatrixStats_dgCMatrix_colVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+dgCMatrix_colVars <- function(matrix, na_rm, center) {
+    .Call('_sparseMatrixStats_dgCMatrix_colVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm, center)
 }
 
 dgCMatrix_colMads <- function(matrix, na_rm, scale_factor) {
@@ -109,7 +109,7 @@ dgCMatrix_rowMeans2 <- function(matrix, na_rm) {
     .Call('_sparseMatrixStats_dgCMatrix_rowMeans2', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
 }
 
-dgCMatrix_rowVars <- function(matrix, na_rm) {
-    .Call('_sparseMatrixStats_dgCMatrix_rowVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm)
+dgCMatrix_rowVars <- function(matrix, na_rm, center) {
+    .Call('_sparseMatrixStats_dgCMatrix_rowVars', PACKAGE = 'sparseMatrixStats', matrix, na_rm, center)
 }
 

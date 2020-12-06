@@ -71,8 +71,14 @@ NumericVector dgCMatrix_rowMeans2(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
-NumericVector dgCMatrix_rowVars(S4 matrix, bool na_rm){
-  NumericVector means = dgCMatrix_rowMeans2(matrix, na_rm);
+NumericVector dgCMatrix_rowVars(S4 matrix, bool na_rm, Nullable<NumericVector> center){
+  bool center_provided = center.isNotNull();
+  NumericVector means(0);
+  if(center_provided){
+    means = Rcpp::as<NumericVector>(center.get());
+  }else{
+    means = dgCMatrix_rowMeans2(matrix, na_rm);
+  }
   IntegerVector dim = matrix.slot("Dim");
   NumericVector values = matrix.slot("x");
   IntegerVector row_indices = matrix.slot("i");

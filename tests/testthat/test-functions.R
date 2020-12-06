@@ -94,6 +94,9 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colVars(sp_mat), matrixStats::colVars(mat))
     expect_equal(colVars(sp_mat, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
     expect_equal(colVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
+
+    center <- colMeans2(sp_mat)
+    expect_equal(colVars(sp_mat, center = center), matrixStats::colVars(mat, center = center))
   })
 
   test_that("rowVars works", {

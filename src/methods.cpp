@@ -79,6 +79,32 @@ LogicalVector reduce_matrix_lgl(S4 matrix, bool na_rm, Functor op){
 
 
 template<typename Functor>
+NumericVector reduce_matrix_double_with_index(S4 matrix, bool na_rm, Functor op){
+  dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
+  ColumnView cv(&sp_mat);
+  int ncol =  sp_mat.ncol;
+  NumericVector result(ncol);
+  if(na_rm){
+    ColumnView::iterator col_iter = cv.begin();
+    for(int col_idx = 0; col_idx < ncol; col_idx++){
+      ColumnView::col_container col = *col_iter;
+      SkipNAVectorSubsetView<REALSXP> values_wrapper(&col.values);
+      SkipNAVectorSubsetView<INTSXP> row_indices_wrapper(&col.row_indices);
+      result[col_idx] = op(values_wrapper, row_indices_wrapper, col.number_of_zeros, col_idx);
+      ++col_iter;
+    }
+  }else{
+    ColumnView::iterator col_iter = cv.begin();
+    for(int col_idx = 0; col_idx < ncol; col_idx++){
+      ColumnView::col_container col = *col_iter;
+      result[col_idx] = op(col.values, col.row_indices, col.number_of_zeros, col_idx);
+      ++col_iter;
+    }
+  }
+  return result;
+}
+
+template<typename Functor>
 NumericMatrix reduce_matrix_num_matrix(S4 matrix, bool na_rm, R_len_t n_res_columns, bool transpose, Functor op){
   dgCMatrixView sp_mat = wrap_dgCMatrix(matrix);
   ColumnView cv(&sp_mat);
@@ -229,9 +255,19 @@ NumericVector dgCMatrix_colMedians(S4 matrix, bool na_rm){
 
 
 // [[Rcpp::export]]
-NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm){
-  return reduce_matrix_double(matrix, na_rm, [](auto values, auto row_indices, int number_of_zeros) -> double{
-    double mean = sp_mean(values, number_of_zeros);
+NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm, Nullable<NumericVector> center){
+  bool center_provided = center.isNotNull();
+  NumericVector center_vec(0);
+  if(center_provided){
+    center_vec = Rcpp::as<NumericVector>(center.get());
+  }
+  return reduce_matrix_double_with_index(matrix, na_rm, [center_vec, center_provided](auto values, auto row_indices, int number_of_zeros, int col_idx) -> double{
+    double mean = 0;
+    if(! center_provided){
+      mean = sp_mean(values, number_of_zeros);
+    }else{
+      mean = center_vec[col_idx];
+    }
     if(ISNA(mean)){
       return NA_REAL;
     }

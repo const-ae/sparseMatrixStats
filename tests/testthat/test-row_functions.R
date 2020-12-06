@@ -32,6 +32,9 @@ test_that("rowVars works", {
   expect_equal(rowVars(sp_mat), matrixStats::rowVars(mat))
   expect_equal(rowVars(sp_mat, na.rm=TRUE), matrixStats::rowVars(mat, na.rm=TRUE))
   expect_equal(rowVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowVars(mat, rows = row_subset, cols = col_subset))
+
+  center <- rowMeans2(sp_mat)
+  expect_equal(rowVars(sp_mat, center = center), matrixStats::rowVars(mat, center = center))
 })
 
 test_that("rowSds works", {

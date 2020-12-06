@@ -56,7 +56,7 @@ setMethod("rowMedians", signature(x = "dgCMatrix"),
 #' @rdname colVars-xgCMatrix-method
 #' @export
 setMethod("rowVars", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -64,7 +64,7 @@ setMethod("rowVars", signature(x = "xgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   # dgCMatrix_colVars(t(x), na_rm = na.rm)
-  dgCMatrix_rowVars(x, na_rm = na.rm)
+  dgCMatrix_rowVars(x, na_rm = na.rm, center = center)
 })
 
 
@@ -73,14 +73,14 @@ setMethod("rowVars", signature(x = "xgCMatrix"),
 #' @rdname colSds-xgCMatrix-method
 #' @export
 setMethod("rowSds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm))
+  sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = center))
 })
 
 
@@ -225,7 +225,7 @@ setMethod("rowWeightedSds", signature(x = "xgCMatrix"),
     w <- w[cols]
   }
   if(is.null(w)){
-    setNames(sqrt(dgCMatrix_colVars(t(x), na_rm = na.rm)), rownames(x))
+    setNames(sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = NULL)), rownames(x))
   }else{
     setNames(sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm)), rownames(x))
   }

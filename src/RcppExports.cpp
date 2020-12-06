@@ -42,14 +42,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // dgCMatrix_colVars
-NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm);
-RcppExport SEXP _sparseMatrixStats_dgCMatrix_colVars(SEXP matrixSEXP, SEXP na_rmSEXP) {
+NumericVector dgCMatrix_colVars(S4 matrix, bool na_rm, Nullable<NumericVector> center);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_colVars(SEXP matrixSEXP, SEXP na_rmSEXP, SEXP centerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colVars(matrix, na_rm));
+    Rcpp::traits::input_parameter< Nullable<NumericVector> >::type center(centerSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_colVars(matrix, na_rm, center));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -338,14 +339,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // dgCMatrix_rowVars
-NumericVector dgCMatrix_rowVars(S4 matrix, bool na_rm);
-RcppExport SEXP _sparseMatrixStats_dgCMatrix_rowVars(SEXP matrixSEXP, SEXP na_rmSEXP) {
+NumericVector dgCMatrix_rowVars(S4 matrix, bool na_rm, Nullable<NumericVector> center);
+RcppExport SEXP _sparseMatrixStats_dgCMatrix_rowVars(SEXP matrixSEXP, SEXP na_rmSEXP, SEXP centerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type matrix(matrixSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(dgCMatrix_rowVars(matrix, na_rm));
+    Rcpp::traits::input_parameter< Nullable<NumericVector> >::type center(centerSEXP);
+    rcpp_result_gen = Rcpp::wrap(dgCMatrix_rowVars(matrix, na_rm, center));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -354,7 +356,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_dgCMatrix_colSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colSums2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMeans2, 2},
     {"_sparseMatrixStats_dgCMatrix_colMedians", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMedians, 2},
-    {"_sparseMatrixStats_dgCMatrix_colVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colVars, 2},
+    {"_sparseMatrixStats_dgCMatrix_colVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colVars, 3},
     {"_sparseMatrixStats_dgCMatrix_colMads", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMads, 3},
     {"_sparseMatrixStats_dgCMatrix_colMins", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMins, 2},
     {"_sparseMatrixStats_dgCMatrix_colMaxs", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_colMaxs, 2},
@@ -378,7 +380,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sparseMatrixStats_quantile_sparse", (DL_FUNC) &_sparseMatrixStats_quantile_sparse, 3},
     {"_sparseMatrixStats_dgCMatrix_rowSums2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_rowSums2, 2},
     {"_sparseMatrixStats_dgCMatrix_rowMeans2", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_rowMeans2, 2},
-    {"_sparseMatrixStats_dgCMatrix_rowVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_rowVars, 2},
+    {"_sparseMatrixStats_dgCMatrix_rowVars", (DL_FUNC) &_sparseMatrixStats_dgCMatrix_rowVars, 3},
     {NULL, NULL, 0}
 };
 

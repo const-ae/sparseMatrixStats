@@ -52,14 +52,14 @@ setMethod("colMedians", signature(x = "dgCMatrix"),
 #' @inherit MatrixGenerics::colVars
 #' @export
 setMethod("colVars", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colVars(x, na_rm = na.rm)
+  dgCMatrix_colVars(x, na_rm = na.rm, center = center)
 })
 
 
@@ -68,14 +68,14 @@ setMethod("colVars", signature(x = "xgCMatrix"),
 #' @inherit MatrixGenerics::colSds
 #' @export
 setMethod("colSds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  sqrt(dgCMatrix_colVars(x, na_rm = na.rm))
+  sqrt(dgCMatrix_colVars(x, na_rm = na.rm, center = center))
 })
 
 
@@ -284,7 +284,7 @@ setMethod("colWeightedVars", signature(x = "xgCMatrix"),
   }
 
   if(is.null(w)){
-    setNames(dgCMatrix_colVars(x, na_rm = na.rm), colnames(x))
+    setNames(dgCMatrix_colVars(x, na_rm = na.rm, center = NULL), colnames(x))
   }else{
     if(length(w) != nrow(x)){
       stop("The number of elements in arguments 'w'and 'x' does not match: ",
@@ -311,7 +311,7 @@ setMethod("colWeightedSds", signature(x = "xgCMatrix"),
   }
 
   if(is.null(w)){
-    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm)), colnames(x))
+    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm, center = NULL)), colnames(x))
   }else{
     if(length(w) != nrow(x)){
       stop("The number of elements in arguments 'w'and 'x' does not match: ",
@@ -759,7 +759,7 @@ setMethod("colVarDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    setNames(dgCMatrix_colVars(x, na_rm = na.rm), colnames(x))
+    setNames(dgCMatrix_colVars(x, na_rm = na.rm, center = NULL), colnames(x))
   }else{
     n <- nrow(x)
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
@@ -785,7 +785,7 @@ setMethod("colSdDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(diff == 0){
-    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm)), colnames(x))
+    setNames(sqrt(dgCMatrix_colVars(x, na_rm = na.rm, center = NULL)), colnames(x))
   }else{
     n <- nrow(x)
     setNames(reduce_sparse_matrix_to_num(x, function(values, row_indices, number_of_zeros){
