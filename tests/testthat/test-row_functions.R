@@ -2,8 +2,6 @@ set.seed(1)
 # source("tests/testthat/setup.R")
 
 mat <- t(make_matrix_with_all_features(nrow=15, ncol=10))
-colnames(mat) <- paste0("column_", 1:15)
-rownames(mat) <- paste0("row_", 1:10)
 sp_mat <- as(mat, "dgCMatrix")
 row_subset <- 1:5
 col_subset <- c(7, 9, 2)
