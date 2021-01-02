@@ -83,7 +83,11 @@ std::vector<R> calculate_sparse_rank(VT vec, IT positions, int number_of_zeros,
   if(na_handling == "keep"){
     for(int i = 0; i < vec_size; ++i){
       if(Rcpp::NumericVector::is_na(vec[i])){
-        result[positions[i]] = NA_REAL;
+        if(std::is_same<R, int>::value){
+          result[positions[i]] = NA_INTEGER;
+        }else{
+          result[positions[i]] = NA_REAL;
+        }
       }
     }
   }
