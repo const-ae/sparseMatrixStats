@@ -599,7 +599,7 @@ IntegerVector dgCMatrix_colCounts(S4 matrix, double value, bool na_rm){
           return std::count(values.begin(), values.end(), value);
         }
       }else{
-        return NA_REAL;
+        return NA_INTEGER;
       }
     }
   });

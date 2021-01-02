@@ -1,7 +1,7 @@
 #ifndef sample_rank_h
 #define sample_rank_h
 
-
+#include <type_traits>
 #include <Rcpp.h>
 
 
