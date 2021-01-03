@@ -3,6 +3,8 @@ Changes in devel version (1.3)
 + Support center argument in colVars (and friends). This can speed up
 the calculation if both are needed. Note that center must be a proper
 estimate of the column means.
++ Fix bug that broke test on ARM architectures
++ Add extensive section on how to fix installation problems to README
 
 
 Changes in version 1.2
