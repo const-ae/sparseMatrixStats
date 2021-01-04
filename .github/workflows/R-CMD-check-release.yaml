@@ -57,7 +57,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Install matrixStats
-          run: |
+        run: |
            install.packages("matrixStats")
            BiocManager::install("Bioconductor/MatrixGenerics")
         shell: Rscript {0}
