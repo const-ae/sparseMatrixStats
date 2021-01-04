@@ -8,10 +8,10 @@ on:
   schedule:
     - cron: '0 8 * * 5'
 
-name: R-CMD-check
+name: R-CMD-check-devel
 
 jobs:
-  R-CMD-check:
+  R-CMD-check-devel:
     if: "! contains(github.event.head_commit.message, '[ci skip]')"
 
     runs-on: ${{ matrix.config.os }}
