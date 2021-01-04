@@ -12,6 +12,8 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
+    if: "! contains(github.event.head_commit.message, '[ci skip]')"
+
     runs-on: ${{ matrix.config.os }}
     container: ${{ matrix.config.image }}
 
@@ -21,12 +23,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, r: 'release ', bioc: '3.11'}
-          - { os: macOS-latest, r: 'release', bioc: '3.11'}
-          - { os: macOS-latest, r: 'release', bioc: 'devel'}
-          - { os: ubuntu-16.04, r: 'release', bioc: '3.11', cran: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          - { os: ubuntu-latest, r: 'release', image: 'bioconductor/bioconductor_docker:devel'}
-          - { os: ubuntu-latest, r: 'release', image: 'bioconductor/bioconductor_docker:RELEASE_3_11'}
+          - { os: windows-latest, r: 'devel ', bioc: 'devel', matrixStats: 'devel'}
+          - { os: macOS-latest, r: 'devel', bioc: 'devel', matrixStats: 'devel'}
+          - { os: ubuntu-latest, r: 'devel', bioc: 'devel', matrixStats: 'devel'}
+          - { os: ubuntu-latest, r: 'devel', bioc: 'devel', matrixStats: 'release'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -40,13 +40,11 @@ jobs:
 
       - name: Set up R
         uses: r-lib/actions/setup-r@master
-        if: matrix.config.image == null
         with:
           r-version: ${{ matrix.config.r }}
 
       - name: Set up pandoc
         uses: r-lib/actions/setup-pandoc@master
-        if: matrix.config.image == null
 
       - name: Install remotes
         run: |
@@ -54,24 +52,22 @@ jobs:
         shell: Rscript {0}
 
       - name: Set BiocManager version
-        if: matrix.config.image == null
         run: |
           install.packages('BiocManager')
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
         shell: Rscript {0}
 
-      - name: Query dependencies
+      - name: Install matrixStats DEVEL
+        if: matrix.config.matrixStats == 'devel'
         run: |
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories())), 'depends.Rds', version = 2)
+          remotes::install_github("HenrikBengtsson/matrixStats", ref = "develop")
         shell: Rscript {0}
 
-      - name: Cache R packages
-        if: runner.os != 'Windows' && matrix.config.image == null
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-bioc-${{ matrix.config.bioc }}-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-bioc-${{ matrix.config.bioc }}-
+      - name: Install matrixStats Release
+        if: matrix.config.matrixStats == 'release'
+        run: |
+          install.packages("matrixStats")
+        shell: Rscript {0}
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
@@ -82,12 +78,11 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
+
       - name: Install dependencies
         run: |
-          local_deps <- remotes::local_package_deps(dependencies = TRUE)
-          deps <- remotes::dev_package_deps(dependencies = TRUE, repos = BiocManager::repositories())
-          BiocManager::install(local_deps[local_deps %in% deps$package[deps$diff != 0]], Ncpu = 2L)
-          remotes::install_cran('rcmdcheck', Ncpu = 2L)
+         remotes::install_github("Bioconductor/MatrixGenerics")
+         install.packages("Rcpp")
         shell: Rscript {0}
 
       - name: Session info
@@ -127,7 +122,7 @@ jobs:
           path: check
 
       - name: Test coverage
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
+        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
           install.packages("covr")
           covr::codecov(type = "all", token = "${{secrets.CODECOV_TOKEN}}")
