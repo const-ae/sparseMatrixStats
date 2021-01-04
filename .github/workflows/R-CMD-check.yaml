@@ -61,12 +61,14 @@ jobs:
         if: matrix.config.matrixStats == 'devel'
         run: |
           remotes::install_github("HenrikBengtsson/matrixStats", ref = "develop")
+          remotes::install_github("Bioconductor/MatrixGenerics")
         shell: Rscript {0}
 
       - name: Install matrixStats Release
         if: matrix.config.matrixStats == 'release'
         run: |
           install.packages("matrixStats")
+          BiocManager::install("Bioconductor/MatrixGenerics")
         shell: Rscript {0}
 
       - name: Install system dependencies
@@ -79,9 +81,10 @@ jobs:
           sudo -s eval "$sysreqs"
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
 
-      - name: Install dependencies
+      - name: Install further dependencies
         run: |
-         remotes::install_github("Bioconductor/MatrixGenerics")
+         install.packages(c("sessioninfo", "rcmdcheck"))
+         BiocManager::install("BiocCheck")
          install.packages("Rcpp")
         shell: Rscript {0}
 
@@ -98,7 +101,6 @@ jobs:
 
       - name: BiocCheck
         run: |
-          BiocManager::install("BiocCheck")
           BiocCheck::BiocCheck(".")
         shell: Rscript {0}
 
