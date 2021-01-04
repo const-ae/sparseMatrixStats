@@ -403,9 +403,12 @@ for(idx in seq_along(matrix_list)){
 
   test_that("colAvgsPerRowSet works", {
     S <-  suppressWarnings(matrix(seq_len(nrow(mat)), ncol = 2))
-    expect_equal(colAvgsPerRowSet(sp_mat, S = S), matrixStats::colAvgsPerRowSet(mat, S = S))
-    expect_equal(colAvgsPerRowSet(sp_mat, S = S, FUN = colVarDiffs, na.rm = FALSE), matrixStats::colAvgsPerRowSet(mat, S = S, FUN = colVarDiffs, na.rm = FALSE))
-    expect_equal(colAvgsPerRowSet(sp_mat, S = S, na.rm = FALSE, cols = col_subset), matrixStats::colAvgsPerRowSet(mat, S = S, na.rm = FALSE, cols = col_subset))
+    expect_equal(colAvgsPerRowSet(sp_mat, S = S, na.rm = TRUE), matrixStats::colAvgsPerRowSet(mat, S = S))
+    expect_equal(colAvgsPerRowSet(sp_mat, S = S, FUN = colVarDiffs, na.rm = TRUE), matrixStats::colAvgsPerRowSet(mat, S = S, FUN = colVarDiffs))
+    if(ncol(mat) == 1 || length(col_subset) == 1){
+      skip("matrixStats has a bug in colAvgsPerRowSet if the input has exactly one column")
+    }
+    expect_equal(colAvgsPerRowSet(sp_mat, S = S, na.rm = TRUE, cols = col_subset), matrixStats::colAvgsPerRowSet(mat, S = S, cols = col_subset))
   })
 
 }

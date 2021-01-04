@@ -864,7 +864,7 @@ function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
 #' @aliases colAvgsPerRowSet
 #' @export
 setMethod("colAvgsPerRowSet", signature(X = "xgCMatrix"),
-function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., na.rm = NA, tFUN = FALSE){
+function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., tFUN = FALSE){
   if(! is.null(W)) stop("the W parameter is not supported.")
   nbrOfSets <- ncol(S)
   setNames <- colnames(S)
@@ -877,9 +877,6 @@ function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., na.rm = NA, tFUN = F
   dimX <- dim(X)
   tFUN <- as.logical(tFUN)
 
-  # Check if missing values have to be excluded while averaging
-  if (is.na(na.rm)) na.rm <- (base::anyNA(X@x) || anyMissing(S))
-
   colnamesX <- colnames(X)
   dimnames(X) <- list(NULL, NULL)
 
@@ -891,9 +888,9 @@ function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., na.rm = NA, tFUN = F
       Zjj <- t(Zjj)
     }
     tryCatch({
-      Zjj <- FUN(Zjj, ..., na.rm = na.rm)
+      Zjj <- FUN(Zjj, ...)
     }, error = function(err){
-      Zjj <<- FUN(as.matrix(Zjj), ..., na.rm = na.rm)
+      Zjj <<- FUN(as.matrix(Zjj), ...)
     })
     if (length(Zjj) != dimX[2L])
       stop("Internal error: length(Zjj) != dimX[1L]")
