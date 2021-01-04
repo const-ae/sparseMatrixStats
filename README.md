@@ -119,9 +119,9 @@ bench::mark(
 #> # A tibble: 3 x 6
 #>   expression             min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>        <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 sparseMatrixStats  36.72µs   42.9µs   22895.     2.93KB    13.7 
-#> 2 matrixStats         1.43ms   1.55ms     641.    156.8KB     2.04
-#> 3 apply               9.02ms  10.64ms      94.8    9.54MB    56.9
+#> 1 sparseMatrixStats  36.38µs   41.3µs   23523.     2.93KB    16.5 
+#> 2 matrixStats         1.42ms    1.5ms     654.    156.8KB     2.03
+#> 3 apply               9.38ms   10.8ms      92.7    9.54MB    54.1
 ```
 
 As you can see `sparseMatrixStats` is ca. 35 times fast than
@@ -259,7 +259,7 @@ The solution is to either create a `~/.R/Makevars` file and define
     CXX14 = g++
     CXX14FLAGS = -g -O2 $(LTO)
     CXX14PICFLAGS = -fpic
-    CXX14STD = -std=gnu++11
+    CXX14STD = -std=gnu++14
 
 or simply call
 

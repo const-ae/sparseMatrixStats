@@ -168,7 +168,7 @@ The solution is to either create a `~/.R/Makevars` file and define
 CXX14 = g++
 CXX14FLAGS = -g -O2 $(LTO)
 CXX14PICFLAGS = -fpic
-CXX14STD = -std=gnu++11
+CXX14STD = -std=gnu++14
 ```
 or simply call 
 ```{r eval=FALSE, include=TRUE}
