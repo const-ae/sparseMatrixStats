@@ -84,8 +84,8 @@ jobs:
       - name: Install further dependencies
         run: |
          install.packages(c("sessioninfo", "rcmdcheck"))
-         BiocManager::install("BiocCheck")
-         install.packages("Rcpp")
+         BiocManager::install(c("BiocCheck", "BiocStyle"))
+         install.packages(c("Rcpp", "rmarkdown", "testthat", "knitr", "bench", "rmarkdown"))
         shell: Rscript {0}
 
       - name: Session info
