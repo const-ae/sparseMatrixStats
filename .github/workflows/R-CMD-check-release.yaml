@@ -59,7 +59,7 @@ jobs:
       - name: Install matrixStats
         run: |
            install.packages("matrixStats")
-           BiocManager::install("Bioconductor/MatrixGenerics")
+           remotes::install_github("const-ae/MatrixGenerics", ref = "master")
         shell: Rscript {0}
 
       - name: Install system dependencies
