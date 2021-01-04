@@ -23,10 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, r: 'devel ', bioc: 'devel', matrixStats: 'devel'}
-          - { os: macOS-latest, r: 'devel', bioc: 'devel', matrixStats: 'devel'}
-          - { os: ubuntu-latest, r: 'devel', bioc: 'devel', matrixStats: 'devel'}
-          - { os: ubuntu-latest, r: 'devel', bioc: 'devel', matrixStats: 'release'}
+          - { os: windows-latest, r: 'devel ', bioc: 'devel'}
+          - { os: macOS-latest, r: 'devel', bioc: 'devel'}
+          - { os: ubuntu-latest, r: 'devel', bioc: 'devel'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -57,16 +56,8 @@ jobs:
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
         shell: Rscript {0}
 
-      - name: Install matrixStats DEVEL
-        if: matrix.config.matrixStats == 'devel'
-        run: |
-          remotes::install_github("HenrikBengtsson/matrixStats", ref = "develop")
-          remotes::install_github("Bioconductor/MatrixGenerics")
-        shell: Rscript {0}
-
-      - name: Install matrixStats Release
-        if: matrix.config.matrixStats == 'release'
-        run: |
+      - name: Install matrixStats
+          run: |
           install.packages("matrixStats")
           BiocManager::install("Bioconductor/MatrixGenerics")
         shell: Rscript {0}
@@ -120,7 +111,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-bioc-${{ matrix.config.bioc }}-results
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-bioc-${{ matrix.config.bioc }}-branch-release-results
           path: check
 
       - name: Test coverage
