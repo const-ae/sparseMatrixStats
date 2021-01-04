@@ -57,7 +57,6 @@ jobs:
         shell: Rscript {0}
 
       - name: Install matrixStats
-        if: matrix.config.matrixStats == 'devel'
         run: |
           remotes::install_github("HenrikBengtsson/matrixStats", ref = "develop")
           remotes::install_github("const-ae/MatrixGenerics", ref = "develop")
