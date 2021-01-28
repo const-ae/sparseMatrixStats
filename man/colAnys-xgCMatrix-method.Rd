@@ -53,8 +53,10 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 \seealso{
 \itemize{
 \item \code{matrixStats::\link[matrixStats:rowAlls]{rowAnys}()} and
-\code{matrixStats::\link[matrixStats:rowAlls]{colAnys}()} which are used
-when the input is a \code{matrix} or \code{numeric} vector.
+\code{matrixStats::\link[matrixStats:rowAlls]{colAnys}()} which are
+used when the input is a \code{matrix} or \code{numeric} vector.
+\item For checks if \emph{all} elements are equal to a value, see
+\code{\link[MatrixGenerics]{rowAlls}()}.
 \item \code{base::\link{any}()}.
 }
 }

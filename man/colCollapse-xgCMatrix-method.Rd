@@ -50,8 +50,8 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowCollapse}()} and
-\code{matrixStats::\link[matrixStats:rowCollapse]{colCollapse}()}
+\item \code{matrixStats::\link[matrixStats:rowCollapse]{rowCollapse}()}
+and \code{matrixStats::\link[matrixStats:rowCollapse]{colCollapse}()}
 which are used when the input is a \code{matrix} or \code{numeric} vector.
 }
 }

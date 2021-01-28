@@ -5,9 +5,9 @@
 \alias{rowVars,xgCMatrix-method}
 \title{Calculates the variance for each row (column) of a matrix-like object}
 \usage{
-\S4method{colVars}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{colVars}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL)
 
-\S4method{rowVars}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{rowVars}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -22,6 +22,8 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
+
+\item{center}{(optional) the center, defaults to the row means.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).
