@@ -41,13 +41,9 @@ done.}
 are excluded first, otherwise not.}
 
 \item{type}{An integer specifying the type of estimator. See
-\code{stats::\link[stats]{quantile}()}. for more details. Note, that this
-is not a generic argument and not all implementation of this function have
-to provide it.}
+\code{stats::\link[stats]{quantile}()}. for more details.}
 
-\item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.
-Note, that this is not a generic argument and not all implementation of
-this function have to provide it.}
+\item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.}
 }
 \value{
 a \code{\link{numeric}} \code{NxJ} (\code{KxJ})

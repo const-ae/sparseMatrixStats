@@ -22,7 +22,8 @@ matrix-like object}
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  constant = 1.4826
+  constant = 1.4826,
+  center = NULL
 )
 }
 \arguments{

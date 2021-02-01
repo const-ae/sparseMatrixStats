@@ -13,6 +13,7 @@
   S,
   FUN = colMeans2,
   ...,
+  na.rm = NA,
   tFUN = FALSE
 )
 
@@ -23,6 +24,7 @@
   S,
   FUN = rowMeans2,
   ...,
+  na.rm = NA,
   tFUN = FALSE
 )
 }
@@ -43,6 +45,10 @@ range of values is [1, M] ([1,N]).}
 applied to to each column (row) subset of \code{X} that is specified by \code{S}.}
 
 \item{...}{Additional arguments passed to \code{FUN}.}
+
+\item{na.rm}{(logical) Argument passed to \code{FUN()} as \code{na.rm = na.rm}.
+If \code{NA} (default), then \code{na.rm = TRUE} is used if \code{X} or \code{S} holds missing values,
+otherwise \code{na.rm = FALSE}.}
 
 \item{tFUN}{If \code{TRUE}, \code{X} is transposed before it is passed to \code{FUN}.}
 
@@ -78,8 +84,8 @@ mat <- matrix(rnorm(20), nrow = 5, ncol = 4)
 }
 \seealso{
 \itemize{
-\item \code{matrixStats::\link[matrixStats]{rowAvgsPerColSet}()} and
-\code{matrixStats::\link[matrixStats:rowAvgsPerColSet]{colAvgsPerRowSet}()}
+\item \code{matrixStats::\link[matrixStats:rowAvgsPerColSet]{rowAvgsPerColSet}()}
+and \code{matrixStats::\link[matrixStats:rowAvgsPerColSet]{colAvgsPerRowSet}()}
 which are used when the input is a \code{matrix} or \code{numeric} vector.
 }
 }
