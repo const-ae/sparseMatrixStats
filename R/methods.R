@@ -878,7 +878,7 @@ function(X, W = NULL, cols = NULL, S, FUN = colMeans2, ..., na.rm = NA, tFUN = F
   tFUN <- as.logical(tFUN)
 
   # Check if missing values have to be excluded while averaging
-  if (is.na(na.rm)) na.rm <- (base::anyNA(X@x) || anyMissing(S))
+  if (is.na(na.rm)) na.rm <- (base::anyNA(X@x) || matrixStats::anyMissing(S))
 
   colnamesX <- colnames(X)
   dimnames(X) <- list(NULL, NULL)
