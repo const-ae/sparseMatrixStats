@@ -559,8 +559,8 @@ setMethod("rowIQRDiffs", signature(x = "dgCMatrix"),
 #' @rdname colAvgsPerRowSet-xgCMatrix-method
 #' @export
 setMethod("rowAvgsPerColSet", signature(X = "xgCMatrix"),
-          function(X, W = NULL, rows = NULL, S, FUN = rowMeans2, ..., tFUN = FALSE){
-  tZ <- colAvgsPerRowSet(t(X), W = W, cols = rows, S = S, FUN  = FUN, ..., tFUN = ! tFUN)
+          function(X, W = NULL, rows = NULL, S, FUN = rowMeans2, ..., na.rm = NA, tFUN = FALSE){
+  tZ <- colAvgsPerRowSet(t(X), W = W, cols = rows, S = S, FUN  = FUN, ..., na.rm = na.rm, tFUN = ! tFUN)
   t(tZ)
 })
 

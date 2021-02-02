@@ -288,9 +288,9 @@ test_that("rowCollapse works", {
 
 test_that("rowAvgsPerColSet works", {
   S <-  suppressWarnings(matrix(seq_len(ncol(mat)), ncol = 2))
-  expect_equal(rowAvgsPerColSet(sp_mat, S = S, na.rm = TRUE), matrixStats::rowAvgsPerColSet(mat, S = S))
-  expect_equal(rowAvgsPerColSet(sp_mat, S = S, FUN = rowVarDiffs, na.rm = TRUE), matrixStats::rowAvgsPerColSet(mat, S = S, FUN = rowVarDiffs))
-  expect_equal(rowAvgsPerColSet(sp_mat, S = S, na.rm = TRUE, rows = row_subset), matrixStats::rowAvgsPerColSet(mat, S = S, rows = row_subset))
+  expect_equal(rowAvgsPerColSet(sp_mat, S = S, na.rm = TRUE), matrixStats::rowAvgsPerColSet(mat, S = S, na.rm = TRUE))
+  expect_equal(rowAvgsPerColSet(sp_mat, S = S, FUN = rowVarDiffs, na.rm = FALSE), matrixStats::rowAvgsPerColSet(mat, S = S, FUN = rowVarDiffs, na.rm = FALSE))
+  expect_equal(rowAvgsPerColSet(sp_mat, S = S, na.rm = FALSE, rows = row_subset), matrixStats::rowAvgsPerColSet(mat, S = S, na.rm = FALSE, rows = row_subset))
 })
 
 
