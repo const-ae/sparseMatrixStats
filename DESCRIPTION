@@ -27,7 +27,6 @@ Suggests:
     bench,
     rmarkdown,
     BiocStyle
-SystemRequirements: C++14
 VignetteBuilder: knitr
 URL: https://github.com/const-ae/sparseMatrixStats
 BugReports: https://github.com/const-ae/sparseMatrixStats/issues
