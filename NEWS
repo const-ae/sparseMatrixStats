@@ -7,6 +7,8 @@ estimate of the column means.
 + Fix bug that broke test on ARM architectures
 + Add extensive section on how to fix installation problems to README
 + Fix compatibility with matrixStats v.0.58.0
++ Fix bug in colCounts, colAnys, colAlls, colRanks if the sparse matrix
+contained explicit zeros.
 
 
 Changes in version 1.2
