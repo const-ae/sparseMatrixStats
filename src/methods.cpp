@@ -714,17 +714,19 @@ public:
   colCounts(double value_, bool na_rm_) : value(value_), na_rm(na_rm_) {}
   template<class V, class R>
   double operator()(V& values, R& row_indices, int number_of_zeros) const {
-    if(na_rm && value == 0.0){
-      return number_of_zeros;
-    }else if(na_rm){
-      return std::count(values.begin(), values.end(), value);
+    if(na_rm){
+      if(value == 0.0){
+        return number_of_zeros + std::count(values.begin(), values.end(), value);
+      }else {
+        return std::count(values.begin(), values.end(), value);
+      }
     }else{
       bool contains_na = std::any_of(values.begin(), values.end(), [](const double d) -> bool{
         return NumericVector::is_na(d);
       });
       if(! contains_na){  // No NA's in the vector
         if(value == 0.0){
-          return number_of_zeros;
+          return number_of_zeros + std::count(values.begin(), values.end(), value);
         }else{
           return std::count(values.begin(), values.end(), value);
         }
@@ -765,31 +767,29 @@ public:
   colAnys(double value_, bool na_rm_) : value(value_), na_rm(na_rm_) {}
   template<class V, class R>
   double operator()(V& values, R& row_indices, int number_of_zeros) const {
-    if(na_rm && value == 0.0){
-      return number_of_zeros > 0;
-    }else if(! na_rm && value == 0.0){
-      if(number_of_zeros > 0){
-        return true;
-      }else if(values.is_empty()){
-        return false;
+    if(na_rm){
+      if(value == 0.0){
+        return number_of_zeros > 0 || std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
+          return d == value;
+        });
       }else{
-        bool any_na = is_any_na(values);
-        if(any_na){
-          return NA_LOGICAL;
-        }else{
-          return false;
-        }
+        return std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
+          return d == value;
+        });
       }
-    }else if(na_rm){
-      return std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
-        return d == value;
-      });
     }else{
       // !na_rm and value != 0
       bool any_na = is_any_na(values);
-      bool found_value = std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
-        return d == value;
-      });
+      bool found_value = false;
+      if(value == 0.0){
+        found_value = number_of_zeros > 0 || std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
+          return d == value;
+        });
+      }else{
+        found_value = std::any_of(values.begin(), values.end(),  [this](const double d) -> bool{
+          return d == value;
+        });
+      }
       if(any_na){
         if(found_value){
           return true;
@@ -814,47 +814,31 @@ LogicalVector dgCMatrix_colAnys(S4 matrix, double value, bool na_rm){
 
 class colAlls {
 public:
-  colAlls(double value_, bool na_rm_, R_len_t nrows_) :
+  colAlls(double value_, bool na_rm_) :
   value(value_),
-  na_rm(na_rm_),
-  nrows(nrows_) {}
+  na_rm(na_rm_) {}
+
   template<class V, class R>
   double operator()(V& values, R& row_indices, int number_of_zeros) const {
-    if(value == 0.0){
-      if(na_rm){
-        return values.is_empty();
-      }else{
-        if(number_of_zeros == nrows){
-          return true;
-        }else{
-          bool all_na = are_all_na(values);
-          if(all_na){
-            return NA_LOGICAL;
-          }else{
-            return false;
-          }
-        }
-      }
+    if(value != 0.0 && number_of_zeros > 0){
+      return false;
+    }
+
+    if(na_rm){
+      return std::all_of(values.begin(), values.end(), [this](const double d) -> bool {
+        return d == value;
+      });
     }else{
-      if(number_of_zeros > 0){
+      bool all_equal_or_na = std::all_of(values.begin(), values.end(), [this](const double d) -> bool {
+        return d == value || NumericVector::is_na(d);
+      });
+      bool any_na = is_any_na(values);
+      if(! all_equal_or_na){
         return false;
-      }
-      if(na_rm){
-        return std::all_of(values.begin(), values.end(), [this](const double d) -> bool {
-          return d == value;
-        });
-      }else{
-        bool all_equal_or_na = std::all_of(values.begin(), values.end(), [this](const double d) -> bool {
-          return d == value || NumericVector::is_na(d);
-        });
-        bool any_na = is_any_na(values);
-        if(! all_equal_or_na){
-          return false;
-        }else if(all_equal_or_na && any_na){
-          return NA_LOGICAL;
-        }else if(all_equal_or_na && !any_na){
-          return true;
-        }
+      }else if(all_equal_or_na && any_na){
+        return NA_LOGICAL;
+      }else if(all_equal_or_na && !any_na){
+        return true;
       }
     }
     return false;
@@ -862,15 +846,13 @@ public:
 private:
   double value;
   bool na_rm;
-  R_len_t nrows;
 };
 
 
 // [[Rcpp::export]]
 LogicalVector dgCMatrix_colAlls(S4 matrix, double value, bool na_rm){
   Rcpp::IntegerVector dim = matrix.slot("Dim");
-  R_len_t nrows = dim[0];
-  return reduce_matrix_lgl(matrix, na_rm, colAlls(value, na_rm, nrows));
+  return reduce_matrix_lgl(matrix, na_rm, colAlls(value, na_rm));
 }
 
 

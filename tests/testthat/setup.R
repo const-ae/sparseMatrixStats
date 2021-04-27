@@ -29,3 +29,11 @@ make_matrix_with_all_features <- function(nrow, ncol){
 
   mat
 }
+
+make_matrix_with_all_features_with_explicit_zeros <- function(nrow, ncol, frac_zero = 0.7){
+  i <- c(sample.int(nrow, round(nrow * ncol * (1-frac_zero)), replace = TRUE), 4, 1, 2)
+  j <- c(sample.int(ncol, round(nrow * ncol * (1-frac_zero)), replace = TRUE), 1, 3, 2)
+  x <- c(rpois(n = round(nrow * ncol * (1-frac_zero)), lambda = 0.5), NA, NA, -1)
+  Matrix::sparseMatrix(i = i, j = j, x = x, dims = c(nrow, ncol))
+}
+

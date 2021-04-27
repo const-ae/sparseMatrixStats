@@ -16,6 +16,8 @@ dense_mat <- rbind(dense_mat, 4)
 all_inf_mat <-  matrix(c(Inf, -Inf,  Inf, -Inf, -Inf,  Inf,
                          -Inf,  Inf, Inf, -Inf,  Inf, -Inf ),
                        ncol=4)
+mat_with_explicit_zeros_sp <- make_matrix_with_all_features_with_explicit_zeros(nrow = 15, ncol = 10)
+
 
 
 matrix_list <- list(diverse_mat,
@@ -25,7 +27,8 @@ matrix_list <- list(diverse_mat,
                     matrix_with_zeros_only,
                     matrix_with_large_numbers,
                     dense_mat,
-                    all_inf_mat)
+                    all_inf_mat,
+                    as.matrix(mat_with_explicit_zeros_sp))
 sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(zero_row_mat, "dgCMatrix"),
                        as(zero_col_mat, "dgCMatrix"),
@@ -33,9 +36,10 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        as(matrix_with_zeros_only, "dgCMatrix"),
                        as(matrix_with_large_numbers, "dgCMatrix"),
                        as(dense_mat, "dgCMatrix"),
-                       as(all_inf_mat, "dgCMatrix"))
-row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3))
-col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3, 1:10, NULL, NULL)
+                       as(all_inf_mat, "dgCMatrix"),
+                       mat_with_explicit_zeros_sp)
+row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3), NULL)
+col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3, 1:10, NULL, NULL, 2)
 descriptions <- list("diverse",
                      "zero row",
                      "zero col",
@@ -43,7 +47,8 @@ descriptions <- list("diverse",
                      "only zeros inside",
                      "numerical precision challenge",
                      "dense matrix",
-                     "plus/minus Inf")
+                     "plus/minus Inf",
+                     "explicit zeros")
 
 
 for(idx in seq_along(matrix_list)){
