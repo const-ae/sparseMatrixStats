@@ -20,7 +20,7 @@ Imports:
     matrixStats (>= 0.60.0),
     methods
 Depends:
-    MatrixGenerics (>= 1.5.3)
+    MatrixGenerics (>= 1.4.2)
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
