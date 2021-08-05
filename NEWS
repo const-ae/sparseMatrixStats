@@ -1,5 +1,9 @@
 
-Changes in devel version (1.3)
+Changes in development
++ Add useNames parameter to all functions
+
+
+Changes in version 1.3
 + Avoid C++14 features. This should fix the reoccuring installation problems.
 + Support center argument in colVars (and friends). This can speed up
 the calculation if both are needed. Note that center must be a proper
