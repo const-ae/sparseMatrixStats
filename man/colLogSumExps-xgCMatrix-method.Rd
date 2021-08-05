@@ -6,9 +6,9 @@
 \title{Accurately calculates the logarithm of the sum of exponentials for each row
 (column) of a matrix-like object}
 \usage{
-\S4method{colLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{colLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
 
-\S4method{rowLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{rowLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
 }
 \arguments{
 \item{lx}{An NxK matrix-like object. Typically \code{lx} are \code{log(x)} values.}
@@ -21,6 +21,8 @@ columns) to operate over. If \code{\link{NULL}}, no subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).

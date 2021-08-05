@@ -12,6 +12,7 @@
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
   type = 7L,
+  useNames = NA,
   drop = TRUE
 )
 
@@ -21,6 +22,7 @@
   cols = NULL,
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
+  useNames = NA,
   drop = TRUE
 )
 }
@@ -42,6 +44,8 @@ are excluded first, otherwise not.}
 
 \item{type}{An integer specifying the type of estimator. See
 \code{stats::\link[stats]{quantile}()}. for more details.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 
 \item{drop}{If \code{TRUE} a vector is returned if \code{J == 1}.}
 }

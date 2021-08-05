@@ -5,7 +5,7 @@
 #' @rdname colSums2-xgCMatrix-method
 #' @export
 setMethod("rowSums2", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -13,7 +13,7 @@ setMethod("rowSums2", signature(x = "xgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   # dgCMatrix_colSums2(t(x), na_rm = na.rm)
-  dgCMatrix_rowSums2(x, na_rm = na.rm)
+  set_result_names_t(dgCMatrix_rowSums2(x, na_rm = na.rm), useNames)
 })
 
 
@@ -23,7 +23,7 @@ setMethod("rowSums2", signature(x = "xgCMatrix"),
 #' @rdname colMeans2-xgCMatrix-method
 #' @export
 setMethod("rowMeans2", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -31,7 +31,7 @@ setMethod("rowMeans2", signature(x = "xgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   # dgCMatrix_colMeans2(t(x), na_rm = na.rm)
-  dgCMatrix_rowMeans2(x, na_rm = na.rm)
+  set_result_names_t(dgCMatrix_rowMeans2(x, na_rm = na.rm), useNames)
 })
 
 
@@ -40,14 +40,14 @@ setMethod("rowMeans2", signature(x = "xgCMatrix"),
 #' @rdname colMedians-dgCMatrix-method
 #' @export
 setMethod("rowMedians", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colMedians(t(x), na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colMedians(t(x), na_rm = na.rm), useNames)
 })
 
 
@@ -56,7 +56,7 @@ setMethod("rowMedians", signature(x = "dgCMatrix"),
 #' @rdname colVars-xgCMatrix-method
 #' @export
 setMethod("rowVars", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -64,7 +64,7 @@ setMethod("rowVars", signature(x = "xgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   # dgCMatrix_colVars(t(x), na_rm = na.rm)
-  dgCMatrix_rowVars(x, na_rm = na.rm, center = center)
+  set_result_names_t(dgCMatrix_rowVars(x, na_rm = na.rm, center = center), useNames, default = ncol(x) > 0 && !is.null(center))
 })
 
 
@@ -73,14 +73,14 @@ setMethod("rowVars", signature(x = "xgCMatrix"),
 #' @rdname colSds-xgCMatrix-method
 #' @export
 setMethod("rowSds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, center = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = center))
+  set_result_names_t(sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = center)), useNames)
 })
 
 
@@ -90,8 +90,8 @@ setMethod("rowSds", signature(x = "xgCMatrix"),
 #' @rdname colMads-dgCMatrix-method
 #' @export
 setMethod("rowMads", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, center = NULL, constant = 1.4826, na.rm=FALSE){
-  colMads(t(x), rows = cols, cols = rows, center = center, constant = constant, na.rm = na.rm)
+          function(x, rows = NULL, cols = NULL, center = NULL, constant = 1.4826, na.rm=FALSE, useNames = NA){
+  colMads(t(x), rows = cols, cols = rows, center = center, constant = constant, na.rm = na.rm, useNames = useNames)
 })
 
 
@@ -100,14 +100,14 @@ setMethod("rowMads", signature(x = "dgCMatrix"),
 #' @rdname colLogSumExps-xgCMatrix-method
 #' @export
 setMethod("rowLogSumExps", signature(lx = "xgCMatrix"),
-          function(lx, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(lx, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     lx <- lx[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     lx <- lx[, cols, drop = FALSE]
   }
-  setNames(dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm), rownames(lx))
+  set_result_names_t(dgCMatrix_colLogSumExps(t(lx), na_rm = na.rm), useNames, default = TRUE, names = rownames(lx))
 })
 
 
@@ -116,14 +116,14 @@ setMethod("rowLogSumExps", signature(lx = "xgCMatrix"),
 #' @rdname colProds-xgCMatrix-method
 #' @export
 setMethod("rowProds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colProds(t(x), na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colProds(t(x), na_rm = na.rm), useNames)
 })
 
 
@@ -133,14 +133,14 @@ setMethod("rowProds", signature(x = "xgCMatrix"),
 #' @rdname colMins-dgCMatrix-method
 #' @export
 setMethod("rowMins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colMins(t(x), na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colMins(t(x), na_rm = na.rm), useNames)
 })
 
 
@@ -149,14 +149,14 @@ setMethod("rowMins", signature(x = "dgCMatrix"),
 #' @rdname colMaxs-dgCMatrix-method
 #' @export
 setMethod("rowMaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colMaxs(t(x), na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colMaxs(t(x), na_rm = na.rm), useNames)
 })
 
 
@@ -165,7 +165,7 @@ setMethod("rowMaxs", signature(x = "dgCMatrix"),
 #' @rdname colOrderStats-dgCMatrix-method
 #' @export
 setMethod("rowOrderStats", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, which = 1, useNames = NA, na.rm=FALSE){
   if(which < 1 || which > ncol(x)){
     stop("Argument 'which' is out of range.")
   }
@@ -175,7 +175,7 @@ setMethod("rowOrderStats", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colOrderStats(t(x), which = which, na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colOrderStats(t(x), which = which, na_rm = na.rm), useNames)
 })
 
 
@@ -185,8 +185,8 @@ setMethod("rowOrderStats", signature(x = "dgCMatrix"),
 #' @rdname colWeightedMeans-xgCMatrix-method
 #' @export
 setMethod("rowWeightedMeans", signature(x = "xgCMatrix"),
-    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
-  colWeightedMeans(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm)
+    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
+  colWeightedMeans(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm, useNames = useNames)
 })
 
 
@@ -195,8 +195,8 @@ setMethod("rowWeightedMeans", signature(x = "xgCMatrix"),
 #' @rdname colWeightedMedians-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMedians", signature(x = "dgCMatrix"),
-    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
-  colWeightedMedians(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm)
+    function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
+  colWeightedMedians(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm, useNames = useNames)
 })
 
 
@@ -205,8 +205,8 @@ setMethod("rowWeightedMedians", signature(x = "dgCMatrix"),
 #' @rdname colWeightedVars-xgCMatrix-method
 #' @export
 setMethod("rowWeightedVars", signature(x = "xgCMatrix"),
-function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
-  colWeightedVars(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm)
+function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
+  colWeightedVars(t(x), w = w, rows = cols, cols = rows, na.rm = na.rm, useNames = useNames)
 })
 
 
@@ -216,7 +216,7 @@ function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
 #' @rdname colWeightedSds-xgCMatrix-method
 #' @export
 setMethod("rowWeightedSds", signature(x = "xgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -225,9 +225,9 @@ setMethod("rowWeightedSds", signature(x = "xgCMatrix"),
     w <- w[cols]
   }
   if(is.null(w)){
-    setNames(sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = NULL)), rownames(x))
+    set_result_names_t(sqrt(dgCMatrix_rowVars(x, na_rm = na.rm, center = NULL)), useNames, default = TRUE)
   }else{
-    setNames(sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm)), rownames(x))
+    set_result_names_t(sqrt(dgCMatrix_colWeightedVars(t(x), weights = w, na_rm = na.rm)), useNames, default = TRUE)
   }
 })
 
@@ -237,8 +237,8 @@ setMethod("rowWeightedSds", signature(x = "xgCMatrix"),
 #' @rdname colWeightedMads-dgCMatrix-method
 #' @export
 setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
-          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826, center = NULL){
-  colWeightedMads(t(x), w=w, rows = cols, cols = rows, na.rm=na.rm, constant = constant, center = center)
+          function(x, w = NULL, rows = NULL, cols = NULL, na.rm=FALSE,  constant = 1.4826, center = NULL, useNames = NA){
+  colWeightedMads(t(x), w=w, rows = cols, cols = rows, na.rm=na.rm, constant = constant, center = center, useNames = useNames)
 })
 
 
@@ -248,7 +248,7 @@ setMethod("rowWeightedMads", signature(x = "dgCMatrix"),
 #' @rdname colCounts-xgCMatrix-method
 #' @export
 setMethod("rowCounts", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, useNames = NA){
   stopifnot(length(value) == 1)
   if(is(x, "lgCMatrix")){
     value <- as.logical(value)
@@ -259,7 +259,7 @@ setMethod("rowCounts", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colCounts(t(x), value, na_rm = na.rm)
+  set_result_names_t(dgCMatrix_colCounts(t(x), value, na_rm = na.rm), useNames)
 })
 
 
@@ -268,14 +268,14 @@ setMethod("rowCounts", signature(x = "xgCMatrix"),
 #' @rdname colAnyNAs-xgCMatrix-method
 #' @export
 setMethod("rowAnyNAs", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL){
+          function(x, rows = NULL, cols = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  dgCMatrix_colAnyNAs(t(x))
+  set_result_names_t(dgCMatrix_colAnyNAs(t(x)), useNames)
 })
 
 
@@ -284,7 +284,7 @@ setMethod("rowAnyNAs", signature(x = "xgCMatrix"),
 #' @rdname colAnys-xgCMatrix-method
 #' @export
 setMethod("rowAnys", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, useNames = NA){
   stopifnot(length(value) == 1)
   if(is(x, "lgCMatrix")){
     value <- as.logical(value)
@@ -295,11 +295,12 @@ setMethod("rowAnys", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  if(isTRUE(value)){
+  res <- if(isTRUE(value)){
     ! dgCMatrix_colAlls(t(x), value = 0, na_rm=na.rm)
   }else{
     dgCMatrix_colAnys(t(x), value, na_rm=na.rm)
   }
+  set_result_names_t(res, useNames)
 })
 
 
@@ -309,7 +310,7 @@ setMethod("rowAnys", signature(x = "xgCMatrix"),
 #' @rdname colAlls-xgCMatrix-method
 #' @export
 setMethod("rowAlls", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, value = TRUE, na.rm=FALSE, useNames = NA){
   stopifnot(length(value) == 1)
   if(is(x, "lgCMatrix")){
     value <- as.logical(value)
@@ -320,11 +321,12 @@ setMethod("rowAlls", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  if(isTRUE(value)){
+  res <- if(isTRUE(value)){
     ! dgCMatrix_colAnys(t(x), value = 0, na_rm = na.rm)
   }else{
     dgCMatrix_colAlls(t(x), value, na_rm=na.rm)
   }
+  set_result_names_t(res, useNames)
 })
 
 
@@ -334,7 +336,7 @@ setMethod("rowAlls", signature(x = "xgCMatrix"),
 #' @rdname colCollapse-xgCMatrix-method
 #' @export
 setMethod("rowCollapse", signature(x = "xgCMatrix"),
-          function(x, idxs, rows = NULL){
+          function(x, idxs, rows = NULL, useNames = NA){
   idxs <- rep(idxs, length.out = nrow(x))
   if (!is.null(rows)) {
     x <- x[rows, , drop = FALSE]
@@ -344,7 +346,7 @@ setMethod("rowCollapse", signature(x = "xgCMatrix"),
   cols <- cols[idxs]
   idxs <- nrow(x) * cols + seq_len(nrow(x))
   cols <- NULL
-  x[idxs]
+  set_result_names_t(x[idxs], useNames)
 })
 
 
@@ -355,7 +357,7 @@ setMethod("rowCollapse", signature(x = "xgCMatrix"),
 #' @rdname colQuantiles-xgCMatrix-method
 #' @export
 setMethod("rowQuantiles", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, drop = TRUE){
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, useNames = NA, drop = TRUE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
@@ -366,7 +368,7 @@ setMethod("rowQuantiles", signature(x = "xgCMatrix"),
   # Add dim names
   digits <- max(2L, getOption("digits"))
   colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
-  rownames(mat) <- rownames(x)
+  mat <- set_result_rownames(mat, useNames, default = TRUE, names = rownames(x))
   if(drop && nrow(mat) == 1){
     mat[1,]
   }else{
@@ -381,8 +383,8 @@ setMethod("rowQuantiles", signature(x = "xgCMatrix"),
 #' @rdname colTabulates-xgCMatrix-method
 #' @export
 setMethod("rowTabulates", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, values = NULL){
-  colTabulates(t(x), rows = cols, cols = rows, values = values)
+          function(x, rows = NULL, cols = NULL, values = NULL, useNames = NA){
+  colTabulates(t(x), rows = cols, cols = rows, values = values, useNames = useNames)
 })
 
 
@@ -392,15 +394,18 @@ setMethod("rowTabulates", signature(x = "xgCMatrix"),
 #' @rdname colIQRs-xgCMatrix-method
 #' @export
 setMethod("rowIQRs", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm, drop = FALSE)
-  unname(col_q[,2] - col_q[,1])
+  col_q <- colQuantiles(t(x), probs=c(0.25, 0.75), na.rm = na.rm, useNames = TRUE, drop = FALSE)
+  if(is.na(useNames)){
+    useNames <- FALSE
+  }
+  set_result_names_t(unname(col_q[,2] - col_q[,1]), useNames, names = rownames(col_q))
 })
 
 
@@ -410,11 +415,14 @@ setMethod("rowIQRs", signature(x = "xgCMatrix"),
 #' @rdname colRanges-dgCMatrix-method
 #' @export
 setMethod("rowRanges", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE, useNames = NA){
   tx <- t(x)
-  row_max <- colMaxs(tx, rows = cols, cols = rows, na.rm = na.rm)
-  row_min <- colMins(tx, rows = cols, cols = rows, na.rm = na.rm)
-  unname(cbind(row_min, row_max))
+  row_max <- colMaxs(tx, rows = cols, cols = rows, na.rm = na.rm, useNames = TRUE)
+  row_min <- colMins(tx, rows = cols, cols = rows, na.rm = na.rm, useNames = TRUE)
+  if(is.na(useNames)){
+    useNames <- FALSE
+  }
+  set_result_rownames(unname(cbind(row_min, row_max)), useNames, names = names(row_max))
 })
 
 
@@ -424,14 +432,14 @@ setMethod("rowRanges", signature(x = "dgCMatrix"),
 #' @rdname colCumsums-xgCMatrix-method
 #' @export
 setMethod("rowCumsums", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL){
+          function(x, rows = NULL, cols = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  t(dgCMatrix_colCumsums(t(x)))
+  set_result_rownames(t(dgCMatrix_colCumsums(t(x))), useNames, names = rownames(x))
 })
 
 
@@ -441,14 +449,14 @@ setMethod("rowCumsums", signature(x = "xgCMatrix"),
 #' @rdname colCumprods-xgCMatrix-method
 #' @export
 setMethod("rowCumprods", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL){
+          function(x, rows = NULL, cols = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  t(dgCMatrix_colCumprods(t(x)))
+ set_result_rownames(t(dgCMatrix_colCumprods(t(x))), useNames, names = rownames(x))
 })
 
 
@@ -458,14 +466,14 @@ setMethod("rowCumprods", signature(x = "xgCMatrix"),
 #' @rdname colCummins-dgCMatrix-method
 #' @export
 setMethod("rowCummins", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL){
+          function(x, rows = NULL, cols = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  t(dgCMatrix_colCummins(t(x)))
+  set_result_rownames(t(dgCMatrix_colCummins(t(x))), useNames, names = rownames(x))
 })
 
 
@@ -475,14 +483,14 @@ setMethod("rowCummins", signature(x = "dgCMatrix"),
 #' @rdname colCummaxs-dgCMatrix-method
 #' @export
 setMethod("rowCummaxs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL){
+          function(x, rows = NULL, cols = NULL, useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  t(dgCMatrix_colCummaxs(t(x)))
+  set_result_rownames(t(dgCMatrix_colCummaxs(t(x))), useNames, names = rownames(x))
 })
 
 
@@ -492,14 +500,14 @@ setMethod("rowCummaxs", signature(x = "dgCMatrix"),
 #' @rdname colRanks-dgCMatrix-method
 #' @export
 setMethod("rowRanks", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserveShape = TRUE, na.handling = c("keep", "last")){
+          function(x, rows = NULL, cols = NULL,  ties.method = c("max", "average", "min"), preserveShape = TRUE, na.handling = c("keep", "last"), ..., useNames = NA){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  colRanks(t(x), ties.method = ties.method, preserveShape = ! preserveShape, na.handling = na.handling)
+  colRanks(t(x), ties.method = ties.method, preserveShape = ! preserveShape, na.handling = na.handling, useNames = useNames)
 })
 
 
@@ -508,8 +516,8 @@ setMethod("rowRanks", signature(x = "dgCMatrix"),
 
 #' @export
 setMethod("rowDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L){
-  t(colDiffs(t(x), rows = cols, cols = rows, lag = lag, differences = differences))
+          function(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L, useNames = NA){
+  t(colDiffs(t(x), rows = cols, cols = rows, lag = lag, differences = differences, useNames = useNames))
 })
 
 
@@ -518,8 +526,8 @@ setMethod("rowDiffs", signature(x = "dgCMatrix"),
 #' @rdname colVarDiffs-dgCMatrix-method
 #' @export
 setMethod("rowVarDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
-  colVarDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim)
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, useNames = NA){
+  colVarDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim, useNames = useNames)
 })
 
 
@@ -529,8 +537,8 @@ setMethod("rowVarDiffs", signature(x = "dgCMatrix"),
 #' @rdname colSdDiffs-dgCMatrix-method
 #' @export
 setMethod("rowSdDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
-  colSdDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim)
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, useNames = NA){
+  colSdDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim, useNames = useNames)
 })
 
 
@@ -540,8 +548,8 @@ setMethod("rowSdDiffs", signature(x = "dgCMatrix"),
 #' @rdname colMadDiffs-dgCMatrix-method
 #' @export
 setMethod("rowMadDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826){
-  colMadDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim, constant = constant)
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, constant = 1.4826, ..., useNames = NA){
+  colMadDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim, constant = constant, useNames = useNames)
 })
 
 
@@ -551,8 +559,8 @@ setMethod("rowMadDiffs", signature(x = "dgCMatrix"),
 #' @rdname colIQRDiffs-dgCMatrix-method
 #' @export
 setMethod("rowIQRDiffs", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0){
-  colIQRDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim)
+          function(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0, useNames = NA){
+  colIQRDiffs(t(x), rows = cols, cols = rows, na.rm=na.rm, diff=diff, trim = trim, useNames = useNames)
 })
 
 

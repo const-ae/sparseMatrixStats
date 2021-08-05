@@ -5,9 +5,23 @@
 \alias{rowOrderStats,dgCMatrix-method}
 \title{Calculates an order statistic for each row (column) of a matrix-like object}
 \usage{
-\S4method{colOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE)
+\S4method{colOrderStats}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  which = 1,
+  useNames = NA,
+  na.rm = FALSE
+)
 
-\S4method{rowOrderStats}{dgCMatrix}(x, rows = NULL, cols = NULL, which = 1, na.rm = FALSE)
+\S4method{rowOrderStats}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  which = 1,
+  useNames = NA,
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -22,6 +36,8 @@ done.}
 
 \item{which}{An integer index in [1,K] ([1,N]) indicating which order
 statistic to be returned}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 
 \item{na.rm}{If TRUE, NAs are excluded first, otherwise not.}
 }

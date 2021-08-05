@@ -2,6 +2,7 @@ set.seed(1)
 # source("tests/testthat/setup.R")
 
 mat <- t(make_matrix_with_all_features(nrow=15, ncol=10))
+rownames(mat) <- letters[seq_len(10)]
 sp_mat <- as(mat, "dgCMatrix")
 row_subset <- 1:5
 col_subset <- c(7, 9, 2)
@@ -166,6 +167,12 @@ test_that("cumulative functions work", {
   expect_equal(rowCumprods(sp_mat), matrixStats::rowCumprods(mat))
   expect_equal(rowCummins(sp_mat), matrixStats::rowCummins(mat))
   expect_equal(rowCummaxs(sp_mat), matrixStats::rowCummaxs(mat))
+
+  expect_equal(rowCumsums(sp_mat, useNames = TRUE), matrixStats::rowCumsums(mat, useNames = TRUE))
+  expect_equal(rowCumprods(sp_mat, useNames = TRUE), matrixStats::rowCumprods(mat, useNames = TRUE))
+  expect_equal(rowCummins(sp_mat, useNames = TRUE), matrixStats::rowCummins(mat, useNames = TRUE))
+  expect_equal(rowCummaxs(sp_mat, useNames = TRUE), matrixStats::rowCummaxs(mat, useNames = TRUE))
+
 
   expect_equal(rowCumsums(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowCumsums(mat, rows = row_subset, cols = col_subset))
   expect_equal(rowCumprods(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowCumprods(mat, rows = row_subset, cols = col_subset))

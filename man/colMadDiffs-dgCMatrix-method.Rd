@@ -13,7 +13,9 @@ element of a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  constant = 1.4826
+  constant = 1.4826,
+  ...,
+  useNames = NA
 )
 
 \S4method{rowMadDiffs}{dgCMatrix}(
@@ -23,7 +25,9 @@ element of a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  constant = 1.4826
+  constant = 1.4826,
+  ...,
+  useNames = NA
 )
 }
 \arguments{
@@ -46,6 +50,10 @@ are excluded first, otherwise not.}
 be trimmed from each end of (sorted) x before estimation.}
 
 \item{constant}{A scale factor. See \code{\link{mad}} for details.}
+
+\item{...}{Additional arguments passed to specific methods.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).

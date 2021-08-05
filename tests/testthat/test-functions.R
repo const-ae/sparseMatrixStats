@@ -18,6 +18,15 @@ all_inf_mat <-  matrix(c(Inf, -Inf,  Inf, -Inf, -Inf,  Inf,
                        ncol=4)
 mat_with_explicit_zeros_sp <- make_matrix_with_all_features_with_explicit_zeros(nrow = 15, ncol = 10)
 
+colnames(diverse_mat) <- LETTERS[seq_len(ncol(diverse_mat))]
+colnames(zero_row_mat) <- LETTERS[seq_len(ncol(zero_row_mat))]
+colnames(zero_col_mat) <- LETTERS[seq_len(ncol(zero_col_mat))]
+colnames(empty_mat) <- LETTERS[seq_len(ncol(empty_mat))]
+colnames(matrix_with_zeros_only) <- LETTERS[seq_len(ncol(matrix_with_zeros_only))]
+colnames(matrix_with_large_numbers) <- LETTERS[seq_len(ncol(matrix_with_large_numbers))]
+colnames(dense_mat) <- LETTERS[seq_len(ncol(dense_mat))]
+colnames(all_inf_mat) <- LETTERS[seq_len(ncol(all_inf_mat))]
+colnames(mat_with_explicit_zeros_sp) <- LETTERS[seq_len(ncol(mat_with_explicit_zeros_sp))]
 
 
 matrix_list <- list(diverse_mat,
@@ -40,6 +49,7 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        mat_with_explicit_zeros_sp)
 row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3), NULL)
 col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3, 1:10, NULL, NULL, 2)
+use_names_list <- list(TRUE, NA, FALSE, FALSE, TRUE, NA, TRUE, NA, FALSE)
 descriptions <- list("diverse",
                      "zero row",
                      "zero col",
@@ -58,18 +68,19 @@ for(idx in seq_along(matrix_list)){
   sp_mat <- sp_matrix_list[[idx]]
   row_subset <- row_subset_list[[idx]]
   col_subset <- col_subset_list[[idx]]
+  use_names_opt <- use_names_list[[idx]]
 
   test_that("colSums works", {
     expect_equal(colSums2(sp_mat), matrixStats::colSums2(mat))
     expect_equal(colSums2(sp_mat, na.rm=TRUE), matrixStats::colSums2(mat, na.rm=TRUE))
-    expect_equal(colSums2(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colSums2(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("rowSums works", {
     sp_mat2 <- t(sp_mat)
     expect_equal(rowSums2(sp_mat2), matrixStats::colSums2(mat))
     expect_equal(rowSums2(sp_mat2, na.rm=TRUE), matrixStats::colSums2(mat, na.rm=TRUE))
-    expect_equal(rowSums2(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset))
+    expect_equal(rowSums2(sp_mat2, cols = row_subset, rows = col_subset, useNames = use_names_opt), matrixStats::colSums2(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -77,20 +88,23 @@ for(idx in seq_along(matrix_list)){
   test_that("colMeans works", {
     expect_equal(colMeans2(sp_mat), matrixStats::colMeans2(mat))
     expect_equal(colMeans2(sp_mat, na.rm=TRUE), matrixStats::colMeans2(mat, na.rm=TRUE))
-    expect_equal(colMeans2(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colMeans2(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("rowMeans works", {
     sp_mat2 <- t(sp_mat)
     expect_equal(rowMeans2(sp_mat2), matrixStats::colMeans2(mat))
     expect_equal(rowMeans2(sp_mat2, na.rm=TRUE), matrixStats::colMeans2(mat, na.rm=TRUE))
-    expect_equal(rowMeans2(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset))
+    expect_equal(rowMeans2(sp_mat2, cols = row_subset, rows = col_subset, useNames = use_names_opt),
+                 matrixStats::colMeans2(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("colMedians works", {
     expect_equal(colMedians(sp_mat), matrixStats::colMedians(mat))
     expect_equal(colMedians(sp_mat, na.rm=TRUE), matrixStats::colMedians(mat, na.rm=TRUE))
-    expect_equal(colMedians(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMedians(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colMedians(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMedians(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -98,7 +112,8 @@ for(idx in seq_along(matrix_list)){
   test_that("colVars works", {
     expect_equal(colVars(sp_mat), matrixStats::colVars(mat))
     expect_equal(colVars(sp_mat, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
-    expect_equal(colVars(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colVars(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colVars(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     center <- colMeans2(sp_mat)
     expect_equal(colVars(sp_mat, center = center), matrixStats::colVars(mat, center = center))
@@ -108,19 +123,25 @@ for(idx in seq_along(matrix_list)){
     sp_mat2 <- t(sp_mat)
     expect_equal(rowVars(sp_mat2), matrixStats::colVars(mat))
     expect_equal(rowVars(sp_mat2, na.rm=TRUE), matrixStats::colVars(mat, na.rm=TRUE))
-    expect_equal(rowVars(sp_mat2, cols = row_subset, rows = col_subset), matrixStats::colVars(mat, rows = row_subset, cols = col_subset))
+    expect_equal(rowVars(sp_mat2, cols = row_subset, rows = col_subset, useNames = use_names_opt),
+                 matrixStats::colVars(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("colSds works", {
     expect_equal(colSds(sp_mat), matrixStats::colSds(mat))
     expect_equal(colSds(sp_mat, na.rm=TRUE), matrixStats::colSds(mat, na.rm=TRUE))
-    expect_equal(colSds(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colSds(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colSds(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colSds(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
+
+    center <- colMeans2(sp_mat)
+    expect_equal(colSds(sp_mat, center = center), matrixStats::colSds(mat, center = center))
   })
 
   test_that("colMads works", {
     expect_equal(colMads(sp_mat), matrixStats::colMads(mat))
     expect_equal(colMads(sp_mat, na.rm=TRUE), matrixStats::colMads(mat, na.rm=TRUE))
-    expect_equal(colMads(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMads(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colMads(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMads(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     center <- colMeans2(sp_mat)
     expect_equal(colMads(sp_mat, center = center), matrixStats::colMads(mat, center = center))
@@ -129,14 +150,16 @@ for(idx in seq_along(matrix_list)){
   test_that("colMins works", {
     expect_equal(colMins(sp_mat), matrixStats::colMins(mat))
     expect_equal(colMins(sp_mat, na.rm=TRUE), matrixStats::colMins(mat, na.rm=TRUE))
-    expect_equal(colMins(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMins(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colMins(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMins(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
   test_that("colMaxs works", {
     expect_equal(colMaxs(sp_mat), matrixStats::colMaxs(mat))
     expect_equal(colMaxs(sp_mat, na.rm=TRUE), matrixStats::colMaxs(mat, na.rm=TRUE))
-    expect_equal(colMaxs(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colMaxs(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colMaxs(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMaxs(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -146,13 +169,15 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colCounts(sp_mat, na.rm=TRUE, value=0), matrixStats::colCounts(mat, na.rm=TRUE, value = 0))
     expect_equal(colCounts(sp_mat, value = 42), matrixStats::colCounts(mat, value = 42))
     expect_equal(colCounts(sp_mat, na.rm=TRUE, value = 42), matrixStats::colCounts(mat, na.rm=TRUE, value = 42))
-    expect_equal(colCounts(sp_mat, value=0, rows = row_subset, cols = col_subset), matrixStats::colCounts(mat, value=0, rows = row_subset, cols = col_subset))
+    expect_equal(colCounts(sp_mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCounts(mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
   test_that("colAnyNAs works", {
     expect_equal(colAnyNAs(sp_mat), matrixStats::colAnyNAs(mat))
-    expect_equal(colAnyNAs(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colAnyNAs(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colAnyNAs(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colAnyNAs(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -168,7 +193,8 @@ for(idx in seq_along(matrix_list)){
     # expect_equal(colAnys(sp_mat, na.rm=TRUE, value=NA), matrixStats::colAnys(mat, na.rm=TRUE, value = NA))
     expect_equal(colAnys(sp_mat, value = 42), matrixStats::colAnys(mat, value = 42))
     expect_equal(colAnys(sp_mat, na.rm=TRUE, value = 42), matrixStats::colAnys(mat, na.rm=TRUE, value = 42))
-    expect_equal(colAnys(sp_mat, value=0, rows = row_subset, cols = col_subset), matrixStats::colAnys(mat, value=0, rows = row_subset, cols = col_subset))
+    expect_equal(colAnys(sp_mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colAnys(mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -183,28 +209,32 @@ for(idx in seq_along(matrix_list)){
     # expect_equal(colAnys(sp_mat, na.rm=TRUE, value=NA), matrixStats::colAnys(mat, na.rm=TRUE, value = NA))
     expect_equal(colAlls(sp_mat, value = 42), matrixStats::colAlls(mat, value = 42))
     expect_equal(colAlls(sp_mat, na.rm=TRUE, value = 42), matrixStats::colAlls(mat, na.rm=TRUE, value = 42))
-    expect_equal(colAlls(sp_mat, value=0, rows = row_subset, cols = col_subset), matrixStats::colAlls(mat, value=0, rows = row_subset, cols = col_subset))
+    expect_equal(colAlls(sp_mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colAlls(mat, value=0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
   test_that("colLogSumExps works", {
     expect_equal(colLogSumExps(sp_mat), matrixStats::colLogSumExps(mat))
     expect_equal(colLogSumExps(sp_mat, na.rm=TRUE), matrixStats::colLogSumExps(mat, na.rm=TRUE))
-    expect_equal(colLogSumExps(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colLogSumExps(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colLogSumExps(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colLogSumExps(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
   test_that("colProds works", {
     expect_equal(colProds(sp_mat), matrixStats::colProds(mat))
     expect_equal(colProds(sp_mat, na.rm=TRUE), matrixStats::colProds(mat, na.rm=TRUE))
-    expect_equal(colProds(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colProds(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colProds(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colProds(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("colQuantiles works", {
     expect_equal(colQuantiles(sp_mat), matrixStats::colQuantiles(mat))
     expect_equal(colQuantiles(sp_mat, na.rm=TRUE), matrixStats::colQuantiles(mat, na.rm=TRUE))
     expect_equal(colQuantiles(sp_mat, prob = 0.3, na.rm=TRUE), matrixStats::colQuantiles(mat, prob = 0.3, na.rm=TRUE))
-    expect_equal(colQuantiles(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colQuantiles(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colQuantiles(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colQuantiles(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     expect_equal(colQuantiles(sp_mat, type = 1L), matrixStats::colQuantiles(mat, type = 1L))
     expect_equal(colQuantiles(sp_mat, type = 2L), matrixStats::colQuantiles(mat, type = 2L))
@@ -231,8 +261,8 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colTabulates(int_sp_mat, values = c(1, values)), matrixStats::colTabulates(int_mat, values = c(1, values)))
     expect_equal(colTabulates(int_sp_mat, values = c(1, 1, values)), matrixStats::colTabulates(int_mat, values = c(1, 1, values)))
     expect_equal(colTabulates(int_sp_mat, values = values[-1]), matrixStats::colTabulates(int_mat, values = values[-1]))
-    expect_equal(colTabulates(int_sp_mat, values = values, rows = row_subset, cols = col_subset),
-                 matrixStats::colTabulates(int_mat, values = values, rows = row_subset, cols = col_subset))
+    expect_equal(colTabulates(int_sp_mat, values = values, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colTabulates(int_mat, values = values, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -244,7 +274,8 @@ for(idx in seq_along(matrix_list)){
     if(nrow(no_na_mat) >= 6){
       expect_equal(colOrderStats(no_na_sp_mat, which = 1), matrixStats::colOrderStats(no_na_mat, which = 1))
       expect_equal(colOrderStats(no_na_sp_mat, which = 6), matrixStats::colOrderStats(no_na_mat, which = 6))
-      expect_equal(colOrderStats(no_na_sp_mat, which = 1, rows = row_subset, cols = col_subset), matrixStats::colOrderStats(no_na_mat, which = 1, rows = row_subset, cols = col_subset))
+      expect_equal(colOrderStats(no_na_sp_mat, which = 1, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                   matrixStats::colOrderStats(no_na_mat, which = 1, rows = row_subset, cols = col_subset, useNames = use_names_opt))
     }
     expect_error(colOrderStats(no_na_sp_mat, which = 110)) # which should be larger than nrow(no_na_mat)
     expect_error(matrixStats::colOrderStats(no_na_mat, which = 110))
@@ -261,29 +292,36 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colCummins(sp_mat), matrixStats::colCummins(mat))
     expect_equal(colCummaxs(sp_mat), matrixStats::colCummaxs(mat))
 
-    expect_equal(colCumsums(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colCumsums(mat, rows = row_subset, cols = col_subset))
-    expect_equal(colCumprods(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colCumprods(mat, rows = row_subset, cols = col_subset))
-    expect_equal(colCummins(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colCummins(mat, rows = row_subset, cols = col_subset))
-    expect_equal(colCummaxs(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colCummaxs(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colCumsums(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCumsums(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
+    expect_equal(colCumprods(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCumprods(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
+    expect_equal(colCummins(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCummins(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
+    expect_equal(colCummaxs(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCummaxs(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
     # There is no na.rm version
   })
 
 
   test_that("colIQRs works", {
     expect_equal(colIQRs(sp_mat), matrixStats::colIQRs(mat))
-    expect_equal(rowIQRs(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowIQRs(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colIQRs(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colIQRs(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("colRanges works", {
     expect_equal(colRanges(sp_mat), matrixStats::colRanges(mat))
-    expect_equal(colRanges(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colRanges(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colRanges(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colRanges(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
   test_that("colRanks works", {
     expect_equal(colRanks(sp_mat), matrixStats::colRanks(mat))
     expect_equal(colRanks(sp_mat, ties.method = "average"), matrixStats::colRanks(mat, ties.method = "average"))
     expect_equal(colRanks(sp_mat, ties.method = "min"), matrixStats::colRanks(mat, ties.method = "min"))
-    expect_equal(colRanks(sp_mat, rows = row_subset, cols = col_subset), matrixStats::colRanks(mat, rows = row_subset, cols = col_subset))
+    expect_equal(colRanks(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colRanks(mat, rows = row_subset, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -292,7 +330,8 @@ for(idx in seq_along(matrix_list)){
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedMeans(sp_mat, w=weights), matrixStats::colWeightedMeans(mat, w=weights))
     expect_equal(colWeightedMeans(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMeans(mat, na.rm=TRUE, w=weights))
-    expect_equal(colWeightedMeans(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedMeans(mat, w=weights, rows = row_subset, cols = col_subset))
+    expect_equal(colWeightedMeans(sp_mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colWeightedMeans(mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     # Test check for length of w
     expect_error(colWeightedMeans(sp_mat, w=1:42))
@@ -305,7 +344,11 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colWeightedMedians(sp_mat), matrixStats::colWeightedMedians(mat, interpolate = FALSE))
     expect_equal(colWeightedMedians(sp_mat, w=weights), matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE))
     expect_equal(colWeightedMedians(sp_mat, na.rm=TRUE, w=weights), matrixStats::colWeightedMedians(mat, w=weights, na.rm=TRUE, interpolate = FALSE))
-    expect_equal(colWeightedMedians(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE, rows = row_subset, cols = col_subset))
+    expect_equal(colWeightedMedians(sp_mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colWeightedMedians(mat, w=weights, interpolate = FALSE, rows = row_subset, cols = col_subset, useNames = use_names_opt))
+    # The presence of the weight argument affects the default naming of the result
+    expect_equal(colWeightedMedians(sp_mat, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colWeightedMedians(mat, interpolate = FALSE, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     # Test check for length of w
     expect_error(colWeightedMeans(sp_mat, w=1:42))
@@ -336,7 +379,8 @@ for(idx in seq_along(matrix_list)){
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedVars(sp_mat, w=weights), matrixStats::colWeightedVars(mat, w=weights))
     expect_equal(colWeightedVars(sp_mat, na.rm=TRUE), matrixStats::colWeightedVars(mat, na.rm=TRUE))
-    expect_equal(colWeightedVars(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedVars(mat, w=weights, rows = row_subset, cols = col_subset))
+    expect_equal(colWeightedVars(sp_mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colWeightedVars(mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     # Test check for length of w
     expect_error(colWeightedMeans(sp_mat, w=1:42))
@@ -348,7 +392,8 @@ for(idx in seq_along(matrix_list)){
     weights <- rnorm(nrow(sp_mat), mean=4, sd=0.1)
     expect_equal(colWeightedSds(sp_mat, w=weights), matrixStats::colWeightedSds(mat, w=weights))
     expect_equal(colWeightedSds(sp_mat, na.rm=TRUE), matrixStats::colWeightedSds(mat, na.rm=TRUE))
-    expect_equal(colWeightedSds(sp_mat, w=weights, rows = row_subset, cols = col_subset), matrixStats::colWeightedSds(mat, w=weights, rows = row_subset, cols = col_subset))
+    expect_equal(colWeightedSds(sp_mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colWeightedSds(mat, w=weights, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     # Test check for length of w
     expect_error(colWeightedMeans(sp_mat, w=1:42))
@@ -363,24 +408,28 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colDiffs(sp_mat, diff = 1), matrixStats::colDiffs(mat, diff = 1))
     expect_equal(colDiffs(sp_mat, diff = 3), matrixStats::colDiffs(mat, diff = 3))
     expect_equal(colDiffs(sp_mat, diff = 3, lag= 2), matrixStats::colDiffs(mat, diff = 3, lag = 2))
-    expect_equal(colDiffs(sp_mat, diff = 1, rows = row_subset, cols = col_subset), matrixStats::colDiffs(mat, diff = 1, rows = row_subset, cols = col_subset))
+    expect_equal(colDiffs(sp_mat, diff = 1, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colDiffs(mat, diff = 1, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     expect_equal(colVarDiffs(sp_mat, diff = 0), matrixStats::colVarDiffs(mat, diff = 0))
     expect_equal(colVarDiffs(sp_mat, diff = 1), matrixStats::colVarDiffs(mat, diff = 1))
     expect_equal(colVarDiffs(sp_mat, diff = 3), matrixStats::colVarDiffs(mat, diff = 3))
-    expect_equal(colVarDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colVarDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
+    expect_equal(colVarDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colVarDiffs(mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     expect_equal(colSdDiffs(sp_mat, diff = 0), matrixStats::colSdDiffs(mat, diff = 0))
     expect_equal(colSdDiffs(sp_mat, diff = 1), matrixStats::colSdDiffs(mat, diff = 1))
     expect_equal(colSdDiffs(sp_mat, diff = 3), matrixStats::colSdDiffs(mat, diff = 3))
     expect_equal(colSdDiffs(sp_mat, na.rm=TRUE), matrixStats::colSdDiffs(mat, na.rm=TRUE))
-    expect_equal(colSdDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colSdDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
+    expect_equal(colSdDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colSdDiffs(mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     expect_equal(colMadDiffs(sp_mat, diff = 0), matrixStats::colMadDiffs(mat, diff = 0))
     expect_equal(colMadDiffs(sp_mat, diff = 1), matrixStats::colMadDiffs(mat, diff = 1))
     expect_equal(colMadDiffs(sp_mat, diff = 3), matrixStats::colMadDiffs(mat, diff = 3))
     expect_equal(colMadDiffs(sp_mat, na.rm=TRUE), matrixStats::colMadDiffs(mat, na.rm=TRUE))
-    expect_equal(colMadDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colMadDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
+    expect_equal(colMadDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colMadDiffs(mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
     expect_equal(colIQRDiffs(sp_mat, diff = 0), matrixStats::colIQRDiffs(mat, diff = 0))
     if(descriptions[[idx]] != "plus/minus Inf"){
@@ -389,7 +438,8 @@ for(idx in seq_along(matrix_list)){
       expect_equal(colIQRDiffs(sp_mat, na.rm=TRUE), matrixStats::colIQRDiffs(mat, na.rm=TRUE))
     }
     expect_equal(colIQRDiffs(sp_mat, diff = 3), matrixStats::colIQRDiffs(mat, diff = 3))
-    expect_equal(colIQRDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset), matrixStats::colIQRDiffs(mat, diff = 0, rows = row_subset, cols = col_subset))
+    expect_equal(colIQRDiffs(sp_mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colIQRDiffs(mat, diff = 0, rows = row_subset, cols = col_subset, useNames = use_names_opt))
 
   })
 
@@ -402,7 +452,8 @@ for(idx in seq_along(matrix_list)){
     if(nrow(sp_mat) > 0 && ! is.null(col_subset)){
       expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), unname(sp_mat[1, col_subset]))
     }
-    expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), matrixStats::colCollapse(mat, idxs = 1, cols = col_subset))
+    expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset, useNames = use_names_opt),
+                 matrixStats::colCollapse(mat, idxs = 1, cols = col_subset, useNames = use_names_opt))
   })
 
 
@@ -410,7 +461,8 @@ for(idx in seq_along(matrix_list)){
     S <-  suppressWarnings(matrix(seq_len(nrow(mat)), ncol = 2))
     expect_equal(colAvgsPerRowSet(sp_mat, S = S), matrixStats::colAvgsPerRowSet(mat, S = S))
     expect_equal(colAvgsPerRowSet(sp_mat, S = S, FUN = colVarDiffs, na.rm = FALSE), matrixStats::colAvgsPerRowSet(mat, S = S, FUN = colVarDiffs, na.rm = FALSE))
-    expect_equal(colAvgsPerRowSet(sp_mat, S = S, na.rm = FALSE, cols = col_subset), matrixStats::colAvgsPerRowSet(mat, S = S, na.rm = FALSE, cols = col_subset))
+    expect_equal(colAvgsPerRowSet(sp_mat, S = S, na.rm = FALSE, cols = col_subset),
+                 matrixStats::colAvgsPerRowSet(mat, S = S, na.rm = FALSE, cols = col_subset))
   })
 
 }

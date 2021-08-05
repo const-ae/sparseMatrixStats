@@ -6,9 +6,23 @@
 \title{Calculates the weighted variance for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colWeightedVars}{xgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{colWeightedVars}{xgCMatrix}(
+  x,
+  w = NULL,
+  rows = NULL,
+  cols = NULL,
+  na.rm = FALSE,
+  useNames = NA
+)
 
-\S4method{rowWeightedVars}{xgCMatrix}(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{rowWeightedVars}{xgCMatrix}(
+  x,
+  w = NULL,
+  rows = NULL,
+  cols = NULL,
+  na.rm = FALSE,
+  useNames = NA
+)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -26,6 +40,8 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).

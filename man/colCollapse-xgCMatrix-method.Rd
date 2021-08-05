@@ -5,9 +5,9 @@
 \alias{rowCollapse,xgCMatrix-method}
 \title{Extract one cell from each row (column) of a matrix-like object}
 \usage{
-\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL)
+\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL, useNames = NA)
 
-\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL)
+\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL, useNames = NA)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -18,6 +18,8 @@ It is recycled to match the number of rows (column)}
 \item{cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 
 \item{rows}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is

@@ -6,9 +6,23 @@
 \title{Calculates the difference between each element of a row (column) of a
 matrix-like object}
 \usage{
-\S4method{colDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L)
+\S4method{colDiffs}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  lag = 1L,
+  differences = 1L,
+  useNames = NA
+)
 
-\S4method{rowDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, lag = 1L, differences = 1L)
+\S4method{rowDiffs}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  lag = 1L,
+  differences = 1L,
+  useNames = NA
+)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -24,6 +38,8 @@ done.}
 \item{lag}{An integer specifying the lag.}
 
 \item{differences}{An integer specifying the order of difference.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{matrix}} with one column
