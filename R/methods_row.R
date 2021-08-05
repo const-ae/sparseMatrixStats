@@ -116,7 +116,7 @@ setMethod("rowLogSumExps", signature(lx = "xgCMatrix"),
 #' @rdname colProds-xgCMatrix-method
 #' @export
 setMethod("rowProds", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, na.rm=FALSE, ...){
+          function(x, rows = NULL, cols = NULL, na.rm=FALSE){
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }

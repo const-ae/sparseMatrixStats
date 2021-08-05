@@ -5,9 +5,9 @@
 \alias{rowProds,xgCMatrix-method}
 \title{Calculates the product for each row (column) in a matrix}
 \usage{
-\S4method{colProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{colProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
 
-\S4method{rowProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+\S4method{rowProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -22,8 +22,6 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
-
-\item{...}{Additional arguments passed to specific methods.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).
