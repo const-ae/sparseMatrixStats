@@ -130,6 +130,14 @@ test_that("rowQuantiles works", {
   expect_equal(rowQuantiles(sp_mat), matrixStats::rowQuantiles(mat))
   expect_equal(rowQuantiles(sp_mat, na.rm=TRUE), matrixStats::rowQuantiles(mat, na.rm=TRUE))
   expect_equal(rowQuantiles(sp_mat, rows = row_subset, cols = col_subset), matrixStats::rowQuantiles(mat, rows = row_subset, cols = col_subset))
+
+  # different quantile algorithms work
+  y <- rpois(n = 21, lambda = 1.5)
+  for(t in 1:9){
+    expect_equal(rowQuantiles(matrix(y, nrow = 1), type = t, probs = seq(0, 1, length.out = 13), drop = TRUE),
+                 rowQuantiles(as(matrix(y, nrow = 1), "dgCMatrix"), type = t, probs = seq(0, 1, length.out = 13), drop = TRUE))
+  }
+
 })
 
 

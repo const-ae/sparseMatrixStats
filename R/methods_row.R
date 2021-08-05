@@ -357,23 +357,8 @@ setMethod("rowCollapse", signature(x = "xgCMatrix"),
 #' @rdname colQuantiles-xgCMatrix-method
 #' @export
 setMethod("rowQuantiles", signature(x = "xgCMatrix"),
-          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, useNames = NA, drop = TRUE){
-  if(! is.null(rows)){
-    x <- x[rows, , drop = FALSE]
-  }
-  if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
-  }
-  mat <- dgCMatrix_colQuantiles(t(x), probs, na_rm = na.rm)
-  # Add dim names
-  digits <- max(2L, getOption("digits"))
-  colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
-  mat <- set_result_rownames(mat, useNames, default = TRUE, names = rownames(x))
-  if(drop && nrow(mat) == 1){
-    mat[1,]
-  }else{
-    mat
-  }
+          function(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1, by = 0.25), na.rm=FALSE, type = 7L, useNames = NA, drop = TRUE){
+  colQuantiles(t(x), rows = cols, cols = rows, probs = probs, na.rm = na.rm, type = type, useNames = useNames, drop = drop)
 })
 
 
