@@ -41,12 +41,12 @@ mat <- matrix(rpois(15, lambda = 3), nrow = 5, ncol = 3)
   mat[2, 1] <- NA_integer_
   mat[3, 3] <- 0L
   mat[4, 1] <- 0L
-  
+
   print(mat)
-  
+
   rowTabulates(mat)
   colTabulates(mat)
-  
+
   rowTabulates(mat, values = 0)
   colTabulates(mat, values = 0)
 }
