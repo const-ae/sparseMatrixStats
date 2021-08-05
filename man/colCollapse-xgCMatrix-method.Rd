@@ -40,12 +40,12 @@ mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
   mat[2, 1] <- NA
   mat[3, 3] <- Inf
   mat[4, 1] <- 0
-  
+
   print(mat)
-  
+
   rowCollapse(mat, idxs = 2)
   rowCollapse(mat, idxs = c(1,1,2,3,2))
-  
+
   colCollapse (mat, idxs = 4)
 }
 \seealso{
