@@ -6,9 +6,9 @@
 \title{Calculates the cumulative product for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colCumprods}{xgCMatrix}(x, rows = NULL, cols = NULL)
+\S4method{colCumprods}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
 
-\S4method{rowCumprods}{xgCMatrix}(x, rows = NULL, cols = NULL)
+\S4method{rowCumprods}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -20,6 +20,8 @@ done.}
 \item{cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{matrix}}with the same

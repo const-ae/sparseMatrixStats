@@ -6,9 +6,25 @@
 \title{Calculates the variance of the difference between each element of a row
 (column) of a matrix-like object}
 \usage{
-\S4method{colVarDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0)
+\S4method{colVarDiffs}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  na.rm = FALSE,
+  diff = 1L,
+  trim = 0,
+  useNames = NA
+)
 
-\S4method{rowVarDiffs}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, diff = 1L, trim = 0)
+\S4method{rowVarDiffs}{dgCMatrix}(
+  x,
+  rows = NULL,
+  cols = NULL,
+  na.rm = FALSE,
+  diff = 1L,
+  trim = 0,
+  useNames = NA
+)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -28,6 +44,8 @@ are excluded first, otherwise not.}
 
 \item{trim}{A double in [0,1/2] specifying the fraction of observations to
 be trimmed from each end of (sorted) x before estimation.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).

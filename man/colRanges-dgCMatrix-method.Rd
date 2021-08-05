@@ -6,9 +6,9 @@
 \title{Calculates the minimum and maximum for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{colRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
 
-\S4method{rowRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE)
+\S4method{rowRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -23,6 +23,8 @@ done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
 are excluded first, otherwise not.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 a \code{\link{numeric}} \code{Nx2} (\code{Kx2})

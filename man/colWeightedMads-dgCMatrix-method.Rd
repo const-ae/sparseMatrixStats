@@ -13,7 +13,8 @@ matrix-like object}
   cols = NULL,
   na.rm = FALSE,
   constant = 1.4826,
-  center = NULL
+  center = NULL,
+  useNames = NA
 )
 
 \S4method{rowWeightedMads}{dgCMatrix}(
@@ -23,7 +24,8 @@ matrix-like object}
   cols = NULL,
   na.rm = FALSE,
   constant = 1.4826,
-  center = NULL
+  center = NULL,
+  useNames = NA
 )
 }
 \arguments{
@@ -47,6 +49,8 @@ are excluded first, otherwise not.}
 details.}
 
 \item{center}{Not supported at the moment.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).

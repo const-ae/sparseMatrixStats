@@ -5,9 +5,9 @@
 \alias{rowTabulates,xgCMatrix-method}
 \title{Tabulates the values in a matrix-like object by row (column)}
 \usage{
-\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL)
+\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
 
-\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL)
+\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -21,6 +21,8 @@ done.}
 done.}
 
 \item{values}{the values to search for.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 a \code{\link{numeric}} \code{NxJ} (\code{KxJ})

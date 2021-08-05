@@ -12,7 +12,9 @@ object}
   cols = NULL,
   ties.method = c("max", "average", "min"),
   preserveShape = FALSE,
-  na.handling = c("keep", "last")
+  na.handling = c("keep", "last"),
+  ...,
+  useNames = NA
 )
 
 \S4method{rowRanks}{dgCMatrix}(
@@ -21,7 +23,9 @@ object}
   cols = NULL,
   ties.method = c("max", "average", "min"),
   preserveShape = TRUE,
-  na.handling = c("keep", "last")
+  na.handling = c("keep", "last"),
+  ...,
+  useNames = NA
 )
 }
 \arguments{
@@ -45,6 +49,10 @@ dimensions as the input matrix. By default this is true for `rowRanks()`, but fa
 
 \item{na.handling}{string specifying how `NA`s are handled. They can either be preserved with an `NA` rank
 ('keep') or sorted in at the end ('last'). Default is 'keep' derived from the behavior of the equivalent}
+
+\item{...}{Additional arguments passed to specific methods.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 a matrix of type \code{\link{integer}} is returned unless
