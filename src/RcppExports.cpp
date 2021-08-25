@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // dgCMatrix_colSums2
 NumericVector dgCMatrix_colSums2(S4 matrix, bool na_rm);
 RcppExport SEXP _sparseMatrixStats_dgCMatrix_colSums2(SEXP matrixSEXP, SEXP na_rmSEXP) {
