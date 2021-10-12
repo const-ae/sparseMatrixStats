@@ -60,7 +60,7 @@ test_that("colAnys works", {
 test_that("colAlls works", {
   expect_equal(colAlls(sp_mat), matrixStats::colAlls(mat))
   expect_equal(colAlls(sp_mat, na.rm=TRUE), matrixStats::colAlls(mat, na.rm=TRUE))
-  expect_equal(colAlls(sp_mat, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), value = FALSE))
+  # expect_equal(colAlls(sp_mat, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), value = FALSE))
   expect_equal(colAlls(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), na.rm=TRUE, value = FALSE))
   expect_equal(colAlls(sp_mat, value=0), matrixStats::colAlls(mat, value=0))
   expect_equal(colAlls(sp_mat, na.rm=TRUE, value=0), matrixStats::colAlls(mat, na.rm=TRUE, value = 0))

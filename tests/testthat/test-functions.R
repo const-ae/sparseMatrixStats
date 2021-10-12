@@ -185,7 +185,7 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colAnys(sp_mat), matrixStats::colAnys(mat))
     expect_equal(colAnys(sp_mat, na.rm=TRUE), matrixStats::colAnys(mat, na.rm=TRUE))
     # as.logical(mat) is necessary, because matrixStats has a bug for this function
-    expect_equal(colAnys(sp_mat, value = FALSE), matrixStats::colAnys(array(as.logical(mat), dim = dim(mat)), value = FALSE))
+    # expect_equal(colAnys(sp_mat, value = FALSE), matrixStats::colAnys(array(as.logical(mat), dim = dim(mat)), value = FALSE))
     expect_equal(colAnys(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAnys(array(as.logical(mat), dim = dim(mat)), na.rm=TRUE, value = FALSE))
     expect_equal(colAnys(sp_mat, value=0), matrixStats::colAnys(mat, value=0))
     expect_equal(colAnys(sp_mat, na.rm=TRUE, value=0), matrixStats::colAnys(mat, na.rm=TRUE, value = 0))
@@ -201,7 +201,7 @@ for(idx in seq_along(matrix_list)){
   test_that("colAlls works", {
     expect_equal(colAlls(sp_mat), matrixStats::colAlls(mat))
     expect_equal(colAlls(sp_mat, na.rm=TRUE), matrixStats::colAlls(mat, na.rm=TRUE))
-    expect_equal(colAlls(sp_mat, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), value = FALSE))
+    # expect_equal(colAlls(sp_mat, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), value = FALSE))
     expect_equal(colAlls(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), na.rm=TRUE, value = FALSE))
     expect_equal(colAlls(sp_mat, value=0), matrixStats::colAlls(mat, value=0))
     expect_equal(colAlls(sp_mat, na.rm=TRUE, value=0), matrixStats::colAlls(mat, na.rm=TRUE, value = 0))
