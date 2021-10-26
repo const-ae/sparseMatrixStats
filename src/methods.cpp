@@ -520,7 +520,7 @@ public:
       return a < b;
     });
     if(max_iter == values.end()){
-      return number_of_zeros > 0 ? log(number_of_zeros) : R_NegInf;
+      return number_of_zeros > 0 ? std::log(number_of_zeros) : R_NegInf;
     }else{
       double max = *max_iter;
       if(NumericVector::is_na(max)){
@@ -530,7 +530,7 @@ public:
         return R_PosInf;
       }
       if(max == R_NegInf){
-        return log(number_of_zeros);
+        return std::log(number_of_zeros);
       }
       double sum = std::accumulate(values.begin(), values.end(), 0.0, [max](double a, double b) -> double {
         return a + exp(b-max);
