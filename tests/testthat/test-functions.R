@@ -49,7 +49,7 @@ sp_matrix_list <- list(as(diverse_mat, "dgCMatrix"),
                        mat_with_explicit_zeros_sp)
 row_subset_list <- list(1:5, NULL, 1:2, NULL, c(3,7, 1), 1:15, 3:16, c(1,3), NULL)
 col_subset_list <- list(c(7, 9, 2), 1:4, NULL, NULL, 3, 1:10, NULL, NULL, 2)
-use_names_list <- list(TRUE, NA, FALSE, FALSE, TRUE, NA, TRUE, NA, FALSE)
+use_names_list <- list(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALSE)
 descriptions <- list("diverse",
                      "zero row",
                      "zero col",
