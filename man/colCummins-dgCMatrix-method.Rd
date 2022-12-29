@@ -6,18 +6,14 @@
 \title{Calculates the cumulative minima for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colCummins}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
+\S4method{colCummins}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
 
-\S4method{rowCummins}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
+\S4method{rowCummins}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

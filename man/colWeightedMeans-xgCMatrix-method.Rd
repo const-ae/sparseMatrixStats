@@ -11,7 +11,7 @@
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  useNames = NA
+  useNames = FALSE
 )
 
 \S4method{rowWeightedMeans}{xgCMatrix}(
@@ -20,7 +20,7 @@
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  useNames = NA
+  useNames = FALSE
 )
 }
 \arguments{
@@ -29,11 +29,7 @@
 \item{w}{A \code{\link{numeric}} vector of length K (N) that specifies by
 how much each element is weighted.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

@@ -5,18 +5,14 @@
 \alias{rowSums2,xgCMatrix-method}
 \title{Calculates the sum for each row (column) of a matrix-like object}
 \usage{
-\S4method{colSums2}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{colSums2}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 
-\S4method{rowSums2}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{rowSums2}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

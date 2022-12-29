@@ -5,18 +5,14 @@
 \alias{rowAnyNAs,xgCMatrix-method}
 \title{Check if any elements in a row (column) of a matrix-like object is missing}
 \usage{
-\S4method{colAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
+\S4method{colAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
 
-\S4method{rowAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = NA)
+\S4method{rowAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

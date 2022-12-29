@@ -5,18 +5,14 @@
 \alias{rowMedians,dgCMatrix-method}
 \title{Calculates the median for each row (column) of a matrix-like object}
 \usage{
-\S4method{colMedians}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{colMedians}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 
-\S4method{rowMedians}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{rowMedians}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

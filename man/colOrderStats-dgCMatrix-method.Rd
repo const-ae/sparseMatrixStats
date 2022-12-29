@@ -10,7 +10,7 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = NA,
+  useNames = FALSE,
   na.rm = FALSE
 )
 
@@ -19,18 +19,14 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = NA,
+  useNames = FALSE,
   na.rm = FALSE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

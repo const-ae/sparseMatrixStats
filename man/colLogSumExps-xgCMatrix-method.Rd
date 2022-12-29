@@ -6,17 +6,14 @@
 \title{Accurately calculates the logarithm of the sum of exponentials for each row
 (column) of a matrix-like object}
 \usage{
-\S4method{colLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{colLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 
-\S4method{rowLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{rowLogSumExps}{xgCMatrix}(lx, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
 }
 \arguments{
 \item{lx}{An NxK matrix-like object. Typically \code{lx} are \code{log(x)} values.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link{NULL}}, no subsetting is done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset (and/or
+\item{rows, cols}{A \code{\link{vector}} indicating the subset (and/or
 columns) to operate over. If \code{\link{NULL}}, no subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s

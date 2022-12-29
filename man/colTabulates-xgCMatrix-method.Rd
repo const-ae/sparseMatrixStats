@@ -5,18 +5,14 @@
 \alias{rowTabulates,xgCMatrix-method}
 \title{Tabulates the values in a matrix-like object by row (column)}
 \usage{
-\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
+\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = FALSE)
 
-\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
+\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = FALSE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

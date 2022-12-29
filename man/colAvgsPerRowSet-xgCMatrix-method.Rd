@@ -33,10 +33,6 @@
 
 \item{W}{An optional numeric \code{NxM} matrix of weights.}
 
-\item{cols}{A \code{\link{vector}} indicating the subset (and/or
-columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
 \item{S}{An \link{integer} \code{KxJ} matrix that specifying the \code{J} subsets. Each
 column hold \code{K} column (row) indices for the corresponding subset. The
 range of values is [1, M] ([1,N]).}
@@ -52,7 +48,7 @@ otherwise \code{na.rm = FALSE}.}
 
 \item{tFUN}{If \code{TRUE}, \code{X} is transposed before it is passed to \code{FUN}.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset (and/or
+\item{rows, cols}{A \code{\link{vector}} indicating the subset (and/or
 columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 }

@@ -13,7 +13,7 @@ a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  useNames = NA
+  useNames = FALSE
 )
 
 \S4method{rowSdDiffs}{dgCMatrix}(
@@ -23,17 +23,13 @@ a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  useNames = NA
+  useNames = FALSE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

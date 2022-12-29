@@ -13,7 +13,7 @@ matrix-like object}
   center = NULL,
   constant = 1.4826,
   na.rm = FALSE,
-  useNames = NA
+  useNames = FALSE
 )
 
 \S4method{rowMads}{dgCMatrix}(
@@ -23,17 +23,13 @@ matrix-like object}
   center = NULL,
   constant = 1.4826,
   na.rm = FALSE,
-  useNames = NA
+  useNames = FALSE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

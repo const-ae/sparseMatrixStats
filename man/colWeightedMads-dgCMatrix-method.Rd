@@ -14,7 +14,7 @@ matrix-like object}
   na.rm = FALSE,
   constant = 1.4826,
   center = NULL,
-  useNames = NA
+  useNames = FALSE
 )
 
 \S4method{rowWeightedMads}{dgCMatrix}(
@@ -25,7 +25,7 @@ matrix-like object}
   na.rm = FALSE,
   constant = 1.4826,
   center = NULL,
-  useNames = NA
+  useNames = FALSE
 )
 }
 \arguments{
@@ -34,11 +34,7 @@ matrix-like object}
 \item{w}{A \code{\link{numeric}} vector of length K (N) that specifies by
 how much each element is weighted.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 

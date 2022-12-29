@@ -12,7 +12,7 @@
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
   type = 7L,
-  useNames = NA,
+  useNames = FALSE,
   drop = TRUE
 )
 
@@ -23,18 +23,14 @@
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
   type = 7L,
-  useNames = NA,
+  useNames = FALSE,
   drop = TRUE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
