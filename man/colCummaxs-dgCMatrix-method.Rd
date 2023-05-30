@@ -6,9 +6,9 @@
 \title{Calculates the cumulative maxima for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colCummaxs}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
+\S4method{colCummaxs}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = TRUE)
 
-\S4method{rowCummaxs}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
+\S4method{rowCummaxs}{dgCMatrix}(x, rows = NULL, cols = NULL, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -29,20 +29,20 @@ object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowCummaxs}
-/ \code{matrixStats::colCummaxs}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCummaxs}} /
+\code{matrixStats::\link[matrixStats]{colCummaxs}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowCummaxs(mat)
-  colCummaxs(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowCummaxs(mat)
+colCummaxs(mat)
 }
 \seealso{
 \itemize{

@@ -10,7 +10,7 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = FALSE,
+  useNames = TRUE,
   na.rm = FALSE
 )
 
@@ -19,7 +19,7 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = FALSE,
+  useNames = TRUE,
   na.rm = FALSE
 )
 }
@@ -45,9 +45,9 @@ Calculates an order statistic for each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowOrderStats}
-/ \code{matrixStats::colOrderStats}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowOrderStats}} /
+\code{matrixStats::\link[matrixStats]{colOrderStats}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

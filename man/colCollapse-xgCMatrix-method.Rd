@@ -5,9 +5,9 @@
 \alias{rowCollapse,xgCMatrix-method}
 \title{Extract one cell from each row (column) of a matrix-like object}
 \usage{
-\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL, useNames = FALSE)
+\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL, useNames = TRUE)
 
-\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL, useNames = FALSE)
+\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -29,9 +29,9 @@ Extract one cell from each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowCollapse}
-/ \code{matrixStats::colCollapse}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCollapse}} /
+\code{matrixStats::\link[matrixStats]{colCollapse}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

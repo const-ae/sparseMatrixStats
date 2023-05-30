@@ -5,9 +5,9 @@
 \alias{rowProds,xgCMatrix-method}
 \title{Calculates the product for each row (column) in a matrix}
 \usage{
-\S4method{colProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
+\S4method{colProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 
-\S4method{rowProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
+\S4method{rowProds}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -16,8 +16,9 @@
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
@@ -36,14 +37,14 @@ function if there are `+-Inf`, because `Inf * 0 = NaN`. This function returns
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowProds(mat)
-  colProds(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowProds(mat)
+colProds(mat)
 }
 \seealso{
 \itemize{

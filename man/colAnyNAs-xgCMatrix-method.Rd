@@ -5,9 +5,9 @@
 \alias{rowAnyNAs,xgCMatrix-method}
 \title{Check if any elements in a row (column) of a matrix-like object is missing}
 \usage{
-\S4method{colAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
+\S4method{colAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = TRUE)
 
-\S4method{rowAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = FALSE)
+\S4method{rowAnyNAs}{xgCMatrix}(x, rows = NULL, cols = NULL, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -26,9 +26,9 @@ Check if any elements in a row (column) of a matrix-like object is missing.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowAnyNAs}
-/ \code{matrixStats::colAnyNAs}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowAnyNAs}} /
+\code{matrixStats::\link[matrixStats]{colAnyNAs}}.
 }
 \examples{
   mat <- matrix(0, nrow=10, ncol=5)

@@ -12,7 +12,7 @@
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
   type = 7L,
-  useNames = FALSE,
+  useNames = TRUE,
   drop = TRUE
 )
 
@@ -23,7 +23,7 @@
   probs = seq(from = 0, to = 1, by = 0.25),
   na.rm = FALSE,
   type = 7L,
-  useNames = FALSE,
+  useNames = TRUE,
   drop = TRUE
 )
 }
@@ -36,8 +36,9 @@ done.}
 
 \item{probs}{A numeric vector of J probabilities in [0, 1].}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{type}{An integer specifying the type of estimator. See
 \code{stats::\link[stats]{quantile}()}. for more details.}
@@ -56,20 +57,20 @@ Calculates quantiles for each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowQuantiles}
-/ \code{matrixStats::colQuantiles}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowQuantiles}} /
+\code{matrixStats::\link[matrixStats]{colQuantiles}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowQuantiles(mat)
-  colQuantiles(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowQuantiles(mat)
+colQuantiles(mat)
 }
 \seealso{
 \itemize{

@@ -6,9 +6,9 @@
 \title{Calculates the interquartile range for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colIQRs}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
+\S4method{colIQRs}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 
-\S4method{rowIQRs}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = FALSE)
+\S4method{rowIQRs}{xgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -17,8 +17,9 @@ object}
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
@@ -31,20 +32,20 @@ object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowIQRs}
-/ \code{matrixStats::colIQRs}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowIQRs}} /
+\code{matrixStats::\link[matrixStats]{colIQRs}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowIQRs(mat)
-  colIQRs(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowIQRs(mat)
+colIQRs(mat)
 }
 \seealso{
 \itemize{

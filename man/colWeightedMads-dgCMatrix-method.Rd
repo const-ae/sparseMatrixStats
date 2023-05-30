@@ -14,7 +14,7 @@ matrix-like object}
   na.rm = FALSE,
   constant = 1.4826,
   center = NULL,
-  useNames = FALSE
+  useNames = TRUE
 )
 
 \S4method{rowWeightedMads}{dgCMatrix}(
@@ -25,7 +25,7 @@ matrix-like object}
   na.rm = FALSE,
   constant = 1.4826,
   center = NULL,
-  useNames = FALSE
+  useNames = TRUE
 )
 }
 \arguments{
@@ -38,8 +38,9 @@ how much each element is weighted.}
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{constant}{A scale factor. See \code{stats::\link[stats]{mad}()} for
 details.}
@@ -57,9 +58,9 @@ a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowWeightedMads}
-/ \code{matrixStats::colWeightedMads}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowWeightedMads}} /
+\code{matrixStats::\link[matrixStats]{colWeightedMads}}.
 }
 \examples{
   mat <- matrix(0, nrow=10, ncol=5)

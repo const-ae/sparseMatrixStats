@@ -186,7 +186,7 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colAnys(sp_mat, na.rm=TRUE), matrixStats::colAnys(mat, na.rm=TRUE))
     # as.logical(mat) is necessary, because matrixStats has a bug for this function
     # expect_equal(colAnys(sp_mat, value = FALSE), matrixStats::colAnys(array(as.logical(mat), dim = dim(mat)), value = FALSE))
-    expect_equal(colAnys(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAnys(array(as.logical(mat), dim = dim(mat)), na.rm=TRUE, value = FALSE))
+    expect_equal(colAnys(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAnys(mat != 0, na.rm=TRUE, value = FALSE))
     expect_equal(colAnys(sp_mat, value=0), matrixStats::colAnys(mat, value=0))
     expect_equal(colAnys(sp_mat, na.rm=TRUE, value=0), matrixStats::colAnys(mat, na.rm=TRUE, value = 0))
     # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
@@ -202,7 +202,7 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colAlls(sp_mat), matrixStats::colAlls(mat))
     expect_equal(colAlls(sp_mat, na.rm=TRUE), matrixStats::colAlls(mat, na.rm=TRUE))
     # expect_equal(colAlls(sp_mat, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), value = FALSE))
-    expect_equal(colAlls(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAlls(array(as.logical(mat), dim = dim(mat)), na.rm=TRUE, value = FALSE))
+    expect_equal(colAlls(sp_mat, na.rm=TRUE, value = FALSE), matrixStats::colAlls(mat != 0, na.rm=TRUE, value = FALSE))
     expect_equal(colAlls(sp_mat, value=0), matrixStats::colAlls(mat, value=0))
     expect_equal(colAlls(sp_mat, na.rm=TRUE, value=0), matrixStats::colAlls(mat, na.rm=TRUE, value = 0))
     # expect_equal(colAnys(sp_mat, value=NA), matrixStats::colAnys(mat, value=NA))
@@ -450,7 +450,7 @@ for(idx in seq_along(matrix_list)){
     expect_equal(colCollapse(sp_mat, idxs = c(1,3)), matrixStats::colCollapse(mat, idxs = c(1,3)))
     expect_equal(colCollapse(sp_mat, idxs = 1:5, cols = min(ncol(mat), 3)), matrixStats::colCollapse(mat, idxs = 1:5, cols = min(ncol(mat), 3)))
     if(nrow(sp_mat) > 0 && ! is.null(col_subset)){
-      expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), unname(sp_mat[1, col_subset]))
+      expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset), sp_mat[1, col_subset])
     }
     expect_equal(colCollapse(sp_mat, idxs = 1, cols = col_subset, useNames = use_names_opt),
                  matrixStats::colCollapse(mat, idxs = 1, cols = col_subset, useNames = use_names_opt))

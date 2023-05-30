@@ -11,7 +11,7 @@
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  useNames = FALSE
+  useNames = TRUE
 )
 
 \S4method{rowWeightedMedians}{dgCMatrix}(
@@ -20,7 +20,7 @@
   rows = NULL,
   cols = NULL,
   na.rm = FALSE,
-  useNames = FALSE
+  useNames = TRUE
 )
 }
 \arguments{
@@ -33,8 +33,9 @@ how much each element is weighted.}
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
@@ -46,20 +47,20 @@ Calculates the weighted median for each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowWeightedMedians}
-/ \code{matrixStats::colWeightedMedians}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowWeightedMedians}} /
+\code{matrixStats::\link[matrixStats]{colWeightedMedians}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  w <- rnorm(n = 5, mean = 3)
-  rowWeightedMedians(mat, w = w[1:3])
-  colWeightedMedians(mat, w = w)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+w <- rnorm(n = 5, mean = 3)
+rowWeightedMedians(mat, w = w[1:3])
+colWeightedMedians(mat, w = w)
 }
 \seealso{
 \itemize{
