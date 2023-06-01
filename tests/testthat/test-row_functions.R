@@ -212,9 +212,6 @@ test_that("rowRanks works", {
 
 
 test_that("rowWeightedMeans works", {
-  # matrixStats has a bug (#175) that rowWeightedMeans returns a vector
-  # without names if w != NULL
-  # As a work around, I set the names of my result to NULL as well
   weights <- rnorm(ncol(sp_mat), mean=4, sd=0.1)
   expect_equal(rowWeightedMeans(sp_mat, w=NULL), matrixStats::rowWeightedMeans(mat, w=NULL))
   expect_equal(rowWeightedMeans(sp_mat, w=weights), matrixStats::rowWeightedMeans(mat, w=weights))
