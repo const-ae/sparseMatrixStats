@@ -534,7 +534,7 @@ setMethod("colQuantiles", signature(x = "xgCMatrix"),
   }
   # Add dim names
   digits <- max(2L, getOption("digits"))
-  colnames(mat) <- sprintf("%.*g%%", digits, 100 * probs)
+  mat <- set_result_colnames(mat, useNames, default = TRUE, names = sprintf("%.*g%%", digits, 100 * probs))
   mat <- set_result_rownames(mat, useNames, default = TRUE)
   if(drop && nrow(mat) == 1){
     mat[1,]
