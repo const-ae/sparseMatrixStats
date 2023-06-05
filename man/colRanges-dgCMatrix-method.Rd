@@ -6,23 +6,20 @@
 \title{Calculates the minimum and maximum for each row (column) of a matrix-like
 object}
 \usage{
-\S4method{colRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{colRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 
-\S4method{rowRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA)
+\S4method{rowRanges}{dgCMatrix}(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
@@ -37,20 +34,28 @@ object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowRanges}
-/ \code{matrixStats::colRanges}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowRanges}} /
+\code{matrixStats::\link[matrixStats]{colRanges}}.
+}
+\note{
+Unfortunately for the argument list of the \code{rowRanges()}
+generic function we cannot follow the scheme used for the other
+row/column matrix summarization generic functions. This is because
+we need to be compatible with the historic \code{rowRanges()} getter
+for \link[SummarizedExperiment]{RangedSummarizedExperiment} objects.
+See \code{?SummarizedExperiment::\link[SummarizedExperiment]{rowRanges}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowRanges(mat)
-  colRanges(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowRanges(mat)
+colRanges(mat)
 }
 \seealso{
 \itemize{

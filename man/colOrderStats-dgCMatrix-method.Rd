@@ -10,7 +10,7 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = NA,
+  useNames = TRUE,
   na.rm = FALSE
 )
 
@@ -19,18 +19,14 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = NA,
+  useNames = TRUE,
   na.rm = FALSE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
@@ -49,9 +45,9 @@ Calculates an order statistic for each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowOrderStats}
-/ \code{matrixStats::colOrderStats}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowOrderStats}} /
+\code{matrixStats::\link[matrixStats]{colOrderStats}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

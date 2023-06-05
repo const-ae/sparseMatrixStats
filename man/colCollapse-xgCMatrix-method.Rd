@@ -5,9 +5,9 @@
 \alias{rowCollapse,xgCMatrix-method}
 \title{Extract one cell from each row (column) of a matrix-like object}
 \usage{
-\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL, useNames = NA)
+\S4method{colCollapse}{xgCMatrix}(x, idxs, cols = NULL, useNames = TRUE)
 
-\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL, useNames = NA)
+\S4method{rowCollapse}{xgCMatrix}(x, idxs, rows = NULL, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
@@ -15,13 +15,9 @@
 \item{idxs}{An index \code{\link{vector}} with the position to extract.
 It is recycled to match the number of rows (column)}
 
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
 \item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 }
@@ -33,9 +29,9 @@ Extract one cell from each row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowCollapse}
-/ \code{matrixStats::colCollapse}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCollapse}} /
+\code{matrixStats::\link[matrixStats]{colCollapse}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)

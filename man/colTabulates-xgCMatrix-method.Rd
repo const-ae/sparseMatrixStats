@@ -5,18 +5,14 @@
 \alias{rowTabulates,xgCMatrix-method}
 \title{Tabulates the values in a matrix-like object by row (column)}
 \usage{
-\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
+\S4method{colTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = TRUE)
 
-\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = NA)
+\S4method{rowTabulates}{xgCMatrix}(x, rows = NULL, cols = NULL, values = NULL, useNames = TRUE)
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
@@ -34,9 +30,9 @@ Tabulates the values in a matrix-like object by row (column).
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowTabulates}
-/ \code{matrixStats::colTabulates}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowTabulates}} /
+\code{matrixStats::\link[matrixStats]{colTabulates}}.
 }
 \examples{
 mat <- matrix(rpois(15, lambda = 3), nrow = 5, ncol = 3)

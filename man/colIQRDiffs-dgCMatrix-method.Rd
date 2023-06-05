@@ -13,7 +13,7 @@ a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  useNames = NA
+  useNames = TRUE
 )
 
 \S4method{rowIQRDiffs}{dgCMatrix}(
@@ -23,22 +23,19 @@ a row (column) of a matrix-like object}
   na.rm = FALSE,
   diff = 1L,
   trim = 0,
-  useNames = NA
+  useNames = TRUE
 )
 }
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{na.rm}{If \code{\link[base:logical]{TRUE}}, \code{\link{NA}}s
-are excluded first, otherwise not.}
+\item{na.rm}{If \code{\link[base]{TRUE}}, missing values
+(\code{\link[base]{NA}} or \code{\link[base]{NaN}}) are
+omitted from the calculations.}
 
 \item{diff}{An integer specifying the order of difference.}
 
@@ -56,20 +53,20 @@ a row (column) of a matrix-like object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowIQRDiffs}
-/ \code{matrixStats::colIQRDiffs}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowIQRDiffs}} /
+\code{matrixStats::\link[matrixStats]{colIQRDiffs}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowIQRDiffs(mat)
-  colIQRDiffs(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowIQRDiffs(mat)
+colIQRDiffs(mat)
 }
 \seealso{
 \itemize{
