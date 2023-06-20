@@ -1,8 +1,7 @@
 set.seed(1)
 # source("~/prog/r_packages/sparseMatrixStats/tests/testthat/setup.R")
 mat <- make_matrix_with_all_features(nrow = 15, ncol=10) < 0
-sp_mat <- as(mat, "lgCMatrix")
-
+sp_mat <- as(as(as(mat, "lMatrix"), "generalMatrix"), "CsparseMatrix")
 
 test_that("colSums works", {
   expect_equal(colSums2(sp_mat), matrixStats::colSums2(mat))
