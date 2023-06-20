@@ -1,3 +1,7 @@
+Changes in 1.12.1
++ Fix tests problems caused by matrixStats version 1.0.0 release. Use MatrixGenerics
+in unit tests and skip some failing tests
+
 
 Changes in development
 + Add useNames parameter to all functions
