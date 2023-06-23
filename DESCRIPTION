@@ -1,7 +1,7 @@
 Package: sparseMatrixStats
 Type: Package
 Title: Summary Statistics for Rows and Columns of Sparse Matrices
-Version: 1.13.0
+Version: 1.13.1
 Authors@R: person("Constantin", "Ahlmann-Eltze", email = "artjom31415@googlemail.com", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3762-068X"))
 Description: High performance functions for row and column operations on sparse matrices.
