@@ -10,8 +10,8 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = TRUE,
-  na.rm = FALSE
+  na.rm = FALSE,
+  useNames = TRUE
 )
 
 \S4method{rowOrderStats}{dgCMatrix}(
@@ -19,8 +19,8 @@
   rows = NULL,
   cols = NULL,
   which = 1,
-  useNames = TRUE,
-  na.rm = FALSE
+  na.rm = FALSE,
+  useNames = TRUE
 )
 }
 \arguments{
@@ -33,9 +33,9 @@ done.}
 \item{which}{An integer index in [1,K] ([1,N]) indicating which order
 statistic to be returned}
 
-\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
-
 \item{na.rm}{If TRUE, NAs are excluded first, otherwise not.}
+
+\item{useNames}{If \code{\link{NA}}, the default behavior of the function about naming support is remained. If \code{\link{FALSE}}, no naming support is done. Else if \code{\link{TRUE}}, names attributes of result are set.}
 }
 \value{
 Returns a \code{\link{numeric}} \code{\link{vector}} of length N (K).
