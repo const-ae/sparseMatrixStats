@@ -13,11 +13,7 @@ object}
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
@@ -33,20 +29,20 @@ object.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowCumprods}
-/ \code{matrixStats::colCumprods}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowCumprods}} /
+\code{matrixStats::\link[matrixStats]{colCumprods}}.
 }
 \examples{
 mat <- matrix(rnorm(15), nrow = 5, ncol = 3)
-  mat[2, 1] <- NA
-  mat[3, 3] <- Inf
-  mat[4, 1] <- 0
-  
-  print(mat)
-  
-  rowCumprods(mat)
-  colCumprods(mat)
+mat[2, 1] <- NA
+mat[3, 3] <- Inf
+mat[4, 1] <- 0
+
+print(mat)
+
+rowCumprods(mat)
+colCumprods(mat)
 }
 \seealso{
 \itemize{

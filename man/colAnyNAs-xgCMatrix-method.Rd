@@ -12,11 +12,7 @@
 \arguments{
 \item{x}{An NxK matrix-like object.}
 
-\item{rows}{A \code{\link{vector}} indicating the subset of rows
-(and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
-done.}
-
-\item{cols}{A \code{\link{vector}} indicating the subset of rows
+\item{rows, cols}{A \code{\link{vector}} indicating the subset of rows
 (and/or columns) to operate over. If \code{\link{NULL}}, no subsetting is
 done.}
 
@@ -30,9 +26,9 @@ Check if any elements in a row (column) of a matrix-like object is missing.
 }
 \details{
 The S4 methods for \code{x} of type \code{\link{matrix}},
-\code{\link{array}}, or \code{\link{numeric}} call
-\code{matrixStats::rowAnyNAs}
-/ \code{matrixStats::colAnyNAs}.
+\code{\link{array}}, \code{\link{table}}, or \code{\link{numeric}} call
+\code{matrixStats::\link[matrixStats]{rowAnyNAs}} /
+\code{matrixStats::\link[matrixStats]{colAnyNAs}}.
 }
 \examples{
   mat <- matrix(0, nrow=10, ncol=5)
