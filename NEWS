@@ -1,6 +1,8 @@
-Changes in 1.12.1
+Changes in 1.12
 + Fix tests problems caused by matrixStats version 1.0.0 release. Use MatrixGenerics
 in unit tests and skip some failing tests
++ Change the argument order of colOrderStats to match the generic which created
+problems since bug https://bugs.r-project.org/show_bug.cgi?id=18538 was fixed.
 
 
 Changes in development
