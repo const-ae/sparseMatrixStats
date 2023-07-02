@@ -165,7 +165,7 @@ setMethod("rowMaxs", signature(x = "dgCMatrix"),
 #' @rdname colOrderStats-dgCMatrix-method
 #' @export
 setMethod("rowOrderStats", signature(x = "dgCMatrix"),
-          function(x, rows = NULL, cols = NULL, which = 1, useNames = NA, na.rm=FALSE){
+          function(x, rows = NULL, cols = NULL, which = 1, na.rm=FALSE, ..., useNames = NA){
   if(which < 1 || which > ncol(x)){
     stop("Argument 'which' is out of range.")
   }
