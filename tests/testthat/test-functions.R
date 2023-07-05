@@ -18,6 +18,7 @@ all_inf_mat <-  matrix(c(Inf, -Inf,  Inf, -Inf, -Inf,  Inf,
                        ncol=4)
 mat_with_explicit_zeros_sp <- make_matrix_with_all_features_with_explicit_zeros(nrow = 15, ncol = 10)
 
+rownames(diverse_mat) <- paste0("row_", seq_len(nrow(diverse_mat)))
 colnames(diverse_mat) <- LETTERS[seq_len(ncol(diverse_mat))]
 colnames(zero_row_mat) <- LETTERS[seq_len(ncol(zero_row_mat))]
 colnames(zero_col_mat) <- LETTERS[seq_len(ncol(zero_col_mat))]

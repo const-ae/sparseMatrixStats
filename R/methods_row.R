@@ -424,7 +424,10 @@ setMethod("rowCumsums", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_rownames(t(dgCMatrix_colCumsums(t(x))), useNames, names = rownames(x))
+  mat <- t(dgCMatrix_colCumsums(t(x)))
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat <- set_result_colnames(mat, useNames, names = colnames(x))
+  mat
 })
 
 
@@ -441,7 +444,10 @@ setMethod("rowCumprods", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
- set_result_rownames(t(dgCMatrix_colCumprods(t(x))), useNames, names = rownames(x))
+ mat <- t(dgCMatrix_colCumprods(t(x)))
+ mat <- set_result_rownames(mat, useNames, names = rownames(x))
+ mat <- set_result_colnames(mat, useNames, names = colnames(x))
+ mat
 })
 
 
@@ -458,7 +464,10 @@ setMethod("rowCummins", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_rownames(t(dgCMatrix_colCummins(t(x))), useNames, names = rownames(x))
+  mat <- t(dgCMatrix_colCummins(t(x)))
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat <- set_result_colnames(mat, useNames, names = colnames(x))
+  mat
 })
 
 
@@ -475,7 +484,10 @@ setMethod("rowCummaxs", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_rownames(t(dgCMatrix_colCummaxs(t(x))), useNames, names = rownames(x))
+  mat <- t(dgCMatrix_colCummaxs(t(x)))
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat <- set_result_colnames(mat, useNames, names = colnames(x))
+  mat
 })
 
 

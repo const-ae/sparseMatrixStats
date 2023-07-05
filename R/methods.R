@@ -637,7 +637,10 @@ setMethod("colCumsums", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_colnames(dgCMatrix_colCumsums(x), useNames)
+  mat <- dgCMatrix_colCumsums(x)
+  mat <- set_result_colnames(mat, useNames)
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat
 })
 
 
@@ -654,7 +657,10 @@ setMethod("colCumprods", signature(x = "xgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_colnames(dgCMatrix_colCumprods(x), useNames)
+  mat <- dgCMatrix_colCumprods(x)
+  mat <- set_result_colnames(mat, useNames)
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat
 })
 
 
@@ -671,7 +677,10 @@ setMethod("colCummins", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_colnames(dgCMatrix_colCummins(x), useNames)
+  mat <- dgCMatrix_colCummins(x)
+  mat <- set_result_colnames(mat, useNames)
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat
 })
 
 
@@ -688,7 +697,10 @@ setMethod("colCummaxs", signature(x = "dgCMatrix"),
   if(! is.null(cols)){
     x <- x[, cols, drop = FALSE]
   }
-  set_result_colnames(dgCMatrix_colCummaxs(x), useNames)
+  mat <- dgCMatrix_colCummaxs(x)
+  mat <- set_result_colnames(mat, useNames)
+  mat <- set_result_rownames(mat, useNames, names = rownames(x))
+  mat
 })
 
 
@@ -723,12 +735,14 @@ setMethod("colRanks", signature(x = "dgCMatrix"),
   }
   ties.method <- match.arg(ties.method,  c("max", "average", "min"))
   na.handling <- match.arg(na.handling, c("keep", "last"))
-  res <- if(ties.method == "average"){
+  mat <- if(ties.method == "average"){
     dgCMatrix_colRanks_num(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserveShape)
   }else{
     dgCMatrix_colRanks_int(x, ties_method = ties.method, na_handling = na.handling, preserve_shape = preserveShape)
   }
-  set_result_rownames(res, useNames)
+  mat <- set_result_rownames(mat, useNames, names = colnames(x))
+  mat <- set_result_colnames(mat, useNames, names = rownames(x))
+  mat
 })
 
 
@@ -745,13 +759,19 @@ setMethod("colDiffs", signature(x = "dgCMatrix"),
     x <- x[, cols, drop = FALSE]
   }
   if(differences == 0){
-    set_result_colnames(x, useNames)
+    mat <- set_result_colnames(x, useNames)
+    mat <- set_result_rownames(mat, useNames, names = rownames(x))
+    mat
   }else{
-    set_result_colnames(reduce_sparse_matrix_to_matrix(x, n_result_rows = max(nrow(x) - differences * lag, 0), function(values, row_indices, number_of_zeros){
+    mat <- reduce_sparse_matrix_to_matrix(x, n_result_rows = max(nrow(x) - differences * lag, 0), function(values, row_indices, number_of_zeros){
       tmp <- rep(0,  nrow(x))
       tmp[row_indices+1] <- values
       matrixStats::diff2(tmp, lag = lag, differences = differences)
-    }), useNames)
+    })
+    mat <- set_result_colnames(mat, useNames, names = colnames(x))
+    indices <- setdiff(seq_len(nrow(x)), seq_len(differences * lag))
+    mat <- set_result_rownames(mat, useNames, names = rownames(x)[indices])
+    mat
   }
 })
 

@@ -3,6 +3,7 @@ set.seed(1)
 
 mat <- t(make_matrix_with_all_features(nrow=15, ncol=10))
 rownames(mat) <- letters[seq_len(10)]
+colnames(mat) <- paste0("col_", seq_len(ncol(mat)))
 sp_mat <- as(mat, "dgCMatrix")
 row_subset <- 1:5
 col_subset <- c(7, 9, 2)
