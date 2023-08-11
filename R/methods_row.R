@@ -9,11 +9,15 @@ setMethod("rowSums2", signature(x = "xgCMatrix"),
   if(! is.null(rows)){
     x <- x[rows, , drop = FALSE]
   }
-  if(! is.null(cols)){
-    x <- x[, cols, drop = FALSE]
+  if(is.logical(cols) && length(cols) == ncol(x)){
+    set_result_names_t(dgCMatrix_rowSums2_col_select(x, na_rm = na.rm, col_selector = cols), useNames)
+  }else{
+    if(! is.null(cols)){
+      x <- x[, cols, drop = FALSE]
+    }
+    # dgCMatrix_colSums2(t(x), na_rm = na.rm)
+    set_result_names_t(dgCMatrix_rowSums2(x, na_rm = na.rm), useNames)
   }
-  # dgCMatrix_colSums2(t(x), na_rm = na.rm)
-  set_result_names_t(dgCMatrix_rowSums2(x, na_rm = na.rm), useNames)
 })
 
 
