@@ -1,7 +1,11 @@
 
-Changes in development
+Changes in version 1.13
++ Make sparseMatrixStats compatible with matrixStats release v1.0.0.
+In particular change 'useNames'to 'TRUE' by default.
++ Add fast path for 'rowSums2(x, cols = logical_vector)'
 + Add useNames parameter to all functions
 + fix incomplete method signature of rowQuantiles
++
 
 Changes in version 1.3
 + Avoid C++14 features. This should fix the reoccuring installation problems.
