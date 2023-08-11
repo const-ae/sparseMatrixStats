@@ -37,34 +37,18 @@ NumericVector dgCMatrix_rowSums2_col_select(S4 matrix, bool na_rm, LogicalVector
   IntegerVector row_indices = matrix.slot("i");
   IntegerVector pointers = matrix.slot("p");
   std::vector<LDOUBLE> result (dim[0], 0.0);
+  int n_cols = dim[1];
 
-  double* val_iter = values.begin();
-  int* idx_iter = row_indices.begin();
-  int* pointer_iter = pointers.begin();
-
-  int idx = 0;
-  int col_idx = -1;
-  while(val_iter != values.end() && idx_iter != row_indices.end()){
-    while(*pointer_iter <= idx && pointer_iter != pointers.end()){
-      ++pointer_iter;
-      ++col_idx;
-    }
-    int consider = col_selector[col_idx];
-    if(ISNA(consider)){
-      stop("NA values in the 'cols' argument are not allowed");
-    }else if(consider == 1){
-      if(na_rm && ISNA(*val_iter)){
-        // Do nothing
-      }else{
-        result[*idx_iter] += *val_iter;
+  for(int i = 0; i < n_cols; ++i){
+    if(col_selector[i] == 1){
+      int val_idx = pointers[i];
+      int end_idx = pointers[i + 1];
+      for(;val_idx < end_idx; ++val_idx){
+        result[row_indices[val_idx]] += values[val_idx];
       }
-    }else{
-      // Do nothing
     }
-    ++val_iter;
-    ++idx_iter;
-    ++idx;
   }
+
   return wrap(result);
 }
 
